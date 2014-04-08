@@ -1,0 +1,460 @@
+<!--Data: Mammal -->
+<!--Model: SDPM1 + strict clock-->
+<!--Source: Wu, Suchard and Drummond. Bayesian selection of nucleotide substitution models and their site assignments. Molecular Biology and Evolution.-->
+
+<beast version='2.0'
+       namespace='beast.core:beast.evolution.tree.coalescent:beast.core.util:beast.evolution.nuc:beast.evolution.operators:beast.evolution.sitemodel:beast.evolution.substitutionmodel:beast.evolution.branchratemodel:beast.evolution.likelihood:beast.core.parameter:beast.math.distributions:beast.evolution.operators.util'>
+
+    <data id="alignment" dataType="nucleotide">
+        <sequence id="seq_Canis" taxon="Canis" totalcount="4" value="ATGGCTGAAGGGGAAATCACAACCTTCACTGCCCTGACGGAGAAGTTTAATCTGCCTCCGGGGAATTACATGAAGCCCAAACTCCTCTACTGTAGCAACGGGGGCCACTTCCTGAGGATCCTTCCAGATGGCACAGTGGATGGGACAAGGGACAGGAGCGACCAGCACATTCAGCTGCAGCTCAGCGCGGAAAGCGTGGGGGAGGTGTATATAAAGAGCACCGAGACTGGCCAGTACTTGGCCATGGACACCGATGGGCTTCTGTACGGCTCACAGACACCGAATGAGGAATGTTTGTTCCTGGAAAGGCTGGAGGAAAACCATTACAACACCTACACATCCAAGAAGCATGCAGAAAAAAATTGGTTTGTTGGTCTCAAGAAGAATGGAAGCTGCAAACGCGGTCCTCGGACTCACTATGGTCAAAAAGCAATTTTGTTTCTCCCCCTGCCAGTGTCCTCTGATTAA"/>
+        <sequence id="seq_Felis" taxon="Felis" totalcount="4" value="ATGGCTGAAGGGGAAATCACAACCTTCACGGCCCTGACGGAGAAGTTCAATCTGCCTCCAGGGAATTACAAGAAACCCAAACTCCTCTACTGTAGCAACGGGGGCCACTTCCTGAGGATCCTTCCAGATGGCACAGTGGATGGGACGAGGGACAGGAGCGACCAGCACATTCAGCTGCAGCTCAGTGCGGAAAGCGTGGGGGAGGTGTATATAAAGAGTACCGAGACTGGCCAGTACTTGGCCATGGACACCGACGGGCTTTTGTACGGCTCACAGACACCAAATGAGGAATGCTTGTTCCTGGAAAGGCTGGAAGAAAACCATTACAACACCTACACATCCAAGAAGCACGCAGAAAAGAATTGGTTTGTGGGTCTCAAGAAGAATGGAAGCTGCAAACGCGGTCCCCGGACTCACTATGGCCAGAAGGCAATTTTGTTTCTCCCCCTGCCAGTC------------"/>
+        <sequence id="seq_Homo" taxon="Homo" totalcount="4" value="ATGGCTGAAGGGGAAATCACCACCTTCACAGCCCTGACCGAGAAGTTTAATCTGCCTCCAGGGAATTACAAGAAGCCCAAACTCCTCTACTGTAGCAACGGGGGCCACTTCCTGAGGATCCTTCCGGATGGCACAGTGGATGGGACAAGGGACAGGAGCGACCAGCACATTCAGCTGCAGCTCAGTGCGGAAAGCGTGGGGGAGGTGTATATAAAGAGTACCGAGACTGGCCAGTACTTGGCCATGGACACCGACGGGCTTTTATACGGCTCACAGACACCAAATGAGGAATGTTTGTTCCTGGAAAGGCTGGAGGAGAACCATTACAACACCTATATATCCAAGAAGCATGCAGAGAAGAATTGGTTTGTTGGCCTCAAGAAGAATGGGAGCTGCAAACGCGGTCCTCGGACTCACTATGGCCAGAAAGCAATCTTGTTTCTCCCCCTGCCAGTCTCTTCTGATTAA"/>
+        <sequence id="seq_Macaca" taxon="Macaca" totalcount="4" value="ATGGCTGAAGGGGAAATCACCACGTTCACAGCCCTGACCGAGAAGTTTAATCTGCCTCCAGGGAATTACAAGAAGCCCAAACTGCTCTACTGTAGCAATGGGGGCCACTTCTTGAGGATCCTTCCGGATGGCACAGTGGATGGGACAAGGGACAGGAGCGACCAGCACATTCAGCTGCAGCTCAGTGCGGAAAGCGTGGGGGAGGTGTATATAAAGAGTACCGAGACTGGCCAGTACTTGGCCATGGACACCGACGGGCTTTTATACGGCTCACAGACACCAAATGAGGAATGTTTGTTCCTGGAAAGGCTGGAGGAGAACCATTACAACACCTATACATCCAAGAAGCACGCAGAGAAGAATTGGTTTGTTGGCCTCAAGAAGAATGGAAGCTGCAAACGTGGTCCTCGGACTCACTATGGCCAGAAAGCAATCTTGTTTCTTCCCCTGCCAGTCTCTTCTGATTAA"/>
+        <sequence id="seq_Microcebus" taxon="Microcebus" totalcount="4" value="ATGGCCGAAGGGGAGATCACAACCTTCACGGCCCTCACCGAGAAGTTTAACCTGCCTCCGGGGAACTACAAGAAGCCCAAGCTCCTCTACTGCAGCAACGGCGGCCACTTCCTGCGCATCCTTCCCGACGGCACCGTGGATGGCACGAGAGACAGGAGCGACCAGCACATTCAGCTGCAGCTCAGTGCGGAAAGCGCGGGGGAGGTGTATATAAAGAGCACCCAGACTGGCCGGTACTTGGCCATGGACGCCGACGGGCTTTTATACGGCTCACAAACACCAAATGAGGAATGTTTGTTCCTGGAAAGGCTGGAGGAAAACCATTACAACACCTACGTATCCAAGAAGCACGCAGAGAAGAATTGGTTTGTTGGCCTCAAGAAGAATGGAAGTTGCAAACGCGGCCCCCGGACTCACTATGGCCAGAAAGCAATCTTGTTTCTGCCCCTGCCAGTCTCCTCTGATTAA"/>
+        <sequence id="seq_Mus" taxon="Mus" totalcount="4" value="ATGGCTGAAGGGGAGATCACAACCTTCGCAGCCCTGACCGAGAGGTTCAACCTGCCTCTAGGAAACTACAAAAAGCCCAAACTGCTCTACTGCAGCAACGGGGGCCACTTCTTGAGGATCCTTCCTGATGGCACCGTGGATGGGACAAGGGACAGGAGCGACCAGCACATTCAGCTGCAGCTCAGTGCGGAAAGTGCGGGCGAAGTGTATATAAAGGGTACGGAGACCGGCCAGTACTTGGCCATGGACACCGAAGGGCTTTTATACGGCTCGCAGACACCAAATGAGGAATGTCTGTTCCTGGAAAGGCTGGAAGAAAACCATTATAACACTTACACCTCCAAGAAGCATGCGGAGAAGAACTGGTTTGTGGGCCTCAAGAAGAACGGGAGCTGTAAGCGCGGTCCTCGGACTCACTATGGCCAGAAAGCCATCTTGTTTCTGCCCCTCCCGGTGTCTTCTGACTAG"/>
+        <sequence id="seq_Ochotona" taxon="Ochotona" totalcount="4" value="ATGGCCGAGGGAGAAGTCACCACCTTCTCAGCCCTGACGGAGAAGTTCAATCTGCCTGGAGGAAACTACAAGTTGCCCAAGCTCCTTTACTGTAGCAACGGAGGCCACTTCCTGAGGATCCTTCCAGATGGCACAGTGGATGGGACCAGGGACAGGAGCGACCTGCACA????????????????????????????????GAGGTGTTTATAAAGAGTACGGAGACTGGCCAGTACTTGGCTATGGACACCGATGGCCTTTTATATGGCTCGCAGACACCCAGTGAGGAGTGTTTGTTCCTGGAGCGGCTGGAGGAGAACCACTACAACACCTACACATCCAAGAAGCATGCCGAGAAGAACTGGTTTGTGGGCATCAAGAAGAATGGAAGCTGCAAGCGTGGTCCTCGGACTCACTACGGCCAGAAAGCCATCTTGTTTCTCCCTCTGCCAGTCTCTTCTGACTAA"/>
+        <sequence id="seq_Oryctolagus" taxon="Oryctolagus" totalcount="4" value="---------------------------------------------------------------------------------------------------GGGGGCCACTTCCTGAGGATCCTGCCGGACGGCACTGTGACGGCCACAGGGGACAGGAGCGACCAGCACATTCAGCTGCAGCTGAGTGCGGAAAGCGTGGGGGAGGTGTATATAAAGAGTACGGAGACCGGCCAGTACTTGGCCATGGACACCGACGGCCTTTTATACGGCTCGCAAACGCCCAGTGAGGAGTGTTTGTTCCTGGAACGGCTGGAGGAGAACCACTACAACACCTACACGTCCAAGAAGCACGCCGAGAAGAACTGGTTCGTGGGGCTGAAGAAAAACGGGAGCTGCAAGCGCGGTCCTCGGACTCACTACGGCCAGAAAGCCATCTTGTTCCTCCCCCTGCCGGTCTCCTCCGACTAA"/>
+        <sequence id="seq_Otolemur" taxon="Otolemur" totalcount="4" value="ATGGCTGAAGGGGAAATCACAACCTTCACAGCCCTCACAGAGAAGTTTAATCTGCCTCTAGGAAATTACAAGAAGCCCAAGCTCCTCTACTGTAGCAACGGGGGTCACTTTCTGAGGATCCTGCCGGATGGCACCGTGGATGGGACACAAGACAGGAGCGACCAGCACATTCAGCTGCAGCTCAGTGCGGAAAGCGTGGGGGAGGTGTATATAAAGAGTACCCAGACTGGCCAGTACTTGGCCATGGACTCCGACGGGCTTTTATACGGCTCACAAACACCAAATGAGGAATGCCTGTTCCTGGAACGGCTGGAGGAAAACCATTACAACACCTATGTGTCCAAGAAGCACGCCGAGAAGAATTGGTTTGTCGGTCTCAAGAAGAACGGAAGTTGCAAACGTGGTCCTCGGACTCACTACGGCCAGAAAGCAATCTTGTTTCTCCCCCTGCCAGTCTCCTCTGATTAA"/>
+        <sequence id="seq_Pan" taxon="Pan" totalcount="4" value="ATGGCTGAAGGGGAAATCACCACCTTCACAGCCCTGACCGAGAAGTTTAATCTGCCTCCAGGGAATTACAAGAAGCCCAAACTCCTCTACTGTAGCAACGGGGGCCACTTCCTGAGGATCCTTCCGGATGGCACAGTGGATGGGACAAGGGACAGGAGCGACCAGCACATTCAGCTGCAGCTCAGTGCGGAAAGCGTGGGGGAGGTGTATATAAAGAGTACCGAGACTGGCCAGTACTTGGCCATGGACACCGACGGGCTTTTATACGGCTCACAGACACCAAATGAGGAATGTTTGTTCCTGGAACGGCTGGAGGAGAACCATTACAACACCTATATATCCAAGAAGCATGCAGAGAAGAATTGGTTTGTTGGCCTCAAGAAGAATGGAAGCTGCAAACGCGGTCCTCGGACTCACTATGGCCAGAAAGCAATCTTGTTTCTCCCCCTGCCAGTCTCTTCCGATTAA"/>
+        <sequence id="seq_Pongo" taxon="Pongo" totalcount="4" value="ATGGCTGAAGGGGAAATCACCACCTTCACAGCCCTGACCGAGAAGTTTAATCTGCCTCCAGGGAATTACAAGAAGCCCAAACTCCTCTACTGTAGCAACGGGGGCCACTTCTTGAGGATCCTTCCGGATGGCACAGTGGATGGGACAAGGGACAGGAGCGACCAGCACATTCAGCTGCAGCTCAGTGCGGAAAGCGTGGGGGAGGTGTATATAAAGAGTACCGAGACTGGCCAGTACTTGGCCATGGACACCGACGGGCTTTTATACGGCTCACAGACACCAAATGAGGAATGTTTGTTCCTGGAAAGGCTGGAGGAGAACCATTACAACACCTATATATCCAAGAAGCATGCAGAGAAGAATTGGTTTGTTGGCCTCAAGAAGAATGGAAGCTGCAAACGCGGTCCTCGGACTCACTATGGCCAGAAAGCAATCTTGTTTCTCCCCCTGCCAGTCTCTTCCGATTAA"/>
+        <sequence id="seq_Rattus" taxon="Rattus" totalcount="4" value="ATGGCCGAAGGGGAGATCACAACCTTTGCAGCCCTGACCGAGAGGTTCAATCTGCCTCTAGGGAACTACAAAAAACCCAAACTGCTCTACTGCAGCAACGGGGGCCACTTCTTGAGGATTCTTCCCGATGGCACCGTGGATGGGACCAGGGACAGGAGCGACCAGCACATTCAGCTGCAGCTCAGTGCGGAAAGCGCGGGCGAAGTGTATATAAAGGGTACAGAGACTGGCCAGTACTTGGCCATGGACACCGAAGGGCTTTTATACGGCTCGCAGACACCAAATGAAGAATGCCTATTCCTGGAAAGGCTAGAAGAAAACCATTATAACACTTACACATCCAAGAAGCACGCGGAGAAGAACTGGTTTGTGGGCCTCAAGAAGAACGGGAGTTGTAAGCGCGGTCCTCGGACTCACTACGGCCAGAAAGCCATCTTGTTTCTCCCCCTCCCGGTATCTTCTGACTAA"/>
+    </data>
+
+    <taxonset spec='beast.evolution.alignment.TaxonSet' id='taxa'>
+        <taxon spec='beast.evolution.alignment.Taxon' id='Canis'/>
+        <taxon spec='beast.evolution.alignment.Taxon' id='Felis'/>
+        <taxon spec='beast.evolution.alignment.Taxon' id='Homo'/>
+        <taxon spec='beast.evolution.alignment.Taxon' id='Macaca'/>
+        <taxon spec='beast.evolution.alignment.Taxon' id='Microcebus'/>
+        <taxon spec='beast.evolution.alignment.Taxon' id='Mus'/>
+        <taxon spec='beast.evolution.alignment.Taxon' id='Ochotona'/>
+        <taxon spec='beast.evolution.alignment.Taxon' id='Oryctolagus'/>
+        <taxon spec='beast.evolution.alignment.Taxon' id='Otolemur'/>
+        <taxon spec='beast.evolution.alignment.Taxon' id='Pan'/>
+        <taxon spec='beast.evolution.alignment.Taxon' id='Pongo'/>
+        <taxon spec='beast.evolution.alignment.Taxon' id='Rattus'/>
+    </taxonset>
+
+
+    <input spec="ParameterList" id="parameterList">
+        <parameter spec="QuietRealParameter" id="parameter1" value="0.0 0.0 0.0 0.0 0.0" upper="Infinity" lower="-Infinity"/>
+    </input>
+
+    <input spec="DPPointer" id="param.pointers">
+        <input name="uniqueParameter" idref="parameter1"/>
+        <input name="initialAssignment" spec="IntegerParameter" value="0" dimension="468" lower="0"/>
+    </input>
+
+    <input spec="ParameterList" id="modelList">
+        <parameter spec="QuietRealParameter" id="parameter2" value="5.0" upper="5.0" lower="1.0"/>
+    </input>
+
+    <input spec="DPPointer" id="model.pointers">
+        <input name="uniqueParameter" idref="parameter2"/>
+        <input name="initialAssignment" spec="IntegerParameter" value="0" dimension="468" lower="0"/>
+    </input>
+
+    <input spec="ParameterList" id="freqsList">
+        <parameter spec="QuietRealParameter" id="parameter3" value="0.25 0.25 0.25 0.25" upper="1.0" lower="0.0"/>
+    </input>
+
+    <input spec="DPPointer" id="freq.pointers">
+        <input name="uniqueParameter" idref="parameter3"/>
+        <input name="initialAssignment" spec="IntegerParameter" value="0" dimension="468" lower="0"/>
+    </input>
+
+    <input spec="ParameterList" id="ratesList">
+        <parameter spec="QuietRealParameter" id="parameter4" value="0.1" upper="Infinity" lower="0.0"/>
+    </input>
+
+    <input spec="DPPointer" id="rates.pointers">
+        <input name="uniqueParameter" idref="parameter4"/>
+        <input name="initialAssignment" spec="IntegerParameter" value="0" dimension="468" lower="0"/>
+    </input>
+
+    <input spec="DPNtdBMA" id="dpNtdBMA">
+        <input name="paramList" spec="ParameterList" idref="parameterList"/>
+        <input name="modelList" spec="ParameterList" idref="modelList"/>
+        <input name="freqsList" spec="ParameterList" idref="freqsList"/>
+        <input name="pointers" spec="DPPointer" idref="freq.pointers"/>
+    </input>
+
+    <input spec="DPNtdRateSiteModel" id="dpNtdRateSiteModel">
+        <input name="ntdBMAList" idref="dpNtdBMA"/>
+        <input name="ratesList" idref="ratesList"/>
+        <input name="ratesPointers" idref="rates.pointers"/>
+    </input>
+
+    <tree spec='beast.util.ClusterTree' id='tree' clusterType='upgma'>
+        <taxa idref='alignment'/>
+    </tree>
+    <input spec="beast.evolution.tree.TreeScaler" id="treeScaler" scaleToHeight="1.0">
+        <initial idref='tree'/>
+    </input>
+
+    <input spec="StrictClockModel" id="strict.clock">
+        <input name="clock.rate" value="1.0"/>
+    </input>
+
+
+    <input spec='beast.evolution.speciation.CalibratedYuleModel' type="all" id="yule">
+        <birthRate id="birthRate" spec='parameter.RealParameter' value="2.0"/>
+        <tree idref='tree'/>
+
+        <calibrations spec='beast.evolution.speciation.CalibrationPoint' id='cal'>
+            <taxonset idref="taxa"/>
+            <!-- This Gamma distribution approximates Normal(mean=0,stdev=0.1)-->
+            <distr spec="beast.math.distributions.Gamma" alpha="100" beta="0.01"/>
+        </calibrations>
+    </input>
+
+    <input name="scaler" id="mean.rate" spec="PointerMean">
+        <input name="paramList" idref="ratesList"/>
+        <input name="pointers" idref="rates.pointers"/>
+        <input name="dpVal" idref="dpValuable"/>
+    </input>
+
+    <input spec='DPTreeLikelihood' id="treeLikelihood">
+        <data idref="alignment"/>
+        <tree idref="tree"/>
+        <siteModel idref="dpNtdRateSiteModel"/>
+        <branchRateModel idref="strict.clock"/>
+        <input name="dpVal" idref="dpValuable"/>
+    </input>
+
+
+    <!-- The HKY substitution model (Hasegawa, Kishino & Yano, 1985)             -->
+    <input spec="SwitchingNtdBMA" id="tempNtdBMA">
+        <input name="logKappa" spec="QuietRealParameter" value="0.0"/>
+        <input name="logTN" spec="QuietRealParameter" value="0.0"/>
+        <input name="logAC" spec="QuietRealParameter" value="0.0"/>
+        <input name="logAT" spec="QuietRealParameter" value="0.0"/>
+        <input name="logGC" spec="QuietRealParameter" value="0.0"/>
+        <input name="modelChoose" spec="QuietRealParameter" value="1.0"/>
+        <input name="frequenciesParameter" spec="QuietRealParameter" value="0.25 0.25 0.25 0.25"/>
+    </input>
+
+    <!-- site model                                                              -->
+    <input spec='QuietSiteModel' id="dummySiteModel">
+        <substModel idref='tempNtdBMA'/>
+        <input name="mutationRate" spec="QuietRealParameter" value="1.0"/>
+    </input>
+
+    <input spec='TempTreeLikelihood' id="tempTreeLikelihood1">
+        <data idref="alignment"/>
+        <tree idref="tree"/>
+        <siteModel idref="dummySiteModel"/>
+        <branchRateModel idref="strict.clock"/>
+    </input>
+
+
+    <input spec='TempWVTreeLikelihood' id="tempTreeLikelihood2">
+        <data idref="alignment"/>
+        <tree idref="tree"/>
+        <siteModel idref="dummySiteModel"/>
+        <branchRateModel idref="strict.clock"/>
+    </input>
+
+    <input spec="DPValuable" id="dpValuable">
+        <input spec="ParameterList" name="paramList" idref="freqsList"/>
+        <input spec="DPPointer" name="pointers" idref="freq.pointers"/>
+    </input>
+
+    <input spec="beast.math.distributions.CompoundDirichletProcess" id="ntdRateDP">
+        <input name="dpVal" idref="dpValuable"/>
+        <input name="baseDistr" spec="beast.math.distributions.MultivariateNormal">
+            <input name="mean" spec="RealParameter" id="mvn.mean"  value="3.89 1.914  0.416 -0.122 0.209"/>
+            <input name="precision" id="mvn.precision" spec="RealParameter" value="
+            1.003 0.117 -0.341 -0.103 -0.709
+            0.117 0.984 -1.283 1.327 0.078
+            -0.341 -1.283 16.894 -2.212 -6.792
+            -0.103 1.327 -2.212 16.512 -3.212
+            -0.709 0.078 -6.792 -3.212 11.873"/>
+        </input>
+        <input name="baseDistr" spec="beast.math.distributions.CategoricalDistribution"  offset="1">
+            <input spec="RealParameter" name="probs" id="categorical.prob" value="0.2 0.2 0.2 0.2 0.2" lower="0.0"/>
+        </input>
+        <input name="baseDistr" spec="beast.math.distributions.DirichletDistribution">
+            <input name="alpha" id="dirichlet.prob" spec="RealParameter" value="0.25 0.25 0.25 0.25" lower="0" upper="Infinity"/>
+            <input name="scale" id="dirichlet.scale" spec="RealParameter" value="40.0" lower="0" upper="Infinity"/>
+        </input>
+        <input name="baseDistr" spec="beast.math.distributions.LogNormal" meanInRealSpace="false" sIsPrec="true">
+            <input name="M" spec="RealParameter" id="lnorm.mean" value="-2" lower="-Infinity" upper="Infinity"/>
+            <input name="S" spec="RealParameter" id="lnorm.prec" value="1" lower="0.0" upper="Infinity"/>
+        </input>
+        <input name="alpha" spec="RealParameter" id="conc" value="0.1065" lower="0.0" upper="Infinity"/>
+    </input>
+
+    <input spec="Count" id="model.count">
+        <input name="list" idref="dpNtdBMA"/>
+    </input>
+
+    <input spec="Count" id="siteModel.count">
+        <input name="list" idref="dpNtdRateSiteModel"/>
+    </input>
+
+    <input spec="Count" id="treeLik.count">
+        <input name="list" idref="treeLikelihood"/>
+    </input>
+
+    <input spec="Weights" id="treeLik.weight">
+        <input name="dpTreeLik" idref="treeLikelihood"/>
+    </input>
+
+   <input spec="PrintListIDNumber" id="subst.list.print">
+        <input name="paramList" idref="freqsList"/>
+    </input>
+
+   <input spec="PrintListIDNumber" id="rates.list.print">
+        <input name="paramList" idref="ratesList"/>
+    </input>
+
+    <input spec="PrintPointerIDNumber" id="subst.pointers.print">
+        <input name="pointers" idref="freq.pointers"/>
+    </input>
+
+    <input spec="PrintPointerIDNumber" id="rates.pointers.print">
+        <input name="pointers" idref="rates.pointers"/>
+    </input>
+    <!--run spec="MCMC" id="mcmc" chainLength="1000"--> <!--autoOptimize="true"-->
+    <run spec="MCMC" id="mcmc" chainLength="25000000">
+        <state>
+            <input name='stateNode' idref='parameterList'/>
+            <input name='stateNode' idref='modelList'/>
+            <input name='stateNode' idref='freqsList'/>
+            <input name='stateNode' idref='ratesList'/>
+            <input name='stateNode' idref='param.pointers'/>
+            <input name='stateNode' idref='model.pointers'/>
+            <input name='stateNode' idref='freq.pointers'/>
+            <input name='stateNode' idref='rates.pointers'/>
+            <input name="stateNode" idref="tree"/>
+            <stateNode idref='birthRate'/>
+            <input name='stateNode' idref="lnorm.mean"/>
+            <input name='stateNode' idref="lnorm.prec"/>
+            <input name="stateNode" idref="dirichlet.scale"/>
+            <input name="stateNode" idref="dirichlet.prob"/>
+            <input name="stateNode" idref="categorical.prob"/>
+            <input name="stateNode" idref="dirichletPriorOncategorialProbs"/>
+            <input name='stateNode' idref="mvn.mean"/>
+            <input name='stateNode' idref="mvn.precision"/>
+            <input name="stateNode" idref="mvnPriorMean"/>
+            <input name="stateNode" idref="mvnPriorPrecision"/>
+            <input name="stateNode" idref="wishartPriorScale"/>
+        </state>
+
+        <distribution spec="CompoundDistribution" id="posterior">
+            <distribution idref="treeLikelihood"/>
+            <distribution id="prior" spec="beast.math.distributions.ParameterListsPrior" applyToList="true">
+                <distr idref="ntdRateDP"/>
+                <xList idref="parameterList"/>
+                <xList idref="modelList"/>
+                <xList idref="freqsList"/>
+                <xList idref="ratesList"/>
+            </distribution>
+            <distribution id="hMean.prior" spec="beast.math.distributions.Prior">
+                 <input name="distr" spec="beast.math.distributions.Normal" mean="-2.3" sigma="2.35"/>
+                 <x idref="lnorm.mean"/>
+             </distribution>
+            <distribution id="hCV.prior" spec="beast.math.distributions.Prior">
+                 <input name="distr" spec="beast.math.distributions.Gamma" alpha="1" beta="10"/>
+                 <x idref="lnorm.prec"/>
+             </distribution>
+            <distribution id="dScale.prior" spec="beast.math.distributions.Prior">
+                <input name="distr" spec="beast.math.distributions.Gamma" alpha="0.001" beta="1000"/>
+                <x idref="dirichlet.scale"/>
+            </distribution>
+            <distribution id="mvnmean.prior" spec="beast.math.distributions.Prior">
+                <input name="distr" spec="beast.math.distributions.MultivariateNormal">
+                    <input name="mean" spec="RealParameter" id="mvnPriorMean"  value="3.89 1.914  0.416 -0.122 0.209"/>
+                    <parameter name="precision" id="mvnPriorPrecision" value="
+                        1.003 0.117 -0.341 -0.103 -0.709
+                        0.117 0.984 -1.283 1.327 0.078
+                       -0.341 -1.283 16.894 -2.212 -6.792
+                       -0.103 1.327 -2.212 16.512 -3.212
+                       -0.709 0.078 -6.792 -3.212 11.873"/>
+                </input>
+                <x idref="mvn.mean"/>
+            </distribution>
+            <distribution id="mvnprecision.prior" spec="beast.math.distributions.Prior">
+                <input name="distr" spec="beast.math.distributions.Wishart" df="7">
+                    <parameter name="scaleMatrix" id="wishartPriorScale" value="
+                       1.003 0.0 0.0 0.0 0.0
+                       0.0 0.984 0.0 0.0 0.0
+                       0.0 0.0 16.894 0.0 0.0
+                       0.0 0.0 0.0 16.512 0.0
+                       0.0 0.0 0.0 0.0 11.873
+                       "/>
+                </input>
+                <x idref="mvn.precision"/>
+            </distribution>
+            <distribution spec="beast.math.distributions.Prior">
+                <input name="distr" spec="beast.math.distributions.Normal" mean="1.0" sigma="0.1"/>
+                <x spec="beast.evolution.tree.TreeHeightValuable" id="rootHeight" tree="@tree"/>
+            </distribution>
+
+            <distribution id="yule.prior" idref='yule'/>
+        </distribution>
+
+        <init idref="treeScaler"/>
+
+        <operator spec='Uniform' weight="10" tree="@tree"/>
+        <operator spec='SubtreeSlide' weight="5" gaussian="true" size="1.0" tree="@tree"/>
+        <operator id='narrow' spec='Exchange' isNarrow='true' weight="1" tree="@tree"/>
+        <operator id='wide' spec='Exchange' isNarrow='false' weight="1" tree="@tree"/>
+        <operator spec='WilsonBalding' weight="1" tree="@tree"/>
+        <operator id="branchLengthScaler" spec='ScaleOperator' scaleFactor="0.75" weight="3" tree="@tree"/>
+
+        <operator id="dpps1" spec="NtdBMARateDPPGibbsSampler" weight="10" sampleSize="5">
+            <input name="tempLikelihood" idref="tempTreeLikelihood1"/>
+            <input name="parameterList" idref="parameterList"/>
+            <input name="parameterPointers" idref="param.pointers"/>
+            <input name="modelList" idref="modelList"/>
+            <input name="modelPointers" idref="model.pointers"/>
+            <input name="freqsList" idref="freqsList"/>
+            <input name="freqPointers" idref="freq.pointers"/>
+            <input name="ratesList" idref="ratesList"/>
+            <input name="ratesPointers" idref="rates.pointers"/>
+            <input name="dirichletProcess" idref="ntdRateDP"/>
+            <input name="dpTreeLik" idref="treeLikelihood"/>
+            <input name="dpVal" idref="dpValuable"/>
+        </operator>
+
+        <operator id="dpps2" spec="NtdBMARateSAMSPriorOperator" weight="5">
+            <input name="tempLikelihood" idref="tempTreeLikelihood2"/>
+            <input name="parameterList" idref="parameterList"/>
+            <input name="parameterPointers" idref="param.pointers"/>
+            <input name="modelList" idref="modelList"/>
+            <input name="modelPointers" idref="model.pointers"/>
+            <input name="freqsList" idref="freqsList"/>
+            <input name="freqPointers" idref="freq.pointers"/>
+            <input name="ratesList" idref="ratesList"/>
+            <input name="ratesPointers" idref="rates.pointers"/>
+            <input name="dirichletProcess" idref="ntdRateDP"/>
+            <input name="dpTreeLik" idref="treeLikelihood"/>
+            <input name="dpVal" idref="dpValuable"/>
+        </operator>
+
+        <operator spec='ScaleOperator' scaleFactor="0.75" weight="0.6" parameter="@birthRate"/>
+
+        <operator id="plerrwo" spec="PLExtendedRealRandomWalkOperator" windowSizes="0.5 0.5 0.1 0.1 0.1" weight="4">
+            <input name="parameters" idref="parameterList"/>
+        </operator>
+        <operator id="PLNetworkIntRandomWalk" spec="PLNetworkIntRandomWalkOperator" weight="4" offset="1">
+            <input id="k80" spec='Vertex' name="vertex" idNum="0" neighbours="2"/>
+            <input id="f81" spec='Vertex' name="vertex" idNum="1" neighbours="2"/>
+            <input id="hky85" spec='Vertex' name="vertex" idNum="2" neighbours="0 1 3"/>
+            <input id="tn93" spec='Vertex' name="vertex" idNum="3" neighbours="2 4"/>
+            <input id="gtr" spec='Vertex' name="vertex" idNum="4" neighbours="3"/>
+            <input name="parameters" idref="modelList"/>
+        </operator>
+        <operator id="errwo" spec="PLDeltaExchangeOperator" delta="0.05" weight="4">
+            <input name="parameterList" idref="freqsList"/>
+        </operator>
+
+        <operator id="plso" spec="PLScaleOperator" scaleFactor="0.75" weight="5">
+            <input name="parameters" idref="ratesList"/>
+        </operator>
+
+        <operator spec='ScaleOperator' scaleFactor="0.75" weight="0.2" parameter="@dirichlet.scale"/>
+        <operator spec='DeltaExchangeOperator' delta="0.1" weight="0.6" parameter="@dirichlet.prob"/>
+        <operator id='hMeanRandomWalk' spec='RealRandomWalkOperator' windowSize="0.5" weight="0.5" parameter="@lnorm.mean"/>
+        <operator id='hCVScaler' spec='ScaleOperator' scaleFactor="0.75" weight="0.5" parameter="@lnorm.prec"/>
+
+        <operator spec="beast.evolution.operators.CategoricalPDirichletPriorSampler" weight="0.3" offset="1">
+            <input name="categorialProbs" idref="categorical.prob"/>
+            <input name="x" idref="modelList"/>
+            <input name="dirichletPriorCounts" id="dirichletPriorOncategorialProbs" spec="RealParameter" value="1.0 1.0 1.0 1.0 1.0"/>
+        </operator>
+
+        <operator spec='DeltaExchangeOperator' delta="0.1" weight="0.3" parameter="@categorical.prob"/>
+
+        <operator spec="MeanMVNSampler" weight="0.5">
+            <input name="priorMean" idref="mvnPriorMean"/>
+            <input name="priorPrecision" idref="mvnPriorPrecision"/>
+            <input name="x" idref="parameterList"/>
+            <input name="mean" idref="mvn.mean"/>
+            <input name="precision" idref="mvn.precision"/>
+        </operator>
+
+        <operator spec="PrecisionWishartSampler" weight="0.5" df="7">
+            <input name="scaleMatrix" idref="wishartPriorScale"/>
+            <input name="mean" idref="mvn.mean"/>
+            <input name="precision" idref="mvn.precision"/>
+            <input name="x" idref="parameterList"/>
+        </operator>
+
+
+        <!--logger logEvery="1"-->
+        <logger logEvery="100000">
+            <log idref="posterior"/>
+            <log idref="prior"/>
+            <log idref="treeLikelihood"/>
+            <log idref="dpValuable"/>
+            <log idref="model.count"/>
+            <log idref="siteModel.count"/>
+            <log idref="treeLik.count"/>
+            <log id="tree.height.time" spec='beast.evolution.tree.TreeHeightLogger' tree='@tree'/>
+            <log id="tree.height" spec='beast.core.parameter.ParameterMeanLogger' paramList='@ratesList' pointers="@rates.pointers" dpVal="@dpValuable" tree="@rootHeight"/>
+            <log idref='birthRate'/>
+        </logger>
+
+
+        <logger logEvery="20000" fileName="mammal_468_sdpm1_1.log">
+            <log idref="posterior"/>
+            <log idref="prior"/>
+            <log idref="dpValuable"/>
+            <log idref="treeLikelihood"/>
+            <log idref="treeLik.count"/>
+            <log spec='beast.evolution.tree.TreeHeightLogger' tree='@tree'/>
+            <log spec='beast.core.parameter.ParameterMeanLogger' paramList='@ratesList' pointers="@rates.pointers" dpVal="@dpValuable" tree="@rootHeight"/>
+            <log idref="mvnmean.prior"/>
+            <log idref="mvnprecision.prior"/>
+            <log idref="lnorm.mean"/>
+            <log idref="lnorm.prec"/>
+            <log idref="dirichlet.scale"/>
+            <log idref="dirichlet.prob"/>
+            <log idref="categorical.prob"/>
+            <log idref="mvn.mean"/>
+            <log idref="mvn.precision"/>
+            <log spec='beast.core.parameter.InverseMatrixLogger' parameter='@mvn.precision'/>
+            <log idref='birthRate'/>
+        </logger>
+
+        <logger logEvery="20000" fileName="mammal_468_sdpm1_1.trees">
+            <log idref="tree"/>
+        </logger>
+
+        <logger logEvery="20000" fileName="mammal_468_sdpm1_paramList_1.log">
+            <log idref="parameterList"/>
+        </logger>
+
+        <logger logEvery="20000" fileName="mammal_468_sdpm1_modelList_1.log">
+            <log idref="modelList"/>
+        </logger>
+
+        <logger logEvery="20000" fileName="mammal_468_sdpm1_freqsList_1.log">
+            <log idref="freqsList"/>
+        </logger>
+
+        <logger logEvery="20000" fileName="mammal_468_sdpm1_ratesList_1.log">
+            <log idref="ratesList"/>
+        </logger>
+
+        <logger logEvery="20000" fileName="mammal_468_sdpm1_subst.list.print_1.log">
+            <log idref="subst.list.print"/>
+        </logger>
+
+        <logger logEvery="20000" fileName="mammal_468_sdpm1_rates.list.print_1.log">
+            <log idref="rates.list.print"/>
+        </logger>
+
+        <logger logEvery="20000" fileName="mammal_468_sdpm1_subst.pointers.print_1.log">
+            <log idref="subst.pointers.print"/>
+        </logger>
+
+        <logger logEvery="20000" fileName="mammal_468_sdpm1_rates.pointers.print_1.log">
+            <log idref="rates.pointers.print"/>
+        </logger>
+
+    </run>
+</beast>
