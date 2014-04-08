@@ -18,6 +18,7 @@ public class PLIntegerRandomWalkOperator extends IntegerRandomWalkOperator{
                     Input.Validate.REQUIRED
             );
     public PLIntegerRandomWalkOperator(){
+        parameterInput.setRule(Input.Validate.OPTIONAL);
         intparameterInput.setRule(Input.Validate.OPTIONAL);
     }
     public void initAndValidate() throws Exception {
