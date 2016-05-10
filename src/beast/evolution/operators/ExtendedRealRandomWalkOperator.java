@@ -59,7 +59,7 @@ public class ExtendedRealRandomWalkOperator extends RealRandomWalkOperator{
         double newValue = getProposedVal(
                 value, //original value
                 i,     //index of the value
-                m_bUseGaussian, //whether to use gaussian moves
+                useGaussian, //whether to use gaussian moves
                 windowSizes);   //window sizes
 
         if (newValue < param.getLower() || newValue > param.getUpper()) {

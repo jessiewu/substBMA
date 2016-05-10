@@ -28,7 +28,7 @@ public class BetaDistribution extends DirichletDistribution {
     }
 
 
-    public void initAndValidate() throws Exception {
+    public void initAndValidate() {
         alpha = alphaInput.get();
         if(alpha.getDimension() != 2){
             throw new ParameterLengthException();
@@ -124,7 +124,7 @@ public class BetaDistribution extends DirichletDistribution {
     }
 
 
-    class ParameterLengthException extends Exception{
+    class ParameterLengthException extends RuntimeException{
         public String getMessage(){
             return  "The length of the alpha vector of a Beta distribution must be two.";
 

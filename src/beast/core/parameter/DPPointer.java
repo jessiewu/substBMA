@@ -379,7 +379,7 @@ public class DPPointer extends StateNode {
     }
 
     @Override
-    public void init(PrintStream out) throws Exception {
+    public void init(PrintStream out) {
         int dimParam = getDimension();
         for (int iParam = 0; iParam < dimParam; iParam++) {
             int dimValue = getParameter(iParam).getDimension();

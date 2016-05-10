@@ -22,7 +22,7 @@ public class GeneralJC69 extends GeneralSubstitutionModel {
     private double[] frequencies;
     public GeneralJC69(){
         frequenciesInput.setRule(Input.Validate.OPTIONAL);
-        m_rates.setRule(Input.Validate.OPTIONAL);
+        ratesInput.setRule(Input.Validate.OPTIONAL);
 
     }
 

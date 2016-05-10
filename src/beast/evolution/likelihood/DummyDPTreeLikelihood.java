@@ -7,7 +7,7 @@ import beast.core.Description;
  */
 @Description("This class is for testing purpose.")
 public class DummyDPTreeLikelihood extends DPTreeLikelihood{
-    public void initAndValidate() throws Exception{
+    public void initAndValidate() {
         super.initAndValidate();
     }
 

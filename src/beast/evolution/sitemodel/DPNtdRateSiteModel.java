@@ -24,7 +24,7 @@ public class DPNtdRateSiteModel extends DPRateSiteModel{
         substModelInput.setRule(Input.Validate.OPTIONAL);
     }
 
-    public void initAndValidate() throws Exception{
+    public void initAndValidate() {
         //super.initAndValidate();
         dpNtdBMA = dpNtdBMAInput.get();
 

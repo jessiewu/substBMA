@@ -34,10 +34,10 @@ public class WVTreeLikelihood extends TreeLikelihood{
     }
 
 @Override
-    public void initAndValidate() throws Exception {
+    public void initAndValidate() {
     	// sanity check: alignment should have same #taxa as tree
-    	if (m_data.get().getNrTaxa() != m_tree.get().getLeafNodeCount()) {
-    		throw new Exception("The number of nodes in the tree does not match the number of sequences");
+    	if (dataInput.get().getNrTaxa() != treeInput.get().getLeafNodeCount()) {
+    		throw new RuntimeException("The number of nodes in the tree does not match the number of sequences");
     	}
     	//m_beagle = null;
     	/*m_beagle = new BeagleTreeLikelihood();
@@ -54,75 +54,75 @@ public class WVTreeLikelihood extends TreeLikelihood{
 		// No Beagle instance was found, so we use the good old java likelihood core
     	m_beagle = null;*/
 
-        int nodeCount = m_tree.get().getNodeCount();
-        if (!(m_pSiteModel.get() instanceof SiteModel.Base)) {
-        	throw new Exception ("siteModel input should be of type SiteModel.Base");
+        int nodeCount = treeInput.get().getNodeCount();
+        if (!(siteModelInput.get() instanceof SiteModel.Base)) {
+        	throw new RuntimeException ("siteModel input should be of type SiteModel.Base");
         }
-        m_siteModel = (SiteModel.Base) m_pSiteModel.get();
-        m_siteModel.setDataType(m_data.get().getDataType());
-        m_substitutionModel = m_siteModel.m_pSubstModel.get();
+        m_siteModel = (SiteModel.Base) siteModelInput.get();
+        m_siteModel.setDataType(dataInput.get().getDataType());
+        substitutionModel = m_siteModel.substModelInput.get();
 
-        if (m_pBranchRateModel.get() != null) {
-        	m_branchRateModel = m_pBranchRateModel.get();
+        if (branchRateModelInput.get() != null) {
+        	branchRateModel = branchRateModelInput.get();
         } else {
-            m_branchRateModel = new StrictClockModel();
+            branchRateModel = new StrictClockModel();
         }
     	m_branchLengths = new double[nodeCount];
-    	m_StoredBranchLengths = new double[nodeCount];
+    	storedBranchLengths = new double[nodeCount];
 
-        int nStateCount = m_data.get().getMaxStateCount();
-        int nPatterns = m_data.get().getPatternCount();
+        int nStateCount = dataInput.get().getMaxStateCount();
+        int nPatterns = dataInput.get().getPatternCount();
         if (nStateCount == 4) {
-            m_likelihoodCore = new BeerLikelihoodCore4();
+            likelihoodCore = new BeerLikelihoodCore4();
         } else {
-            m_likelihoodCore = new BeerLikelihoodCore(nStateCount);
+            likelihoodCore = new BeerLikelihoodCore(nStateCount);
         }
         //System.err.println("TreeLikelihood uses " + m_likelihoodCore.getClass().getName());
 
-        m_fProportionInvariant = m_siteModel.getProportianInvariant();
+        proportionInvariant = m_siteModel.getProportionInvariant();
         m_siteModel.setPropInvariantIsCategory(false);
-        if (m_fProportionInvariant > 0) {
+        if (proportionInvariant > 0) {
         	calcConstantPatternIndices(nPatterns, nStateCount);
         }
 
         initCore();
 
-        m_fPatternLogLikelihoods = new double[nPatterns];
+        patternLogLikelihoods = new double[nPatterns];
         storedPatternLogLikelihoods = new double[nPatterns];
         m_fRootPartials = new double[nPatterns * nStateCount];
-        m_nMatrixSize = (nStateCount +1)* (nStateCount+1);
-        m_fProbabilities = new double[(nStateCount +1)* (nStateCount+1)];
-        Arrays.fill(m_fProbabilities, 1.0);
+        matrixSize = (nStateCount +1)* (nStateCount+1);
+        probabilities = new double[(nStateCount +1)* (nStateCount+1)];
+        Arrays.fill(probabilities, 1.0);
 
-        if (m_data.get() instanceof AscertainedAlignment) {
-            m_bAscertainedSitePatterns = true;
+        if (dataInput.get() instanceof AscertainedAlignment) {
+            useAscertainedSitePatterns = true;
         }
 
-        if(patternWeights.length != m_data.get().getPatternCount()){
+        if(patternWeights.length != dataInput.get().getPatternCount()){
             throw new RuntimeException("Pattern counts differ!");
         }
     }
 
     @Override
-    public double calculateLogP() throws Exception {
+    public double calculateLogP() {
     	/*if (m_beagle != null) {
     		logP =  m_beagle.calculateLogP();
     		return logP;
     	}*/
-        Tree tree = m_tree.get();
+        Tree tree = (Tree) treeInput.get();
         //System.err.println("m_nHasDirt: "+m_nHasDirt);
-        if(m_nHasDirt > -1){
+        if(hasDirt > -1){
        	    traverse(tree.getRoot());
         }
 
         calcLogP();
 
         m_nScale++;
-        if (logP > 0 || (m_likelihoodCore.getUseScaling() && m_nScale > X)) {
+        if (logP > 0 || (likelihoodCore.getUseScaling() && m_nScale > X)) {
             //System.err.println("Switch off scaling");
-            m_likelihoodCore.setUseScaling(1.0);
-            m_likelihoodCore.unstore();
-            m_nHasDirt = Tree.IS_FILTHY;
+            likelihoodCore.setUseScaling(1.0);
+            likelihoodCore.unstore();
+            hasDirt = Tree.IS_FILTHY;
             X *= 2;
            	traverse(tree.getRoot());
             calcLogP();
@@ -131,9 +131,9 @@ public class WVTreeLikelihood extends TreeLikelihood{
         	m_nScale = 0;
         	m_fScale *= 1.01;
             System.err.println("Turning on scaling to prevent numeric instability " + m_fScale);
-            m_likelihoodCore.setUseScaling(m_fScale);
-            m_likelihoodCore.unstore();
-            m_nHasDirt = Tree.IS_FILTHY;
+            likelihoodCore.setUseScaling(m_fScale);
+            likelihoodCore.unstore();
+            hasDirt = Tree.IS_FILTHY;
            	traverse(tree.getRoot());
             calcLogP();
             //System.err.println(getID()+": "+logP);
@@ -144,24 +144,24 @@ public class WVTreeLikelihood extends TreeLikelihood{
         return logP;
     }
 
-    protected void calcLogP() throws Exception {
+    protected void calcLogP() {
         logP = 0.0;
-        if (m_bAscertainedSitePatterns) {
-            double ascertainmentCorrection = ((AscertainedAlignment)m_data.get()).getAscertainmentCorrection(m_fPatternLogLikelihoods);
-            for (int i = 0; i < m_data.get().getPatternCount(); i++) {
-            	logP += (m_fPatternLogLikelihoods[i] - ascertainmentCorrection) * patternWeights[i];
+        if (useAscertainedSitePatterns) {
+            double ascertainmentCorrection = ((AscertainedAlignment)dataInput.get()).getAscertainmentCorrection(patternLogLikelihoods);
+            for (int i = 0; i < dataInput.get().getPatternCount(); i++) {
+            	logP += (patternLogLikelihoods[i] - ascertainmentCorrection) * patternWeights[i];
             }
         } else {
 
-	        for (int i = 0; i < m_data.get().getPatternCount(); i++) {
-	            logP += m_fPatternLogLikelihoods[i] * patternWeights[i];
+	        for (int i = 0; i < dataInput.get().getPatternCount(); i++) {
+	            logP += patternLogLikelihoods[i] * patternWeights[i];
 	        }
         }
     }
 
 
     public double getPatternLogLikelihood(int iPat){
-        return m_fPatternLogLikelihoods[iPat];
+        return patternLogLikelihoods[iPat];
     }
     /**
      * check state for changed variables and update temp results if necessary *
@@ -172,33 +172,33 @@ public class WVTreeLikelihood extends TreeLikelihood{
     	/*if (m_beagle != null) {
     		return m_beagle.requiresRecalculation();
     	} */
-        m_nHasDirt = Tree.IS_CLEAN;
+        hasDirt = Tree.IS_CLEAN;
 
         if(weightsChanged){
-            m_nHasDirt = -1;
+            hasDirt = -1;
             //System.err.println("flag2");
             return true;            
         }
 
-        if (m_branchRateModel != null && m_branchRateModel.isDirtyCalculation()) {
-            m_nHasDirt = Tree.IS_FILTHY;
+        if (branchRateModel != null && branchRateModel.isDirtyCalculation()) {
+            hasDirt = Tree.IS_FILTHY;
             //System.err.println("flag3");
             return true;
         }
 
-        if (m_data.get().isDirtyCalculation()) {
-            m_nHasDirt = Tree.IS_FILTHY;
+        if (dataInput.get().isDirtyCalculation()) {
+            hasDirt = Tree.IS_FILTHY;
             //System.err.println("flag4");
             return true;
         }
 
         if (m_siteModel.isDirtyCalculation()) {
-            m_nHasDirt = Tree.IS_DIRTY;
+            hasDirt = Tree.IS_DIRTY;
             //System.err.println("flag5");
             return true;
         }
 
-        return m_tree.get().somethingIsDirty();
+        return treeInput.get().somethingIsDirty();
     }
 
     public void addWeight(int patId, int dweight){
@@ -222,7 +222,7 @@ public class WVTreeLikelihood extends TreeLikelihood{
     public void store(){
         weightsChanged = false;
         System.arraycopy(patternWeights,0,storedPatternWeights,0,patternWeights.length);
-        System.arraycopy(m_fPatternLogLikelihoods,0,storedPatternLogLikelihoods,0,m_fPatternLogLikelihoods.length);
+        System.arraycopy(patternLogLikelihoods,0,storedPatternLogLikelihoods,0,patternLogLikelihoods.length);
         super.store();
     }
 
@@ -232,8 +232,8 @@ public class WVTreeLikelihood extends TreeLikelihood{
         patternWeights = storedPatternWeights;
         storedPatternWeights = temp1;
 
-        double[] temp2 = m_fPatternLogLikelihoods;
-        m_fPatternLogLikelihoods = storedPatternLogLikelihoods;
+        double[] temp2 = patternLogLikelihoods;
+        patternLogLikelihoods = storedPatternLogLikelihoods;
         storedPatternLogLikelihoods = temp2;
         
         weightsChanged = false;
@@ -258,7 +258,7 @@ public class WVTreeLikelihood extends TreeLikelihood{
     }
 
     public void printThings(){
-        System.out.println("modelID: "+((SwitchingNtdBMA)m_substitutionModel).getIDNumber());
+        System.out.println("modelID: "+((SwitchingNtdBMA)substitutionModel).getIDNumber());
         System.out.println("modelID: "+((QuietRealParameter)(((QuietSiteModel)m_siteModel)).getRateParameter()).getIDNumber());
     }
 

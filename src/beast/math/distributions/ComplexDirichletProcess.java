@@ -90,7 +90,7 @@ public class ComplexDirichletProcess extends Distribution{
         }
 
     }
-    public double calculateLogP() throws Exception {
+    public double calculateLogP() {
         if(requiresRecalculation()){
             refresh();
         }

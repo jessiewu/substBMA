@@ -21,7 +21,7 @@ public abstract class DPSiteModel extends CalculationNode implements PluginList,
     protected ArrayList<QuietSiteModel> storedSiteModels;
     protected ChangeType changeType = ChangeType.ALL;
 
-    public void initAndValidate() throws Exception{
+    public void initAndValidate() {
         siteModels = new ArrayList<QuietSiteModel>();
     }
 

@@ -46,6 +46,6 @@ public class GammaDistribution extends ParametricDistribution {
 
     @Override
     public double getMean() {
-    	return m_offset.get() + m_dist.getAlpha() / m_dist.getBeta();
+    	return offsetInput.get() + m_dist.getAlpha() / m_dist.getBeta();
     }
 }

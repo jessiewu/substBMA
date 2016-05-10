@@ -79,7 +79,7 @@ public class DPNtdRateSepSiteModel extends DPSingleAlignSiteModel {
 
 
 
-    public void initAndValidate() throws Exception{
+    public void initAndValidate() {
         super.initAndValidate();
         if(siteModels == null){
             throw new RuntimeException("Site model list is not instantiated.");

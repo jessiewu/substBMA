@@ -611,8 +611,8 @@ public class NtdBMARateSAMSPriorOperator extends Operator {
             double[] lik1,
             double[] lik2) throws Exception{
 
-        int[] tempWeights = new int[tempLikelihood.m_data.get().getPatternCount()];
-        tempWeights[tempLikelihood.m_data.get().getPatternIndex(mergedClusterSites[shuffle[i]])] = 1;
+        int[] tempWeights = new int[tempLikelihood.dataInput.get().getPatternCount()];
+        tempWeights[tempLikelihood.dataInput.get().getPatternIndex(mergedClusterSites[shuffle[i]])] = 1;
         tempLikelihood.setPatternWeights(tempWeights);
         double temp1 = Math.exp(tempLikelihood.calculateLogP(
                 paramList.getParameter(clusterIndex1),

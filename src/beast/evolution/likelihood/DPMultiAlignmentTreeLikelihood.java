@@ -7,6 +7,7 @@ import beast.core.parameter.ChangeType;
 import beast.evolution.alignment.Alignment;
 import beast.evolution.sitemodel.DPMultiAlignSiteModel;
 import beast.evolution.sitemodel.SiteModel;
+import beast.evolution.tree.Tree;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,12 +43,12 @@ public class DPMultiAlignmentTreeLikelihood extends DPTreeLikelihood {
     private int[] siteIndexWithinAlignment;
 
     public DPMultiAlignmentTreeLikelihood(){
-        m_data.setRule(Input.Validate.OPTIONAL);
-        m_pSiteModel.setRule(Input.Validate.OPTIONAL);
+        dataInput.setRule(Input.Validate.OPTIONAL);
+        siteModelInput.setRule(Input.Validate.OPTIONAL);
 
     }
 
-    public void initAndValidate () throws Exception{
+    public void initAndValidate () {
         dpSiteModel = dpMultiAlignSiteModelInput.get();
         alignments = alignmentsInput.get();
         dpVal = dpValInput.get();
@@ -111,10 +112,10 @@ public class DPMultiAlignmentTreeLikelihood extends DPTreeLikelihood {
                     NewWVTreeLikelihood treeLik = new NewWVTreeLikelihood(
                             clusterPatternWeights[i][j],
                             alignment,
-                            m_tree.get(),
+                            (Tree) treeInput.get(),
                             useAmbiguitiesInput.get(),
                             dpSiteModel.getSiteModel(i, dpVal.getCategoryIDNumber(j)),
-                            m_pBranchRateModel.get()
+                            branchRateModelInput.get()
                     );
 
                     treeLik.calculateLogP();
@@ -207,10 +208,10 @@ public class DPMultiAlignmentTreeLikelihood extends DPTreeLikelihood {
         try{
             NewWVTreeLikelihood treeLik = new NewWVTreeLikelihood(patternWeights,
                     alignments.get(alignmentIndex),
-                    m_tree.get(),
+                    (Tree) treeInput.get(),
                     useAmbiguitiesInput.get(),
                     siteModel,
-                    m_pBranchRateModel.get());
+                    branchRateModelInput.get());
 
             treeLik.calculateLogP();
             treeLik.store();
@@ -262,11 +263,11 @@ public class DPMultiAlignmentTreeLikelihood extends DPTreeLikelihood {
             }
             recalculate = true;
 
-        }else if(m_tree.get().somethingIsDirty()){
+        }else if(treeInput.get().somethingIsDirty()){
 
             recalculate = true;
 
-        }else if(m_pBranchRateModel.get().isDirtyCalculation()){
+        }else if(branchRateModelInput.get().isDirtyCalculation()){
 
             recalculate = true;
 

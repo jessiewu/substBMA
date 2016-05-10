@@ -65,7 +65,7 @@ public class NewWVTreeLikelihood extends QuietTreeLikelihood {
         return m_siteModel.getID();
     }
 
-    public void initAndValidate() throws Exception{
+    public void initAndValidate() {
 
         super.initAndValidate();
         //setup();
@@ -139,7 +139,7 @@ public class NewWVTreeLikelihood extends QuietTreeLikelihood {
 
 
 
-    void initCore() {
+    protected void initCore() {
         final int nodeCount = tree.getNodeCount();
         m_likelihoodCore.initialize(
                 nodeCount,
@@ -165,7 +165,7 @@ public class NewWVTreeLikelihood extends QuietTreeLikelihood {
     /**
      * set leaf partials in likelihood core *
      */
-    void setPartials(Node node, int patternCount) {
+    protected void setPartials(Node node, int patternCount) {
         if (node.isLeaf()) {
             //Alignment data = m_data.get();
             int nStates = data.getDataType().getStateCount();
@@ -194,7 +194,7 @@ public class NewWVTreeLikelihood extends QuietTreeLikelihood {
     /**
      * set leaf states in likelihood core *
      */
-    void setStates(Node node, int patternCount) {
+    protected void setStates(Node node, int patternCount) {
         if (node.isLeaf()) {
             int i;
             int[] states = new int[patternCount];

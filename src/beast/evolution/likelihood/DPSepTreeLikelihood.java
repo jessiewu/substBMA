@@ -9,6 +9,7 @@ import beast.evolution.sitemodel.SiteModel;
 import beast.evolution.substitutionmodel.SwitchingNtdBMA;
 import beast.core.parameter.ChangeType;
 import beast.core.Input;
+import beast.evolution.tree.Tree;
 
 import javax.sound.midi.SysexMessage;
 
@@ -34,16 +35,16 @@ public class DPSepTreeLikelihood extends DPTreeLikelihood{
         dpValInput.setRule(Input.Validate.OPTIONAL);
     }
 
-    public void initAndValidate() throws Exception{
+    public void initAndValidate() {
         useThreads = useThreadsInput.get() && (BeastMCMC.m_nThreads > 1);
         useThreadsEvenly = useThreadsEvenlyInput.get() && (BeastMCMC.m_nThreads > 1);
 
-        alignment = m_data.get();
+        alignment = dataInput.get();
         int patternCount = alignment.getPatternCount();
-        if(!(m_pSiteModel.get() instanceof DPNtdRateSepSiteModel)){
+        if(!(siteModelInput.get() instanceof DPNtdRateSepSiteModel)){
             throw new RuntimeException("DPNtdRateSepSiteModel required for site model.");
         }
-        dpSiteModel = (DPNtdRateSepSiteModel)m_pSiteModel.get();
+        dpSiteModel = (DPNtdRateSepSiteModel)siteModelInput.get();
         int siteModelCount = dpSiteModel.getSiteModelCount();
 
         /*
@@ -77,10 +78,10 @@ public class DPSepTreeLikelihood extends DPTreeLikelihood{
             NewWVTreeLikelihood treeLik = new NewWVTreeLikelihood(
                     clusterWeights[ntdBMAId][ratesId],
                     alignment,
-                    m_tree.get(),
+                    (Tree) treeInput.get(),
                     useAmbiguitiesInput.get(),
                     dpSiteModel.getSiteModel(i),
-                    m_pBranchRateModel.get());
+                    branchRateModelInput.get());
 
             //Add to list and matrix for the convenience of processesing
             treeLiks.add(treeLik);
@@ -287,10 +288,10 @@ int fixedIndex = -1;
         NewWVTreeLikelihood treeLik = new NewWVTreeLikelihood(
                     patternWeights,
                     alignment,
-                    m_tree.get(),
+                    (Tree) treeInput.get(),
                     useAmbiguitiesInput.get(),
                     siteModel,
-                    m_pBranchRateModel.get());
+                    branchRateModelInput.get());
         try{
 
 
@@ -428,10 +429,10 @@ int fixedIndex = -1;
                 changeType = ChangeType.ALL;
             }
             recalculate = true;
-        }else if(m_tree.get().somethingIsDirty()){
+        }else if(treeInput.get().somethingIsDirty()){
             recalculate = true;
 
-        }else if(m_pBranchRateModel.get().isDirtyCalculation()){
+        }else if(branchRateModelInput.get().isDirtyCalculation()){
             recalculate = true;
         }
         

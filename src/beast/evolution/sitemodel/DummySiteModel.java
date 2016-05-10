@@ -9,7 +9,7 @@ import beast.core.parameter.QuietRealParameter;
 @Description("This site model is used for computing tree likelihoods for operator move. " +
         "It is used by DP samplers so that we can use the same site model object over and over again which is required by the move.")
 public class DummySiteModel extends SiteModel {
-    public void initAndValidate() throws Exception{
+    public void initAndValidate() {
 
         super.initAndValidate();
         if(!(muParameter instanceof QuietRealParameter) ){

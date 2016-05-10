@@ -26,7 +26,7 @@ public class SpecificRealRandomWalkOperator extends RealRandomWalkOperator {
 
         double value = param.getValue(index);
         double newValue = value;
-        if (m_bUseGaussian) {
+        if (useGaussian) {
             newValue += Randomizer.nextGaussian() * windowSize;
         } else {
             newValue += Randomizer.nextDouble() * 2 * windowSize - windowSize;

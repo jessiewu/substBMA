@@ -30,11 +30,11 @@ public class ExtendedUpDownOperator extends Operator {
     boolean[] isExpDown;
 
 	@Override
-	public void initAndValidate() throws Exception {
+	public void initAndValidate() {
 		m_fScaleFactor = m_scaleFactor.get();
 		// sanity checks
 		if (m_up.get().size() + m_down.get().size() == 0) {
-			throw new Exception("At least one up or down item must be specified");
+			throw new RuntimeException("At least one up or down item must be specified");
 		}
 		if (m_up.get().size() == 0 || m_down.get().size() == 0) {
 			System.err.println("WARNING: no " + (m_up.get().size() == 0 ? "up" : "down") + " item specified in UpDownOperator");

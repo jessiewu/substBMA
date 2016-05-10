@@ -47,15 +47,15 @@ public class DPSepMultiTreesTreeLikelihood extends DPSepTreeLikelihood {
          */
 
         dpValInput.setRule(Input.Validate.OPTIONAL);
-        m_data.setRule(Input.Validate.REQUIRED);
-        m_tree.setRule(Input.Validate.REQUIRED);
+        dataInput.setRule(Input.Validate.REQUIRED);
+        treeInput.setRule(Input.Validate.REQUIRED);
     }
 
     private List<Alignment> alignments;
     private List<Tree> trees;
     private int[] alignmentStartingIndex;
     private int[] alignmentIndexBySite;
-    public void initAndValidate() throws Exception{
+    public void initAndValidate() {
         useThreads = useThreadsInput.get() && (BeastMCMC.m_nThreads > 1);
         useThreadsEvenly = useThreadsEvenlyInput.get() && (BeastMCMC.m_nThreads > 1);
 
@@ -83,10 +83,10 @@ public class DPSepMultiTreesTreeLikelihood extends DPSepTreeLikelihood {
         }
 
         //int patternCount = alignment.getPatternCount();
-        if(!(m_pSiteModel.get() instanceof DPNtdRateSepSiteModel)){
+        if(!(siteModelInput.get() instanceof DPNtdRateSepSiteModel)){
             throw new RuntimeException("DPNtdRateSepSiteModel required for site model.");
         }
-        dpSiteModel = (DPNtdRateSepSiteModel)m_pSiteModel.get();
+        dpSiteModel = (DPNtdRateSepSiteModel)siteModelInput.get();
         int siteModelCount = dpSiteModel.getSiteModelCount();
 
         /*
@@ -140,7 +140,7 @@ public class DPSepMultiTreesTreeLikelihood extends DPSepTreeLikelihood {
                                 trees.get(i),
                                 useAmbiguitiesInput.get(),
                                 dpSiteModel.getSiteModel(i,j),
-                                m_pBranchRateModel.get()
+                                branchRateModelInput.get()
 
                         );
 
@@ -267,10 +267,10 @@ public class DPSepMultiTreesTreeLikelihood extends DPSepTreeLikelihood {
         NewWVTreeLikelihood treeLik = new NewWVTreeLikelihood(
                     patternWeights,
                     alignment,
-                    m_tree.get(),
+                    (Tree) treeInput.get(),
                     useAmbiguitiesInput.get(),
                     siteModel,
-                    m_pBranchRateModel.get());
+                    branchRateModelInput.get());
         try{
 
 

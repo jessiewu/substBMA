@@ -381,7 +381,7 @@ public class ParameterList extends StateNode implements PluginList, Recycle {
     public void restore(){
         setEverythingDirty(false);
         //System.err.println("restore, storedListSize: "+storedParameterList.size());
-        m_bHasStartedEditing = false;
+        hasStartedEditing = false;
         newIDCount = storedNewIDCount;
         ArrayList<QuietRealParameter> tempList = storedParameterList;
         storedParameterList = parameterList;
@@ -414,7 +414,7 @@ public class ParameterList extends StateNode implements PluginList, Recycle {
         //System.err.println("Parameter list: "+getID()+" "+isDirty);
         setSomethingIsDirty(isDirty);
         //System.err.println("list size: "+parameterList.size());
-        for(Parameter parameter:parameterList){
+        for(QuietRealParameter parameter : parameterList){
             parameter.setEverythingDirty(isDirty);
         }
         changeType = ChangeType.ALL;
@@ -495,7 +495,7 @@ public class ParameterList extends StateNode implements PluginList, Recycle {
     }
 
     @Override
-    public void init(PrintStream out) throws Exception {
+    public void init(PrintStream out) {
         int dimParam = getDimension();
         if(dimParam == 0){
             out.print(getID()+"\t");
@@ -529,7 +529,7 @@ public class ParameterList extends StateNode implements PluginList, Recycle {
         return parameterList.size();
     }
 
-    public int scale(double fScale) throws Exception{
+    public int scale(double fScale) {
         if(parameterList.size() > 0){
             for(RealParameter parameter:parameterList){
                 parameter.scale(fScale);

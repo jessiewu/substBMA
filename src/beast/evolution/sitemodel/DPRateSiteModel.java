@@ -46,7 +46,7 @@ public class DPRateSiteModel extends DPSingleAlignSiteModel implements PluginLis
 
     private SubstitutionModel.Base substModel;
     private int[] pointerIndices;
-    public void initAndValidate() throws Exception{
+    public void initAndValidate() {
         super.initAndValidate();
         substModel = substModelInput.get();
         ratePointers = ratePointersInput.get();

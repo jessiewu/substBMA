@@ -464,7 +464,7 @@ public class NtdBMADPPGibbsSampler extends Operator implements Loggable {
     }
 
     @Override
-	public void init(PrintStream out) throws Exception {
+	public void init(PrintStream out) {
         out.print("count(Add cluster)\t");
     }
 

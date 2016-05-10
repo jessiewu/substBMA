@@ -12,7 +12,7 @@ public class QuietRealParameter extends RealParameter{
 
     }
 
-    public void initAndValidate() throws Exception{
+    public void initAndValidate() {
         super.initAndValidate();
     }
 

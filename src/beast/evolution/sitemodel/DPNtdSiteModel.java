@@ -33,7 +33,7 @@ public class DPNtdSiteModel extends DPSingleAlignSiteModel {
 
 
     int counter = 0;
-    public void initAndValidate() throws Exception{
+    public void initAndValidate() {
         super.initAndValidate();
         dpNtdBMA = dpNtdBMAInput.get();
         muParameter = muParameterInput.get();

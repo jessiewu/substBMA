@@ -15,9 +15,9 @@ import java.util.ArrayList;
 @Description("This site model is used to be created internally on the fly during the MCMC.")
 public class QuietSiteModel extends SiteModel {
     @Override
-    public void initAndValidate() throws Exception {
+    public void initAndValidate() {
         //System.out.println(getID()+": "+m_pSubstModel.get());
-        substitutionModel = m_pSubstModel.get();
+        substitutionModel = (SubstitutionModel.Base) substModelInput.get();
 
     	useBeast1StyleGamma = true; // useBeast1StyleGammaInput.get();
         muParameter = muParameterInput.get();
@@ -45,7 +45,7 @@ public class QuietSiteModel extends SiteModel {
 
 
         if (/*invarParameter != null && */(invarParameter.getValue() < 0 || invarParameter.getValue() > 1)) {
-            throw new Exception("proportion invariant should be between 0 and 1");
+            throw new RuntimeException("proportion invariant should be between 0 and 1");
         }
         refresh();
 
@@ -66,7 +66,7 @@ public class QuietSiteModel extends SiteModel {
     public QuietSiteModel(){}
 
     public QuietSiteModel(SubstitutionModel substModel,
-                          QuietRealParameter muParameter) throws Exception{
+                          QuietRealParameter muParameter) {
         this(substModel,
                 muParameter,
                 null,
@@ -81,7 +81,7 @@ public class QuietSiteModel extends SiteModel {
                           RealParameter shapeParameter,
                           RealParameter invarParameter,
                           boolean useBeast1StyleGamma,
-                          int gammaCategoryCount) throws Exception{
+                          int gammaCategoryCount) {
         substitutionModel = (SubstitutionModel.Base)substModel;
 
         this.useBeast1StyleGamma = useBeast1StyleGamma;
@@ -117,7 +117,7 @@ public class QuietSiteModel extends SiteModel {
 
 
         if (/*invarParameter != null && */(this.invarParameter.getValue() < 0 || this.invarParameter.getValue() > 1)) {
-            throw new Exception("proportion invariant should be between 0 and 1: "+this.invarParameter.getValue());
+            throw new RuntimeException("proportion invariant should be between 0 and 1: "+this.invarParameter.getValue());
         }
         gammaCatCount = gammaCategoryCount;
         refresh();
@@ -142,7 +142,7 @@ public class QuietSiteModel extends SiteModel {
         }
 
         if (/*invarParameter != null && */invarParameter.getValue() > 0) {
-            if (m_bPropInvariantIsCategory) {
+            if (hasPropInvariantCategory) {
                 categoryCount += 1;
             }
         }
@@ -185,7 +185,7 @@ public class QuietSiteModel extends SiteModel {
                 return true;
             }
 
-        } else if (muParameter.somethingIsDirty() || !m_bPropInvariantIsCategory && invarParameter.somethingIsDirty()) {
+        } else if (muParameter.somethingIsDirty() || !hasPropInvariantCategory && invarParameter.somethingIsDirty()) {
                 ratesKnown = false;
 
             return true;

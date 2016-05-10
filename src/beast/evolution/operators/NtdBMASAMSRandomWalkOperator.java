@@ -238,10 +238,10 @@ public class NtdBMASAMSRandomWalkOperator extends Operator {
             Randomizer.shuffle(clusterSites);
 
             //Create the weight vector of site patterns according to the order of the shuffled index.
-            int[] tempWeights = new int[tempLikelihood.m_data.get().getPatternCount()];
+            int[] tempWeights = new int[tempLikelihood.dataInput.get().getPatternCount()];
             int patIndex;
             for(int i = 0; i < clusterSites.length; i++){
-                patIndex = tempLikelihood.m_data.get().getPatternIndex(clusterSites[i]);
+                patIndex = tempLikelihood.dataInput.get().getPatternIndex(clusterSites[i]);
                 tempWeights[patIndex] = 1;
             }
 
@@ -443,9 +443,9 @@ public class NtdBMASAMSRandomWalkOperator extends Operator {
             // Create a weight vector of patterns to inform the temporary tree likelihood
             // which set of pattern likelihoods are to be computed.
             //int[] tempWeights = dpTreeLikelihood.getClusterWeights(clusterIndex1);
-            int[] tempWeights = new int[tempLikelihood.m_data.get().getPatternCount()];
+            int[] tempWeights = new int[tempLikelihood.dataInput.get().getPatternCount()];
             for(int i = 0; i < cluster1Sites.length; i++){
-                int patIndex = tempLikelihood.m_data.get().getPatternIndex(cluster1Sites[i]);
+                int patIndex = tempLikelihood.dataInput.get().getPatternIndex(cluster1Sites[i]);
                 tempWeights[patIndex] = 1;
             }
             tempLikelihood.setPatternWeights(tempWeights);
@@ -458,9 +458,9 @@ public class NtdBMASAMSRandomWalkOperator extends Operator {
             );
 
             //tempWeights = dpTreeLikelihood.getClusterWeights(clusterIndex2);
-            tempWeights = new int[tempLikelihood.m_data.get().getPatternCount()];
+            tempWeights = new int[tempLikelihood.dataInput.get().getPatternCount()];
             for(int i = 0; i < cluster2Sites.length; i++){
-                int patIndex = tempLikelihood.m_data.get().getPatternIndex(cluster2Sites[i]);
+                int patIndex = tempLikelihood.dataInput.get().getPatternIndex(cluster2Sites[i]);
                 tempWeights[patIndex] = 1;
             }
             tempLikelihood.setPatternWeights(tempWeights);
@@ -627,8 +627,8 @@ public class NtdBMASAMSRandomWalkOperator extends Operator {
             double[] lik1,
             double[] lik2) throws Exception{
 
-        int[] tempWeights = new int[tempLikelihood.m_data.get().getPatternCount()];
-        tempWeights[tempLikelihood.m_data.get().getPatternIndex(mergedClusterSites[shuffle[i]])] = 1;
+        int[] tempWeights = new int[tempLikelihood.dataInput.get().getPatternCount()];
+        tempWeights[tempLikelihood.dataInput.get().getPatternIndex(mergedClusterSites[shuffle[i]])] = 1;
         tempLikelihood.setPatternWeights(tempWeights);
         double temp1 = Math.exp(tempLikelihood.calculateLogP(
                 paramList.getParameter(clusterIndex1),

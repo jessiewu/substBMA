@@ -20,7 +20,7 @@ public class ScaledBayesianSkyline extends BayesianSkyline {
 
     private Scaler scaler;
 
-    public void initAndValidate() throws Exception{
+    public void initAndValidate() {
         scaler = scalerInput.get();
         super.initAndValidate();
     }
@@ -33,7 +33,7 @@ public class ScaledBayesianSkyline extends BayesianSkyline {
     }
 
     @Override
-    public double calculateLogP() throws Exception {
+    public double calculateLogP() {
         if (!m_bIsPrepared) {
             prepare();
         }

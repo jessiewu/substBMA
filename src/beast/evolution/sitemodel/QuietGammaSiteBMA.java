@@ -29,7 +29,7 @@ public class QuietGammaSiteBMA extends QuietSiteModel {
 
     private boolean invPrLogit;
     private QuietRealParameter modelChoice;
-    public void initAndValidate() throws Exception {
+    public void initAndValidate() {
         this.modelChoice = modelChoiceInput.get();
         this.invPrLogit = invPrLogitInput.get();
         gammaCatCount = gammaCategoryCount.get();
@@ -166,7 +166,7 @@ public class QuietGammaSiteBMA extends QuietSiteModel {
         }
         //System.out.println("m_bPropInvariantIsCategory: "+m_bPropInvariantIsCategory);
         //if (invarParameter.getValue() > 0) {
-        	if (m_bPropInvariantIsCategory) {
+        	if (hasPropInvariantCategory) {
         		categoryCount += 1;
         	}
             //invarParameter.setBounds(0.0, 1.0);
@@ -268,7 +268,7 @@ public class QuietGammaSiteBMA extends QuietSiteModel {
                 pr = invarParameter.getValue();
             }
 
-            if (m_bPropInvariantIsCategory) {
+            if (hasPropInvariantCategory) {
                 categoryRates[0] = 0.0;
                 //System.out.println(getCurrModel()+" "+INVAR_INDEX);
                 categoryProportions[0] = pr*INDICATORS[getCurrModel()][INVAR_INDEX];
@@ -278,7 +278,7 @@ public class QuietGammaSiteBMA extends QuietSiteModel {
 
             //System.out.println(invarParameter.getID()+" " +invarParameter.getValue()+" "+pr);
             propVariable = 1.0 - pr*INDICATORS[getCurrModel()][INVAR_INDEX];
-            if (m_bPropInvariantIsCategory) {
+            if (hasPropInvariantCategory) {
                 cat = 1;
             }
         //}
@@ -368,7 +368,7 @@ public class QuietGammaSiteBMA extends QuietSiteModel {
     }
 
     @Override
-    public double getProportianInvariant() {
+    public double getProportionInvariant() {
         //if (invarParameter == null) {
         //	return 0;
         //}

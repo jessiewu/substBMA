@@ -23,15 +23,15 @@ public class WVLikelihoodCore4 extends WVLikelihoodCore{
 
 		int v = 0;
 
-		for (int l = 0; l < m_nMatrices; l++) {
+		for (int l = 0; l < nrOfMatrices; l++) {
 
-			for (int k = 0; k < m_nPatterns; k++) {
+			for (int k = 0; k < nrOfPatterns; k++) {
 
                 if(unmasked[k]){
 				    int state1 = iStates1[k];
 				    int state2 = iStates2[k];
 
-				    int w = l * m_nMatrixSize;
+				    int w = l * matrixSize;
 
 				    if (state1 < 4 && state2 < 4) {
 
@@ -100,12 +100,12 @@ public class WVLikelihoodCore4 extends WVLikelihoodCore{
 		int u = 0;
 		int v = 0;
 
-		for (int l = 0; l < m_nMatrices; l++) {
-			for (int k = 0; k < m_nPatterns; k++) {
+		for (int l = 0; l < nrOfMatrices; l++) {
+			for (int k = 0; k < nrOfPatterns; k++) {
                 if(unmasked[k]){
 				    int state1 = iStates1[k];
                     //System.out.println("k: "+k);
-                    int w = l * m_nMatrixSize;
+                    int w = l * matrixSize;
 
 				    if (state1 < 4) {
 
@@ -189,11 +189,11 @@ public class WVLikelihoodCore4 extends WVLikelihoodCore{
 		int u = 0;
 		int v = 0;
 
-		for (int l = 0; l < m_nMatrices; l++) {
+		for (int l = 0; l < nrOfMatrices; l++) {
 
-			for (int k = 0; k < m_nPatterns; k++) {
+			for (int k = 0; k < nrOfPatterns; k++) {
                 if(unmasked[k]){
-                    int w = l * m_nMatrixSize;
+                    int w = l * matrixSize;
 
 				    sum1 = fMatrices1[w] * fPartials1[v];
 				    sum2 = fMatrices2[w] * fPartials2[v];
@@ -248,9 +248,9 @@ public class WVLikelihoodCore4 extends WVLikelihoodCore{
     public void calcRootPsuedoRootPartials(double[] fFrequencies, int iNode, double [] fPseudoPartials) {
 		int u = 0;
 		double [] fInPartials = m_fPartials[m_iCurrentPartials[iNode]][iNode];
-		for (int i = 0; i < m_nPatterns; i++) {
+		for (int i = 0; i < nrOfPatterns; i++) {
             if(unmasked[i]){
-                for(int j = 0; j < m_nMatrices; j++){
+                for(int j = 0; j < nrOfMatrices; j++){
 			        fPseudoPartials[u] = fInPartials[u] * fFrequencies[0];
 			        fPseudoPartials[u+1] = fInPartials[u+1] * fFrequencies[1];
 			        fPseudoPartials[u+2] = fInPartials[u+2] * fFrequencies[2];
@@ -258,7 +258,7 @@ public class WVLikelihoodCore4 extends WVLikelihoodCore{
 			        u+=4;
                 }
             }else{
-                u+=4*m_nMatrices;
+                u+=4*nrOfMatrices;
             }
 		}
     }
@@ -268,9 +268,9 @@ public class WVLikelihoodCore4 extends WVLikelihoodCore{
 		int v = 0;
 		int u = 0;
 		double [] fMatrices = m_fMatrices[m_iCurrentMatrices[iNode]][iNode];
-		for (int k = 0; k < m_nPatterns; k++) {
+		for (int k = 0; k < nrOfPatterns; k++) {
             if(unmasked[k]){
-			    for (int l = 0; l < m_nMatrices; l++) {
+			    for (int l = 0; l < nrOfMatrices; l++) {
 			    	int w = l * m_nMatrixSize;
 			    	fPseudoPartials[v] = fParentPseudoPartials[u] * fMatrices[w] +
 			    		fParentPseudoPartials[u+1] * fMatrices[w+1] +
@@ -295,8 +295,8 @@ public class WVLikelihoodCore4 extends WVLikelihoodCore{
 			    	u += 4;
 			    }
             }else{
-                u += 4*m_nMatrices;
-                v += 4*m_nMatrices;
+                u += 4*nrOfMatrices;
+                v += 4*nrOfMatrices;
             }
 		}
     } */
@@ -309,7 +309,7 @@ public class WVLikelihoodCore4 extends WVLikelihoodCore{
 	public void calculateLogLikelihoodsP(double[] fPartials,double[] fOutLogLikelihoods)
 	{
         int v = 0;
-		for (int k = 0; k < m_nPatterns; k++) {
+		for (int k = 0; k < nrOfPatterns; k++) {
             if(unmasked[k]){
                 double sum = fPartials[v] + fPartials[v+1] + fPartials[v + 2] + fPartials[v + 3];
                 fOutLogLikelihoods[k] = Math.log(sum) + getLogScalingFactor(k);
