@@ -10,7 +10,7 @@ import java.util.logging.StreamHandler;
  * @author Chieh-Hsi Wu
  */
 @Description("Use this class to print the mean value of a ParameterList.")
-public class ParameterMeanLogger extends Plugin implements Loggable {
+public class ParameterMeanLogger extends BEASTObject implements Loggable {
     //ParameterList
     public Input<ParameterList> paramListInput = new Input<ParameterList>(
             "paramList",
@@ -31,7 +31,7 @@ public class ParameterMeanLogger extends Plugin implements Loggable {
             Input.Validate.REQUIRED
     );
 
-    public Input<Valuable> treeHeightInput = new Input<Valuable>(
+    public Input<Function> treeHeightInput = new Input<Function>(
             "tree",
             "Returns the number of sites in each cluster",
             Input.Validate.REQUIRED
@@ -46,7 +46,7 @@ public class ParameterMeanLogger extends Plugin implements Loggable {
     private DPValuable dpVal;
     private DPPointer pointers;
     private ParameterList paramList;
-    private Valuable treeHeight;
+    private Function treeHeight;
     private boolean divide;
 
     public void initAndValidate(){

@@ -1,16 +1,15 @@
 package beast.evolution.alignment;
 
+import beast.core.BEASTObject;
 import beast.core.Input;
 import beast.core.Loggable;
-import beast.core.Plugin;
-import beast.core.Valuable;
 
 import java.io.PrintStream;
 
 /**
  * @author Chieh-Hsi Wu
  */
-public class MultinomialTestStatistic extends Plugin implements Loggable {
+public class MultinomialTestStatistic extends BEASTObject implements Loggable {
     public Input<Alignment> alignmentInput = new Input<Alignment>(
             "alignment",
             "The alignment which its multinomial statistic is computed.",
@@ -51,7 +50,7 @@ public class MultinomialTestStatistic extends Plugin implements Loggable {
      */
 
     @Override
-    public void init(final PrintStream out) throws Exception {
+    public void init(final PrintStream out) {
         String sID = getID();
         if (sID == null) {
             sID = "";

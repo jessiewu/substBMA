@@ -1,6 +1,6 @@
 package beast.math.distributions;
 
-import beast.core.Valuable;
+import beast.core.Function;
 import beast.core.parameter.RealParameter;
 import beast.util.Randomizer;
 
@@ -29,7 +29,7 @@ public class BetaDistribution extends DirichletDistribution {
 
 
     public void initAndValidate() throws Exception {
-        alpha = m_alpha.get();
+        alpha = alphaInput.get();
         if(alpha.getDimension() != 2){
             throw new ParameterLengthException();
         }
@@ -133,7 +133,7 @@ public class BetaDistribution extends DirichletDistribution {
     }
 
     @Override
-    public double calcLogP(Valuable pX) throws Exception {
+    public double calcLogP(Function pX) {
 
         double scaleVal = scale.getValue();
         Double [] fAlpha = alpha.getValues();

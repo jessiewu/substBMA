@@ -18,7 +18,7 @@ public class ScaledTreeWithMetaDataLogger  extends TreeWithMetaDataLogger implem
     private double scaleFactor;
 
 	@Override
-	public void initAndValidate() throws Exception{
+	public void initAndValidate() {
 		super.initAndValidate();
         scaler = m_scaler.get();
         scaleParameter = scalerParameterInput.get();
@@ -27,8 +27,8 @@ public class ScaledTreeWithMetaDataLogger  extends TreeWithMetaDataLogger implem
     @Override
 	public void log(int nSample, PrintStream out) {
 		// make sure we get the current version of the inputs
-        Tree tree = (Tree) m_tree.get().getCurrent();
-        Valuable metadata = m_parameter.get();
+        Tree tree = (Tree) treeInput.get().getCurrent();
+        Valuable metadata = parameterInput.get();
         if (metadata instanceof StateNode) {
         	metadata = ((StateNode) metadata).getCurrent();
         }

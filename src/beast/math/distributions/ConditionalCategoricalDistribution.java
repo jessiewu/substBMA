@@ -1,7 +1,7 @@
 package beast.math.distributions;
 
+import beast.core.BEASTObject;
 import beast.core.Input;
-import beast.core.Plugin;
 import beast.core.parameter.RealParameter;
 
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * @author Chieh-Hsi Wu
  */
-public class ConditionalCategoricalDistribution extends Plugin {
+public class ConditionalCategoricalDistribution extends BEASTObject {
     public Input<List<RealParameter>> conditionalDensityInput =
             new Input<List<RealParameter>>(
                     "condProb",

@@ -1,8 +1,8 @@
 package beast.math.distributions;
 
+import beast.core.BEASTObject;
 import beast.core.Distribution;
 import beast.core.Input;
-import beast.core.Plugin;
 import beast.core.State;
 import beast.core.parameter.RealParameter;
 
@@ -56,8 +56,8 @@ public class ConditionalDistribution extends Distribution {
 
     /** return name of the parameter this prior is applied to **/
     public String getParameterName() {
-    	if (parameter instanceof Plugin) {
-    		return ((Plugin) parameter).getID();
+    	if (parameter instanceof BEASTObject) {
+    		return ((BEASTObject) parameter).getID();
     	}
     	return parameter + "";
     }

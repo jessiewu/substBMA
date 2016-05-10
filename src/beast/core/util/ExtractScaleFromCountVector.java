@@ -1,7 +1,7 @@
 package beast.core.util;
 
+import beast.core.Function;
 import beast.core.Input;
-import beast.core.Valuable;
 import beast.core.parameter.RealParameter;
 
 /**
@@ -11,7 +11,7 @@ import beast.core.parameter.RealParameter;
  * Time: 5:16 PM
  * To change this template use File | Settings | File Templates.
  */
-public class ExtractScaleFromCountVector implements Valuable {
+public class ExtractScaleFromCountVector implements Function {
     public Input<RealParameter> parameterInput = new Input<RealParameter>("parameter", "The vector as a parameter.", Input.Validate.REQUIRED);
     private RealParameter parameter;
     public int getDimension(){

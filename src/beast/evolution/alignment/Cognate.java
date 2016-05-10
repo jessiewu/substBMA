@@ -1,8 +1,8 @@
 package beast.evolution.alignment;
 
+import beast.core.BEASTObject;
 import beast.core.Description;
 import beast.core.Input;
-import beast.core.Plugin;
 import beast.evolution.datatype.DataType;
 import beast.evolution.datatype.LanguageIntegerData;
 
@@ -10,7 +10,7 @@ import beast.evolution.datatype.LanguageIntegerData;
  * @author Chieh-Hsi Wu
  */
 @Description("These are the entity that is compared across lineages.")
-public class Cognate extends Plugin {
+public class Cognate extends BEASTObject {
 
     public Input<String> wordCodeInput = new Input<String>("words","Words coded as digits separated by commas", Input.Validate.REQUIRED);
 

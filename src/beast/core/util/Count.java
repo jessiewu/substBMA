@@ -8,7 +8,7 @@ import java.io.PrintStream;
  * @author Chieh-Hsi Wu
  */
 @Description("Reports the number of items in a list.")
-public class Count extends CalculationNode implements Loggable ,Valuable{
+public class Count extends CalculationNode implements Loggable, Function{
     public Input<PluginList> listInput = new Input<PluginList>("list", "list of items to be counted", Input.Validate.REQUIRED);
     PluginList list;
     @Override
@@ -29,8 +29,8 @@ public class Count extends CalculationNode implements Loggable ,Valuable{
     }
 
     @Override
-	public void init(PrintStream out) throws Exception {
-        out.print("count("+((Plugin)list).getID() + ")\t");
+	public void init(PrintStream out) {
+        out.print("count("+((BEASTObject)list).getID() + ")\t");
     }
 
     @Override

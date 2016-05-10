@@ -1,7 +1,5 @@
 package test.beast.integration;
 
-import org.junit.Test;
-
 /**
  * check whether all example files parse and run 
  */

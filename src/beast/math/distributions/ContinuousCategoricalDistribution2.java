@@ -1,6 +1,6 @@
 package beast.math.distributions;
 
-import beast.core.Valuable;
+import beast.core.Function;
 import beast.core.Description;
 
 /**
@@ -15,7 +15,7 @@ public class ContinuousCategoricalDistribution2 extends ParametricDistribution{
 
     }
 
-    public double calcLogP(Valuable val){
+    public double calcLogP(Function val){
         //System.err.println("Hello?");
         if(val.getArrayValue() > 0.0 && val.getArrayValue()<0.5){
             return Math.log(1.0);

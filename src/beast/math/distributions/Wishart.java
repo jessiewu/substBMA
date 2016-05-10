@@ -2,8 +2,8 @@ package beast.math.distributions;
 
 
 import beast.core.Description;
+import beast.core.Function;
 import beast.core.Input;
-import beast.core.Valuable;
 import beast.core.parameter.RealParameter;
 import beast.math.GammaFunction;
 import beast.math.matrixAlgebra1.CholeskyDecomposition;
@@ -17,8 +17,8 @@ import org.apache.commons.math.distribution.ContinuousDistribution;
  */
 @Description("This class implements the Wishart distribution.")
 public class Wishart extends ParametricDistribution implements MultivariateDistribution {
-    public Input<RealParameter> scaleMatrixInput = new Input<RealParameter>("scaleMatrix","Scale matrix of the Wishart distribution", Input.Validate.REQUIRED);
-    public Input<Integer> dfInput = new Input<Integer>("df","Degrees of freedom of the Wishart distribution", Input.Validate.REQUIRED);
+    public Input<RealParameter> scaleMatrixInput = new Input<>("scaleMatrix", "Scale matrix of the Wishart distribution", Input.Validate.REQUIRED);
+    public Input<Integer> dfInput = new Input<>("df", "Degrees of freedom of the Wishart distribution", Input.Validate.REQUIRED);
 
     public static final String TYPE = "Wishart";
 
@@ -232,7 +232,7 @@ public class Wishart extends ParametricDistribution implements MultivariateDistr
         return draw;
     }
 
-    public double calcLogP(Valuable x) throws Exception {
+    public double calcLogP(Function x) {
         int vDim = x.getDimension();
         if(vDim == 4){
 

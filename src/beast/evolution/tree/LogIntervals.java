@@ -1,11 +1,9 @@
 package beast.evolution.tree;
 
+import beast.core.BEASTObject;
 import beast.core.Input;
 import beast.core.Loggable;
-import beast.core.Plugin;
 import beast.core.parameter.RealParameter;
-import beast.evolution.tree.Node;
-import beast.evolution.tree.Tree;
 
 import java.io.PrintStream;
 import java.util.List;
@@ -19,7 +17,7 @@ import java.util.TreeSet;
  * Time: 12:13 PM
  * To change this template use File | Settings | File Templates.
  */
-public class LogIntervals extends Plugin implements Loggable{
+public class LogIntervals extends BEASTObject implements Loggable{
     public Input<Tree> treeInput = new Input<Tree>(
             "tree",
             "the tree with intervals to be logged"
@@ -39,7 +37,7 @@ public class LogIntervals extends Plugin implements Loggable{
 
     }
 
-    public void init(PrintStream out) throws Exception{
+    public void init(PrintStream out) {
         int count = tree.getInternalNodeCount();
         for(int i = 0; i < count; i++){
             out.print("treeInterval." + (i + 1) + "\t");

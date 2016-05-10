@@ -1,10 +1,9 @@
 package beast.math.distributions;
 
-import beast.core.Input;
-import beast.core.Valuable;
-import beast.core.parameter.QuietRealParameter;
-import beast.core.parameter.RealParameter;
 import beast.core.Description;
+import beast.core.Function;
+import beast.core.Input;
+import beast.core.parameter.RealParameter;
 import beast.util.Randomizer;
 
 /**
@@ -43,11 +42,11 @@ public class DirichletDistribution extends Dirichlet{
 
 
 
-    public void initAndValidate() throws Exception {
+    public void initAndValidate() {
         //System.out.println("This is initiated!");
         //System.out.println(m_alpha.get().getID()+" "+m_alpha.get().getValue(0));
 
-        alpha = m_alpha.get();
+        alpha = alphaInput.get();
         //System.out.println(alpha.getID()+" " +alpha.getValue(0));
         scale = scaleInput.get();
 	}
@@ -178,7 +177,7 @@ public class DirichletDistribution extends Dirichlet{
 
 
     @Override
-    public double calcLogP(Valuable pX) throws Exception {
+    public double calcLogP(Function pX) {
 
         double scaleVal = scale.getValue();
         Double [] fAlpha = alpha.getValues();
@@ -191,7 +190,7 @@ public class DirichletDistribution extends Dirichlet{
 
 
         if (alpha.getDimension() != pX.getDimension()) {
-            throw new Exception("Dimensions of alpha and x should be the same, but dim(alpha)=" + alpha.getDimension()
+            throw new RuntimeException("Dimensions of alpha and x should be the same, but dim(alpha)=" + alpha.getDimension()
                     + " and dim(x)=" + pX.getDimension());
         }
         for(int i = 0; i < fAlpha.length; i++){

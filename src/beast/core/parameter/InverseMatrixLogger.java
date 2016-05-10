@@ -1,9 +1,9 @@
 package beast.core.parameter;
 
+import beast.core.BEASTObject;
 import beast.core.Description;
 import beast.core.Input;
 import beast.core.Loggable;
-import beast.core.Plugin;
 import beast.math.matrixAlgebra1.Matrix;
 
 import java.io.PrintStream;
@@ -12,7 +12,7 @@ import java.io.PrintStream;
  * @author Chieh-Hsi Wu
  */
 @Description("Use this class to print the inverse of a square matrix.")
-public class InverseMatrixLogger extends Plugin implements Loggable {
+public class InverseMatrixLogger extends BEASTObject implements Loggable {
     public Input<RealParameter> parameterInput = new Input<RealParameter>("parameter","The matrix as a vector.", Input.Validate.REQUIRED);
 
     RealParameter parameter;

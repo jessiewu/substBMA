@@ -1,8 +1,8 @@
 package beast.math.distributions;
 
 
+import beast.core.Function;
 import beast.core.Input;
-import beast.core.Valuable;
 import beast.core.Description;
 import beast.core.parameter.RealParameter;
 import beast.math.matrixAlgebra1.*;
@@ -119,7 +119,7 @@ public class MultivariateNormal extends ParametricDistribution implements Multiv
 
     }
 
-    public double calcLogP(Valuable x) throws Exception {
+    public double calcLogP(Function x) {
         if(requiresRecalculation()){
             refresh();
         }
