@@ -1,5 +1,6 @@
 package beast.evolution.likelihood;
 
+import beast.core.Citation;
 import beast.core.Description;
 import beast.core.parameter.QuietRealParameter;
 import beast.evolution.alignment.Alignment;
@@ -23,6 +24,8 @@ import java.util.Arrays;
  * @author Chieh-Hsi Wu
  */
 @Description("Tree likelihood supports alignment pattern weights to change during the MCMC.")
+@Citation("Wu C-H, Suchard MA, Drummond AJ (2013) Bayesian Selection of Nucleotide " +
+        "Substitution Models and Their Site Assignments. MBE 30(3):669-688.")
 public class NewWVTreeLikelihood extends QuietTreeLikelihood {
     WVLikelihoodCore m_likelihoodCore;
    
