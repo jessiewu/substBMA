@@ -97,8 +97,7 @@
 
 
     <tree spec='beast.util.ClusterTree' id='tree' clusterType='upgma'>
-		<trait spec='beast.evolution.tree.TraitSet' traitname='date-forward' units='year'
-			value='
+        <trait spec='beast.evolution.tree.TraitSet' traitname='date-forward' units='year'>
                 AF313916_1=1977.25,
                 AB154177_1=1996.72,
                 AB154178_1=1999.13,
@@ -129,7 +128,7 @@
                 AB154203_1=1998.2,
                 AB154204_1=1999.25,
                 AB154205_1=1994.47,
-                AB154206_1=1999.37'>
+                AB154206_1=1999.37
                 <taxa spec='beast.evolution.alignment.TaxonSet'  alignment='@alignment'/>
         </trait>
         <input name='taxa' idref='alignment'/>
@@ -138,7 +137,7 @@
 
 
     <input spec="StrictClockModel" id="strict.clock">
-        <input name="clock.rate" value="1.0"/>
+        <clock.rate spec="RealParameter" value="1.0"/>
     </input>
 
     <input spec='DPSepTreeLikelihood' id="treeLikelihood">
