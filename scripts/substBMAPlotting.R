@@ -70,7 +70,3 @@ plotModelPosterior <- function (prefix, main="Per-site substitution model probab
 
     print(p)
 }
-
-plotModelPosterior("mammal_468_sdpm1")
-
-#data <- loadData("mammal_468_sdpm1")
