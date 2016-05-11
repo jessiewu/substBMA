@@ -168,7 +168,7 @@
         <input name="plugin" idref="dpNtdSiteModel"/>
     </input-->
 
-    <input spec='beast.evolution.speciation.CalibratedYuleModel' type="all" id="yule">
+    <input spec='beast.evolution.speciation.CalibratedYuleModel' type="full" id="yule">
         <birthRate id="birthRate" spec='parameter.RealParameter' value="2.0"/>
         <tree idref='tree'/>
 
