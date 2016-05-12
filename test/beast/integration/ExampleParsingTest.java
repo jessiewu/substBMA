@@ -1,4 +1,4 @@
-package test.beast.integration;
+package beast.integration;
 
 /**
  * check whether all example files parse and run 
