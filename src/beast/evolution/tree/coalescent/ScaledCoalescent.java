@@ -35,10 +35,10 @@ public class ScaledCoalescent extends TreeDistribution {
     TreeIntervals intervals;
 
     @Override
-    public void initAndValidate() throws Exception {
-        intervals = treeIntervals.get();
+    public void initAndValidate() {
+        intervals = treeIntervalsInput.get();
         if (intervals == null) {
-            throw new Exception("Expected treeIntervals to be specified");
+            throw new RuntimeException("Expected treeIntervals to be specified");
         }
         calculateLogP();
     }
@@ -48,7 +48,7 @@ public class ScaledCoalescent extends TreeDistribution {
      * do the actual calculation *
      */
     @Override
-    public double calculateLogP() throws Exception {
+    public double calculateLogP() {
 
         logP = calculateLogLikelihood(intervals, popSizeInput.get());
 
@@ -70,7 +70,7 @@ public class ScaledCoalescent extends TreeDistribution {
      */
     @Override
     public List<String> getArguments() {
-        return Collections.singletonList(treeIntervals.get().getID());
+        return Collections.singletonList(treeIntervalsInput.get().getID());
     }
 
     /**

@@ -33,21 +33,21 @@ public class LanguageIntegerData extends DataType.Base{
     public void initAndValidate(){
         String[] symbols = symbolsInput.get().split("\\s+");
         String[] ambiguities = ambiguitiesInput.get().split("\\s+");
-        m_mapCodeToStateSet = new int[symbols.length+ambiguities.length+1][];
+        mapCodeToStateSet = new int[symbols.length+ambiguities.length+1][];
 
 
         codeMap = new HashMap<String, Integer>();
         int k = 0;
         for(int i = 0;i < symbols.length;i++){
             if(!codeMap.containsKey(symbols[i])){
-                m_mapCodeToStateSet[k] = new int[]{k};
+                mapCodeToStateSet[k] = new int[]{k};
                 codeMap.put(symbols[i],k++);
 
             }else{
                 throw new RuntimeException("Error: Repeated symbols in code map!");
             }
         }
-        m_nStateCount = codeMap.size();
+        stateCount = codeMap.size();
 
 
         for(int i = 0; i < ambiguities.length; i++){
@@ -68,7 +68,7 @@ public class LanguageIntegerData extends DataType.Base{
                     System.out.println(codeMap.get(""+ambiguity[j])+" "+ambiguity[j]);
                     stateSet[j] = codeMap.get(""+ambiguity[j]);
                 }
-                m_mapCodeToStateSet[k] = stateSet;
+                mapCodeToStateSet[k] = stateSet;
                 codeMap.put(ambiguityKey,k++);
             }else{
                 throw new RuntimeException("Error: Repeated ambiguity specified!");
@@ -77,15 +77,15 @@ public class LanguageIntegerData extends DataType.Base{
         }
         codeMap.put("?",k);
         codeMap.put("-",k);
-        m_mapCodeToStateSet[k] = new int[symbols.length];
+        mapCodeToStateSet[k] = new int[symbols.length];
         for(int i = 0;i < symbols.length; i++){
-            m_mapCodeToStateSet[k][i] = i;
+            mapCodeToStateSet[k][i] = i;
         }
 
-        for(int i = 0; i < m_mapCodeToStateSet.length; i++){
+        for(int i = 0; i < mapCodeToStateSet.length; i++){
             System.out.print(i+": ");
-            for(int j = 0; j < m_mapCodeToStateSet[i].length; j++){
-                System.out.print(m_mapCodeToStateSet[i][j]+", ");
+            for(int j = 0; j < mapCodeToStateSet[i].length; j++){
+                System.out.print(mapCodeToStateSet[i][j]+", ");
             }
             System.out.println();
         }
@@ -166,9 +166,8 @@ public class LanguageIntegerData extends DataType.Base{
     }
 
 
-
-
-
-
-
+    @Override
+    public String getTypeDescription() {
+        return "Language integer data";
+    }
 }

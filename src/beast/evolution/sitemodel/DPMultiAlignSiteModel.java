@@ -24,7 +24,7 @@ public abstract class DPMultiAlignSiteModel extends DPSiteModel {
             Input.Validate.REQUIRED
     );
 
-    public void initAndValidate() throws Exception{
+    public void initAndValidate() {
         super.initAndValidate();
     }
 

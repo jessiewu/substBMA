@@ -1,9 +1,9 @@
 package beast.core.parameter;
 
 import beast.core.CalculationNode;
+import beast.core.Function;
 import beast.core.Input;
 import beast.core.Loggable;
-import beast.core.Valuable;
 
 import java.io.PrintStream;
 
@@ -14,7 +14,7 @@ import java.io.PrintStream;
  * Time: 3:31 PM
  * To change this template use File | Settings | File Templates.
  */
-public class ScaledParameter extends CalculationNode implements Valuable , Loggable {
+public class ScaledParameter extends CalculationNode implements Function, Loggable {
     public Input<RealParameter> parameterInput = new Input<RealParameter>(
             "parameter",
             "The parameter that is to be scaled.",

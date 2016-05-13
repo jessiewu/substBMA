@@ -26,36 +26,36 @@ public class CHWLikelihoodCore extends BeerLikelihoodCore {
 //        }
         int u = 0;
 
-        for (int i = 0; i < m_nPatterns; i++) {
+        for (int i = 0; i < nrOfPatterns; i++) {
 
             double scaleFactor = 0.0;
             int v = u;
-            for (int k = 0; k < m_nMatrices; k++) {
-                for (int j = 0; j < m_nStates; j++) {
-                    if (m_fPartials[m_iCurrentPartials[iNodeIndex]][iNodeIndex][v] > scaleFactor) {
-                        scaleFactor = m_fPartials[m_iCurrentPartials[iNodeIndex]][iNodeIndex][v];
+            for (int k = 0; k < nrOfMatrices; k++) {
+                for (int j = 0; j < nrOfStates; j++) {
+                    if (partials[currentPartialsIndex[iNodeIndex]][iNodeIndex][v] > scaleFactor) {
+                        scaleFactor = partials[currentPartialsIndex[iNodeIndex]][iNodeIndex][v];
                     }
                     v++;
                 }
-                v += (m_nPatterns - 1) * m_nStates;
+                v += (nrOfPatterns - 1) * nrOfStates;
             }
 
             if (scaleFactor < m_fScalingThreshold && scaleFactor > 0.0) {
 
                 v = u;
-                for (int k = 0; k < m_nMatrices; k++) {
-                    for (int j = 0; j < m_nStates; j++) {
-                        m_fPartials[m_iCurrentPartials[iNodeIndex]][iNodeIndex][v] /= scaleFactor;
+                for (int k = 0; k < nrOfMatrices; k++) {
+                    for (int j = 0; j < nrOfStates; j++) {
+                        partials[currentPartialsIndex[iNodeIndex]][iNodeIndex][v] /= scaleFactor;
                         v++;
                     }
-                    v += (m_nPatterns - 1) * m_nStates;
+                    v += (nrOfPatterns - 1) * nrOfStates;
                 }
-                m_fScalingFactors[m_iCurrentPartials[iNodeIndex]][iNodeIndex][i] = Math.log(scaleFactor);
+                scalingFactors[currentPartialsIndex[iNodeIndex]][iNodeIndex][i] = Math.log(scaleFactor);
 
             } else {
-                m_fScalingFactors[m_iCurrentPartials[iNodeIndex]][iNodeIndex][i] = 0.0;
+                scalingFactors[currentPartialsIndex[iNodeIndex]][iNodeIndex][i] = 0.0;
             }
-            u += m_nStates;
+            u += nrOfStates;
 
 
         }

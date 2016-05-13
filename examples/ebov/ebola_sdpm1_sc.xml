@@ -97,8 +97,7 @@
 
 
     <tree spec='beast.util.ClusterTree' id='tree' clusterType='upgma'>
-		<trait spec='beast.evolution.tree.TraitSet' traitname='date-forward' units='year'
-			value='
+        <trait spec='beast.evolution.tree.TraitSet' traitname='date-forward' units='year'>
 			    U23187_YAMBUKAMAYINGA_1976=1976,
                 AY526098_MENDEMBAB_OCT01_2001=2001,
                 AY526099_OLLOBA_2001=2001,
@@ -131,7 +130,6 @@
                 U23417_SIENNA_1992=1992,
                 U23152_RESTON_1989=1989,
                 AF034645_PENNSYLVANIA_1989=1989
-			'>
 			<taxa spec='beast.evolution.alignment.TaxonSet' alignment='@ebola'/>
 		</trait>
         <input name='taxa' idref='ebola'/>

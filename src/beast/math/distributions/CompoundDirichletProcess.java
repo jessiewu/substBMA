@@ -87,7 +87,7 @@ public class CompoundDirichletProcess extends ParametricDistribution{
         }
 
     }
-    public double calcLogP(List<ParameterList> xLists) throws Exception {
+    public double calcLogP(List<ParameterList> xLists) {
         if(requiresRecalculation()){
             refresh();
         }

@@ -247,7 +247,7 @@ public class ScaledTreeIntervals extends TreeIntervals {
 
 
     protected boolean requiresRecalculation() {
-        if(m_tree.isDirty()){
+        if(treeInput.isDirty()){
             super.requiresRecalculation();
 
         }

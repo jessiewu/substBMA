@@ -96,7 +96,7 @@ public class TempTreeLikelihood extends Distribution {
 
     }
     
-    public void initAndValidate() throws Exception{
+    public void initAndValidate() {
         defaultMu = new RealParameter(new Double[]{1.0});
         alignment = dataInput.get();
         int siteCount = alignment.getSiteCount();

@@ -16,13 +16,13 @@ public class NormalDistribution extends Normal {
     void refresh() {
         double fMean;
         double fSigma;
-        if (m_mean.get() == null) {
+        if (meanInput.get() == null) {
             fMean = 0;
         } else {
-            fMean = m_mean.get().getValue();
+            fMean = meanInput.get().getValue();
         }
-        if (m_sigma.get() != null) {
-            fSigma = m_sigma.get().getValue();
+        if (sigmaInput.get() != null) {
+            fSigma = sigmaInput.get().getValue();
         }else if(precisionInput.get() != null){
             fSigma = 1.0/precisionInput.get().getValue();
 
@@ -30,7 +30,7 @@ public class NormalDistribution extends Normal {
             fSigma = 1;
         }
 
-        m_dist.setMean(fMean);
-        m_dist.setStandardDeviation(fSigma);
+        dist.setMean(fMean);
+        dist.setStandardDeviation(fSigma);
     }
 }

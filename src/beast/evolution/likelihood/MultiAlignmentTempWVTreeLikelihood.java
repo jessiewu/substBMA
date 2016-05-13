@@ -37,16 +37,16 @@ public class MultiAlignmentTempWVTreeLikelihood extends TempWVTreeLikelihood{
 
 
     public MultiAlignmentTempWVTreeLikelihood(){
-        m_data.setRule(Input.Validate.OPTIONAL);
-        m_tree.setRule(Input.Validate.OPTIONAL);
-        m_pSiteModel.setRule(Input.Validate.OPTIONAL);
+        dataInput.setRule(Input.Validate.OPTIONAL);
+        treeInput.setRule(Input.Validate.OPTIONAL);
+        siteModelInput.setRule(Input.Validate.OPTIONAL);
     }
 
     private TempWVTreeLikelihood[] tempWVTreeLikelihoods;
     private DPMultiAlignSiteModel dpMultiAlignSiteModel;
     private int[] siteIndexWithinAlignment;
 
-    public void initAndValidate() throws Exception{
+    public void initAndValidate() {
         List<TempWVTreeLikelihood> tempWVTreeLikelihoodList = tempWVLikelihoodsInput.get();
         tempWVTreeLikelihoods = new TempWVTreeLikelihood[tempWVTreeLikelihoodList.size()];
         for(int i = 0; i < tempWVTreeLikelihoods.length; i++){
@@ -59,11 +59,11 @@ public class MultiAlignmentTempWVTreeLikelihood extends TempWVTreeLikelihood{
         prevAlignEndIndex[0] = 0;
         for(int i = 1; i < prevAlignEndIndex.length; i++){
             prevAlignEndIndex[i] = prevAlignEndIndex[i - 1] +
-                    tempWVTreeLikelihoods[i - 1].m_data.get().getSiteCount();
+                    tempWVTreeLikelihoods[i - 1].dataInput.get().getSiteCount();
         }
 
         int siteCount = prevAlignEndIndex[prevAlignEndIndex.length - 1] +
-                tempWVTreeLikelihoods[tempWVTreeLikelihoods.length - 1].m_data.get().getSiteCount();
+                tempWVTreeLikelihoods[tempWVTreeLikelihoods.length - 1].dataInput.get().getSiteCount();
 
         siteIndexWithinAlignment = new int[siteCount];
         for(int i = 0; i < siteIndexWithinAlignment.length; i++){
@@ -82,12 +82,12 @@ public class MultiAlignmentTempWVTreeLikelihood extends TempWVTreeLikelihood{
         for(int i = 0; i < sites.length; i++){
 
             alignmentIndex = dpMultiAlignSiteModel.getAlignmentIndex(sites[i]);
-            patIndex = tempWVTreeLikelihoods[alignmentIndex].m_data.get().getPatternIndex(
+            patIndex = tempWVTreeLikelihoods[alignmentIndex].dataInput.get().getPatternIndex(
                     siteIndexWithinAlignment[sites[i]]
             );
 
             if(tempWeights[alignmentIndex] == null){
-                int patternCount = tempWVTreeLikelihoods[alignmentIndex].m_data.get().getPatternCount();
+                int patternCount = tempWVTreeLikelihoods[alignmentIndex].dataInput.get().getPatternCount();
                 tempWeights[alignmentIndex] = new int[patternCount];
             }
 
@@ -184,8 +184,8 @@ public class MultiAlignmentTempWVTreeLikelihood extends TempWVTreeLikelihood{
             int patternIndex;
             for(int i = 0; i < sites.length;i++){
                 alignmentIndex = dpMultiAlignSiteModel.getAlignmentIndex(sites[i]);
-                patternIndex =  tempWVTreeLikelihoods[alignmentIndex].m_data.get().getPatternIndex(siteIndexWithinAlignment[sites[i]]);
-                siteLogP[i] = tempWVTreeLikelihoods[alignmentIndex].m_fPatternLogLikelihoods[patternIndex];
+                patternIndex =  tempWVTreeLikelihoods[alignmentIndex].dataInput.get().getPatternIndex(siteIndexWithinAlignment[sites[i]]);
+                siteLogP[i] = tempWVTreeLikelihoods[alignmentIndex].patternLogLikelihoods[patternIndex];
             }
         }catch(Exception e){
             throw new RuntimeException(e);
@@ -209,8 +209,8 @@ public class MultiAlignmentTempWVTreeLikelihood extends TempWVTreeLikelihood{
             for(int i = 0; i < sites.length;i++){
                 if(sites[i] != exceptSite){
                     alignmentIndex = dpMultiAlignSiteModel.getAlignmentIndex(sites[i]);
-                    patternIndex =  tempWVTreeLikelihoods[alignmentIndex].m_data.get().getPatternIndex(siteIndexWithinAlignment[sites[i]]);
-                    siteLogP[k++] = tempWVTreeLikelihoods[alignmentIndex].m_fPatternLogLikelihoods[patternIndex];
+                    patternIndex =  tempWVTreeLikelihoods[alignmentIndex].dataInput.get().getPatternIndex(siteIndexWithinAlignment[sites[i]]);
+                    siteLogP[k++] = tempWVTreeLikelihoods[alignmentIndex].patternLogLikelihoods[patternIndex];
                 }
             }
         }catch(Exception e){

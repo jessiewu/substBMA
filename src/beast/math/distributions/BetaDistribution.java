@@ -1,6 +1,6 @@
 package beast.math.distributions;
 
-import beast.core.Valuable;
+import beast.core.Function;
 import beast.core.parameter.RealParameter;
 import beast.util.Randomizer;
 
@@ -28,8 +28,8 @@ public class BetaDistribution extends DirichletDistribution {
     }
 
 
-    public void initAndValidate() throws Exception {
-        alpha = m_alpha.get();
+    public void initAndValidate() {
+        alpha = alphaInput.get();
         if(alpha.getDimension() != 2){
             throw new ParameterLengthException();
         }
@@ -124,7 +124,7 @@ public class BetaDistribution extends DirichletDistribution {
     }
 
 
-    class ParameterLengthException extends Exception{
+    class ParameterLengthException extends RuntimeException{
         public String getMessage(){
             return  "The length of the alpha vector of a Beta distribution must be two.";
 
@@ -133,7 +133,7 @@ public class BetaDistribution extends DirichletDistribution {
     }
 
     @Override
-    public double calcLogP(Valuable pX) throws Exception {
+    public double calcLogP(Function pX) {
 
         double scaleVal = scale.getValue();
         Double [] fAlpha = alpha.getValues();

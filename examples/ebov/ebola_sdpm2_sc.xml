@@ -94,55 +94,50 @@
         <dpValRate idref="dpValuable.rate"/>
     </input>
 
-        <tree id="tree">
-    <tree estimate="false" id="RandomTree" name="initial" spec="beast.evolution.tree.RandomTree">
-            <data idref="ebola" name="taxa"/>
-            <populationModel spec="ConstantPopulation">
-                <parameter dimension="1" estimate="false" name="popSize" value="25.0"/>
-            </populationModel>
-		<trait id="datetrait" spec='beast.evolution.tree.TraitSet' traitname='date-forward' units='year'
-			value='
-                U23187_YAMBUKAMAYINGA_1976=1976,
-                AY526098_MENDEMBAB_OCT01_2001=2001,
-                AY526099_OLLOBA_2001=2001,
-                AY526100_ETAKANGAYE_DEC01_2001=2001,
-                AY526103_YEMBELENGOYE_DEC02_2002=2002,
-                AY526105_MENDEMBAA_OCT01_2001=2001,
-                AY526104_MVOULA_JAN03_2003=2003,
-                AY354458_ZAIRE1995_1995=1995,
-                EU051630_GOR1_LOSSI_2002=2002,
-                EU051631_GOR2_LOSSI_2002=2002,
-                EU051632_GOR_EKATA_2001=2001,
-                EU051633_CH_LOSSI_2003=2003,
-                EU051635_GOR_MBANDZA_2005=2005,
-                EU051634_ETOUMBI_2005=2005,
-                AY058898_BOOUE_1996=1996,
-                U28077_EVU28077_ZAIRE95_1995=1995,
-                U81161_YAMBUKUE_1976=1976,
-                U77384_EVU77384_GABON94_1994=1994,
-                U28006_COTEDIVOIRE_1994=1994,
-                FJ217161_BUNDIBUGYO_2007=2007,
-                U23069_MALEO_1979=1979,
-                EU338380_SUDAN_2004=2004,
-                FJ968794_BONIFACE_1976=1976,
-                AY729654_GULU_2000=2000,
-                FJ621583_PHILIPPINES08A_2008=2008,
-                FJ621584_PHILIPPINES08C_2008=2008,
-                FJ621585_PHILIPPINES08E_2008=2008,
-                AB050936_PHILIPPINES_1996=1996,
-                U23416_PHILIPPINES_1992=1992,
-                U23417_SIENNA_1992=1992,
-                U23152_RESTON_1989=1989,
-                AF034645_PENNSYLVANIA_1989=1989
-                '>
-                <taxa spec='beast.evolution.alignment.TaxonSet'  alignment='@ebola'/>
-            </trait>
-        </tree>
-        <trait idref="datetrait"/>
+    <tree id="tree" spec="beast.evolution.tree.RandomTree">
+        <data idref="ebola" name="taxa"/>
+        <populationModel spec="ConstantPopulation">
+            <parameter dimension="1" estimate="false" name="popSize" value="25.0"/>
+        </populationModel>
+        <trait id="datetrait" spec='beast.evolution.tree.TraitSet' traitname='date-forward' units='year'>
+            U23187_YAMBUKAMAYINGA_1976=1976,
+            AY526098_MENDEMBAB_OCT01_2001=2001,
+            AY526099_OLLOBA_2001=2001,
+            AY526100_ETAKANGAYE_DEC01_2001=2001,
+            AY526103_YEMBELENGOYE_DEC02_2002=2002,
+            AY526105_MENDEMBAA_OCT01_2001=2001,
+            AY526104_MVOULA_JAN03_2003=2003,
+            AY354458_ZAIRE1995_1995=1995,
+            EU051630_GOR1_LOSSI_2002=2002,
+            EU051631_GOR2_LOSSI_2002=2002,
+            EU051632_GOR_EKATA_2001=2001,
+            EU051633_CH_LOSSI_2003=2003,
+            EU051635_GOR_MBANDZA_2005=2005,
+            EU051634_ETOUMBI_2005=2005,
+            AY058898_BOOUE_1996=1996,
+            U28077_EVU28077_ZAIRE95_1995=1995,
+            U81161_YAMBUKUE_1976=1976,
+            U77384_EVU77384_GABON94_1994=1994,
+            U28006_COTEDIVOIRE_1994=1994,
+            FJ217161_BUNDIBUGYO_2007=2007,
+            U23069_MALEO_1979=1979,
+            EU338380_SUDAN_2004=2004,
+            FJ968794_BONIFACE_1976=1976,
+            AY729654_GULU_2000=2000,
+            FJ621583_PHILIPPINES08A_2008=2008,
+            FJ621584_PHILIPPINES08C_2008=2008,
+            FJ621585_PHILIPPINES08E_2008=2008,
+            AB050936_PHILIPPINES_1996=1996,
+            U23416_PHILIPPINES_1992=1992,
+            U23417_SIENNA_1992=1992,
+            U23152_RESTON_1989=1989,
+            AF034645_PENNSYLVANIA_1989=1989
+            <taxa spec='beast.evolution.alignment.TaxonSet'  alignment='@ebola'/>
+        </trait>
     </tree>
 
     <input spec="StrictClockModel" id="strict.clock">
-        <input name="clock.rate" value="1.0"/>
+        <clock.rate spec="RealParameter" value="1.0"/>
     </input>
 
     <input spec='DPSepTreeLikelihood' id="treeLikelihood">

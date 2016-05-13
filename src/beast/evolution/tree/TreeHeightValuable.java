@@ -6,7 +6,7 @@ import beast.core.*;
  * @author Chieh-Hsi Wu
  */
 @Description("Extract the tree height and return it as a valuable.")
-public class TreeHeightValuable extends CalculationNode implements Valuable {
+public class TreeHeightValuable extends CalculationNode implements Function {
     public Input<Tree> treeInput = new Input<Tree>("tree", "The tree, where the root height of which is of interest.", Input.Validate.REQUIRED);
 
 

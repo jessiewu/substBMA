@@ -1,9 +1,9 @@
 package beast.core.parameter;
 
+import beast.core.BEASTObject;
+import beast.core.Function;
 import beast.core.Input;
 import beast.core.Loggable;
-import beast.core.Plugin;
-import beast.core.Valuable;
 import beast.evolution.tree.Scaler;
 
 import java.io.PrintStream;
@@ -15,9 +15,9 @@ import java.io.PrintStream;
  * Time: 4:10 PM
  * To change this template use File | Settings | File Templates.
  */
-public class ScaleParameterLogger extends Plugin implements Loggable{
+public class ScaleParameterLogger extends BEASTObject implements Loggable{
     //ParameterList
-    public Input<Valuable> parameterInput = new Input<Valuable>(
+    public Input<Function> parameterInput = new Input<>(
             "parameter",
             "A parameter to be scaled",
             Input.Validate.REQUIRED
@@ -36,7 +36,7 @@ public class ScaleParameterLogger extends Plugin implements Loggable{
             false
     );
 
-    private Valuable parameter;
+    private Function parameter;
     private Scaler scaler;
     private boolean divide;
 

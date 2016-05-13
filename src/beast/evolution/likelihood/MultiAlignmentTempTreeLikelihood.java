@@ -49,7 +49,7 @@ public class MultiAlignmentTempTreeLikelihood extends TempTreeLikelihood {
     DPMultiAlignSiteModel dpMultiAlignSiteModel;
     int[] prevPatternCount;
     int[] siteIndexWithinAlignment;
-    public void initAndValidate() throws Exception{
+    public void initAndValidate() {
         defaultMu = new RealParameter(new Double[]{1.0});
         alignments = alignmentsInput.get();
         siteModels = siteModelsInput.get();

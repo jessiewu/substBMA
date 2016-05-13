@@ -48,7 +48,7 @@ public class PointerLikelihood extends Distribution {
 
 
 	@Override
-	public double calculateLogP() throws Exception {
+	public double calculateLogP() {
         logP = 0.0;
         for(int i = 0; i < pointersCount;i++){
             logP += distr.calcLogP(pointers.getParameter(i));

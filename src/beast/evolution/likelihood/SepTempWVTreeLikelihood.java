@@ -27,7 +27,7 @@ public class SepTempWVTreeLikelihood extends TempWVTreeLikelihood{
     protected DPNtdRateSepSiteModel dpNtdRateSepSiteModel;
     protected SwitchingNtdBMA substModel;
 
-    public void initAndValidate() throws Exception{
+    public void initAndValidate() {
         super.initAndValidate();
         dpNtdRateSepSiteModel = dpNtdRateSepSiteModelInput.get();
         substModel = (SwitchingNtdBMA)m_siteModel.getSubstitutionModel();
@@ -58,7 +58,7 @@ public class SepTempWVTreeLikelihood extends TempWVTreeLikelihood{
             RealParameter freqs,
             int[] siteIndex){
         
-        Alignment alignment = m_data.get();
+        Alignment alignment = dataInput.get();
         double[] logPs = new double[siteIndex.length];
         setModelParameterVals(modelParameters,modelCode,freqs);
 
@@ -111,7 +111,7 @@ public class SepTempWVTreeLikelihood extends TempWVTreeLikelihood{
 
             for(int i = 0; i < rateCount;i++){
 
-                m_siteModel.m_pSubstModel.setValue(substModel, m_siteModel);
+                m_siteModel.substModelInput.setValue(substModel, m_siteModel);
                 ((DummySiteModel)m_siteModel).getRateParameter().setValueQuietly(0,rates.get(i).getValue());
                 rateID = rates.get(i).getIDNumber();
                 setPatternWeights(clusterWeightsMap.get(rateID));
@@ -120,7 +120,7 @@ public class SepTempWVTreeLikelihood extends TempWVTreeLikelihood{
                 ArrayList<Integer> arrayIndex = clusterSitesMap.get(rateID);
                 for(Integer index:arrayIndex){
                     site = siteIndex[index];
-                    logPs[index] = m_fPatternLogLikelihoods[m_data.get().getPatternIndex(site)] ;
+                    logPs[index] = patternLogLikelihoods[dataInput.get().getPatternIndex(site)] ;
                 }
             }
 
@@ -167,7 +167,7 @@ public class SepTempWVTreeLikelihood extends TempWVTreeLikelihood{
     public double[] calculateLogP (
             RealParameter rateParameter,
             int[] siteIndex) throws Exception{
-        Alignment alignment = m_data.get();
+        Alignment alignment = dataInput.get();
 
         double[] logPs = new double[siteIndex.length];
 
@@ -222,7 +222,7 @@ public class SepTempWVTreeLikelihood extends TempWVTreeLikelihood{
 
             for(int i = 0; i < substModelCount;i++){
 
-                m_siteModel.m_pSubstModel.setValue(ntdBMAMap.get(i), m_siteModel);
+                m_siteModel.substModelInput.setValue(ntdBMAMap.get(i), m_siteModel);
                 ((DummySiteModel)m_siteModel).getRateParameter().setValueQuietly(0,rateParameter.getValue());
                 modelID = ntdBMAMap.get(i).getIDNumber();
                 setPatternWeights(clusterWeightsMap.get(modelID));
@@ -231,7 +231,7 @@ public class SepTempWVTreeLikelihood extends TempWVTreeLikelihood{
                 ArrayList<Integer> arrayIndex = clusterSitesMap.get(modelID);
                 for(Integer index:arrayIndex){
                     site = siteIndex[index];
-                    logPs[index] = m_fPatternLogLikelihoods[m_data.get().getPatternIndex(site)] ;
+                    logPs[index] = patternLogLikelihoods[dataInput.get().getPatternIndex(site)] ;
                 }
             }
 
@@ -240,17 +240,17 @@ public class SepTempWVTreeLikelihood extends TempWVTreeLikelihood{
 
     }
 
-    public double calculateLogP() throws Exception {
-        m_substitutionModel = m_siteModel.m_pSubstModel.get();
+    public double calculateLogP() {
+        substitutionModel = m_siteModel.substModelInput.get();
         /*boolean[] unmasked = m_likelihoodCore.getUnmasked();
         for(int i = 0; i < patternWeights.length; i++){
             System.out.print(unmasked[i]+" ");
         }
             System.out.println();   */
 
-        Tree tree = m_tree.get();
+        Tree tree = (Tree) treeInput.get();
         //System.err.println("m_nHasDirt: "+m_nHasDirt);
-        m_nHasDirt = Tree.IS_FILTHY;
+        hasDirt = Tree.IS_FILTHY;
        	traverse(tree.getRoot());
 
 

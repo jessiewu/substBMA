@@ -31,15 +31,15 @@ public class SlowDPSepTreeLikelihood extends SlowDPTreeLikelihood{
         dpValInput.setRule(Input.Validate.OPTIONAL);
     }
 
-    public void initAndValidate() throws Exception{
+    public void initAndValidate() {
 
 
-        alignment = m_data.get();
+        alignment = dataInput.get();
         int patternCount = alignment.getPatternCount();
-        if(!(m_pSiteModel.get() instanceof DPNtdRateSepSiteModel)){
+        if(!(siteModelInput.get() instanceof DPNtdRateSepSiteModel)){
             throw new RuntimeException("DPNtdRateSepSiteModel object is required for site model");
         }
-        dpSiteModel = (DPNtdRateSepSiteModel) m_pSiteModel.get();
+        dpSiteModel = (DPNtdRateSepSiteModel) siteModelInput.get();
         int siteModelCount = dpSiteModel.getSiteModelCount();
 
         /*
@@ -72,9 +72,9 @@ public class SlowDPSepTreeLikelihood extends SlowDPTreeLikelihood{
             WVTreeLikelihood treeLik = new WVTreeLikelihood(clusterWeights[ntdBMAId][ratesId]);
             treeLik.initByName(
                     "data", alignment,
-                    "tree", m_tree.get(),
+                    "tree", treeInput.get(),
                     "siteModel", dpSiteModel.getSiteModel(i),
-                    "branchRateModel", m_pBranchRateModel.get(),
+                    "branchRateModel", branchRateModelInput.get(),
                     "useAmbiguities",useAmbiguitiesInput.get()
             );
 
@@ -236,9 +236,9 @@ public class SlowDPSepTreeLikelihood extends SlowDPTreeLikelihood{
         try{
             treeLik.initByName(
                     "data", alignment,
-                    "tree", m_tree.get(),
+                    "tree", treeInput.get(),
                     "siteModel", siteModel,
-                    "branchRateModel", m_pBranchRateModel.get(),
+                    "branchRateModel", branchRateModelInput.get(),
                     "useAmbiguities",useAmbiguitiesInput.get()
             );
             treeLik.calculateLogP();
@@ -344,10 +344,10 @@ public class SlowDPSepTreeLikelihood extends SlowDPTreeLikelihood{
                 changeType = ChangeType.ALL;
             }
             recalculate = true;
-        }else if(m_tree.get().somethingIsDirty()){
+        }else if(treeInput.get().somethingIsDirty()){
             recalculate = true;
 
-        }else if(m_pBranchRateModel.get().isDirtyCalculation()){
+        }else if(branchRateModelInput.get().isDirtyCalculation()){
             recalculate = true;
         }
         

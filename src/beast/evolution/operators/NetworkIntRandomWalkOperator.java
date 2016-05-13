@@ -32,7 +32,7 @@ public class NetworkIntRandomWalkOperator extends Operator {
     int vertexCount = -1;
 
 
-    public void initAndValidate() throws Exception {
+    public void initAndValidate() {
         offset = offsetInput.get();
         ArrayList<Vertex> vertices = this.vertices.get();
         vertexCount = vertices.size();

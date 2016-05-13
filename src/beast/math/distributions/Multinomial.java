@@ -1,7 +1,7 @@
 package beast.math.distributions;
 
+import beast.core.Function;
 import beast.core.Input;
-import beast.core.Valuable;
 import beast.core.Description;
 import beast.core.parameter.RealParameter;
 import org.apache.commons.math.distribution.Distribution;
@@ -50,7 +50,7 @@ public class Multinomial extends ParametricDistribution{
 	}
 
     @Override
-	public double calcLogP(Valuable xVec) throws Exception {
+	public double calcLogP(Function xVec) {
         
 
         int xVecDim  = xVec.getDimension();

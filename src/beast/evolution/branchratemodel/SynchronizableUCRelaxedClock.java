@@ -9,6 +9,7 @@ import beast.core.parameter.RealParameter;
 import beast.evolution.tree.Node;
 import beast.evolution.tree.Tree;
 import beast.math.distributions.ParametricDistribution;
+import org.apache.commons.math.MathException;
 
 /**
  * @author Alexei Drummond
@@ -27,7 +28,7 @@ public class SynchronizableUCRelaxedClock extends BranchRateModel.Base {
     RealParameter meanRate;
 
     @Override
-    public void initAndValidate() throws Exception {
+    public void initAndValidate() {
 
         tree = treeInput.get();
 
@@ -50,7 +51,11 @@ public class SynchronizableUCRelaxedClock extends BranchRateModel.Base {
         rates = new double[categories.getDimension()];
         storedRates = new double[categories.getDimension()];
         for (int i = 0; i < rates.length; i++) {
-            rates[i] = distribution.inverseCumulativeProbability((i + 0.5) / rates.length);
+            try {
+                rates[i] = distribution.inverseCumulativeProbability((i + 0.5) / rates.length);
+            } catch (MathException e) {
+                throw new RuntimeException("Error initializing synchronizable relaxed clock.");
+            }
         }
         System.arraycopy(rates, 0, storedRates, 0, rates.length);
         normalize = normalizeInput.get();

@@ -1,4 +1,4 @@
-package test;
+package beast;
 
 import beast.core.parameter.*;
 import beast.core.State;

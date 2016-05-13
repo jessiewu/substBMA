@@ -36,7 +36,7 @@ public class SepTempTreeLikelihood extends TempTreeLikelihood{
         this.dpNtdRateSepSiteModel = dpNtdRateSepSiteModel;
 
     }
-    public void initAndValidate() throws Exception{
+    public void initAndValidate() {
         dpNtdRateSepSiteModel = dpNtdRateSepSiteModelInput.get();
         super.initAndValidate();
     }
@@ -51,7 +51,7 @@ public class SepTempTreeLikelihood extends TempTreeLikelihood{
             //Retrive the substModel of the given site
             SubstitutionModel substModel = dpNtdRateSepSiteModel.getModel(siteIndex);
             //Set the substitution model of the siteModel to the substitution model retrieved
-            siteModelInput.get().m_pSubstModel.setValue(substModel,siteModelInput.get());
+            siteModelInput.get().substModelInput.setValue(substModel,siteModelInput.get());
             //Set the rate to the specified rate
             siteModelInput.get().getRateParameter().setValueQuietly(0,rateParameter.getValue());
             //Retrieve the pattern
@@ -95,7 +95,7 @@ public class SepTempTreeLikelihood extends TempTreeLikelihood{
                 throw new RuntimeException("Need NtdBMA");
             }
             ((NtdBMA)substModel).setUpdateMatrix(true);
-            siteModelInput.get().m_pSubstModel.setValue(substModel,siteModelInput.get());
+            siteModelInput.get().substModelInput.setValue(substModel,siteModelInput.get());
 
             int iPat = alignment.getPatternIndex(siteIndex);
             logP = treeLiks[iPat].calculateLogP();

@@ -39,9 +39,9 @@ public class ParameterListsPrior extends Prior{
     }
 
     @Override
-	public double calculateLogP() throws Exception {
+	public double calculateLogP() {
         List<ParameterList> parameterLists = xListsInput.get();
-        logP = ((CompoundDirichletProcess)m_dist).calcLogP(parameterLists);
+        logP = ((CompoundDirichletProcess)dist).calcLogP(parameterLists);
 
 		return logP;
 	}

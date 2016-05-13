@@ -98,54 +98,50 @@
      </input>
 
 
-    <tree id="tree">
-        <tree estimate="false" id="RandomTree" name="initial" spec="beast.evolution.tree.RandomTree">
-            <data idref="rsva" name="taxa"/>
-            <populationModel spec="ConstantPopulation">
-                <parameter dimension="1" estimate="false" name="popSize" value="5.0"/>
-            </populationModel>
-            <trait id="datetrait" spec="beast.evolution.tree.TraitSet" traitname="date-forward" units="year" value='
-                NYCH09@93=1993.0,
-                SE05@91=1991.0,
-                BE11600@94=1994.0,
-                BE15471@97=1997.0,
-                SE03@91=1991.0,
-                MAD1@93=1993.0,
-                BE1061@00=2000.0,
-                BE64@01=2001.0,
-                BE14536@98=1998.0,
-                BIR6190@89=1989.0,
-                WV12342@84=1984.0,
-                BE933@88=1988.0,
-                BE156@84=1984.0,
-                S2@76=1976.0,
-                BE004@02=2002.0,
-                SE02@98=1998.0,
-                BE11@01=2001.0,
-                BE332@02=2002.0,
-                MON2@88=1988.0,
-                BE11465@94=1994.0,
-                BE12895@95=1995.0,
-                SE10@91=1991.0,
-                BE1591@90=1990.0,
-                BE538@88=1988.0,
-                BE410@86=1986.0,
-                WV23836@88=1988.0,
-                BE12243@96=1996.0,
-                BE3785@87=1987.0,
-                BE119@87=1987.0,
-                WV19983@87=1987.0,
-                MON51@90=1990.0,
-                WV2780@79=1979.0,
-                WV6973@82=1982.0,
-                AUSA2@61=1961.0,
-                USALong@56=1956.0
-                '>
-                <taxa spec='beast.evolution.alignment.TaxonSet' alignment='@rsva'/>
-            </trait>
-        </tree>
-        <trait idref="datetrait"/>
-    </tree>
+     <tree id="tree" spec="beast.evolution.tree.RandomTree">
+         <data idref="rsva" name="taxa"/>
+         <populationModel spec="ConstantPopulation">
+             <parameter dimension="1" estimate="false" name="popSize" value="5.0"/>
+         </populationModel>
+         <trait id="datetrait" spec="beast.evolution.tree.TraitSet" traitname="date-forward" units="year">
+             NYCH09@93=1993.0,
+             SE05@91=1991.0,
+             BE11600@94=1994.0,
+             BE15471@97=1997.0,
+             SE03@91=1991.0,
+             MAD1@93=1993.0,
+             BE1061@00=2000.0,
+             BE64@01=2001.0,
+             BE14536@98=1998.0,
+             BIR6190@89=1989.0,
+             WV12342@84=1984.0,
+             BE933@88=1988.0,
+             BE156@84=1984.0,
+             S2@76=1976.0,
+             BE004@02=2002.0,
+             SE02@98=1998.0,
+             BE11@01=2001.0,
+             BE332@02=2002.0,
+             MON2@88=1988.0,
+             BE11465@94=1994.0,
+             BE12895@95=1995.0,
+             SE10@91=1991.0,
+             BE1591@90=1990.0,
+             BE538@88=1988.0,
+             BE410@86=1986.0,
+             WV23836@88=1988.0,
+             BE12243@96=1996.0,
+             BE3785@87=1987.0,
+             BE119@87=1987.0,
+             WV19983@87=1987.0,
+             MON51@90=1990.0,
+             WV2780@79=1979.0,
+             WV6973@82=1982.0,
+             AUSA2@61=1961.0,
+             USALong@56=1956.0
+             <taxa spec='beast.evolution.alignment.TaxonSet' alignment='@rsva'/>
+         </trait>
+     </tree>
 
     <branchRateModel id="branchRates" spec="beast.evolution.branchratemodel.UCRelaxedClockModel" normalize="true">
         <tree idref="tree"/>

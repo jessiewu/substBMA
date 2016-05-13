@@ -90,50 +90,45 @@
         <dpValRate idref="dpValuable.rate"/>
     </input>
 
-        <tree id="tree">
-    <tree estimate="false" id="RandomTree" name="initial" spec="beast.evolution.tree.RandomTree">
-            <data idref="hcv_2011" name="taxa"/>
-            <populationModel spec="ConstantPopulation">
-                <parameter dimension="1" estimate="false" name="popSize" value="25.0"/>
-            </populationModel>
-		<trait id="datetrait" spec='beast.evolution.tree.TraitSet' traitname='date-forward' units='year'
-			value='
-                AF313916_1=1977.25,
-                AB154177_1=1996.72,
-                AB154178_1=1999.13,
-                AB154179_1=1996.52,
-                AB154180_1=1999.3,
-                AB154181_1=1996.53,
-                AB154182_1=1999.11,
-                AB154183_1=1997.29,
-                AB154184_1=2000.36,
-                AB154185_1=1996.53,
-                AB154186_1=2000.26,
-                AB154187_1=1995.25,
-                AB154188_1=1999.9,
-                AB154189_1=1994.42,
-                AB154190_1=2000.09,
-                AB154191_1=1997.13,
-                AB154192_1=1999.25,
-                AB154193_1=1996.59,
-                AB154194_1=1999.86,
-                AB154195_1=1994.4,
-                AB154196_1=2000.39,
-                AB154197_1=1997.43,
-                AB154198_1=1999.94,
-                AB154199_1=1994.42,
-                AB154200_1=1997.47,
-                AB154201_1=1994.33,
-                AB154202_1=1996.31,
-                AB154203_1=1998.2,
-                AB154204_1=1999.25,
-                AB154205_1=1994.47,
-                AB154206_1=1999.37
-                '>
-                <taxa spec='beast.evolution.alignment.TaxonSet'  alignment='@hcv_2011'/>
-            </trait>
-        </tree>
-        <trait idref="datetrait"/>
+    <tree id="tree" spec="beast.evolution.tree.RandomTree">
+        <data idref="hcv_2011" name="taxa"/>
+        <populationModel spec="ConstantPopulation">
+            <parameter dimension="1" estimate="false" name="popSize" value="25.0"/>
+        </populationModel>
+        <trait id="datetrait" spec='beast.evolution.tree.TraitSet' traitname='date-forward' units='year'>
+            AF313916_1=1977.25,
+            AB154177_1=1996.72,
+            AB154178_1=1999.13,
+            AB154179_1=1996.52,
+            AB154180_1=1999.3,
+            AB154181_1=1996.53,
+            AB154182_1=1999.11,
+            AB154183_1=1997.29,
+            AB154184_1=2000.36,
+            AB154185_1=1996.53,
+            AB154186_1=2000.26,
+            AB154187_1=1995.25,
+            AB154188_1=1999.9,
+            AB154189_1=1994.42,
+            AB154190_1=2000.09,
+            AB154191_1=1997.13,
+            AB154192_1=1999.25,
+            AB154193_1=1996.59,
+            AB154194_1=1999.86,
+            AB154195_1=1994.4,
+            AB154196_1=2000.39,
+            AB154197_1=1997.43,
+            AB154198_1=1999.94,
+            AB154199_1=1994.42,
+            AB154200_1=1997.47,
+            AB154201_1=1994.33,
+            AB154202_1=1996.31,
+            AB154203_1=1998.2,
+            AB154204_1=1999.25,
+            AB154205_1=1994.47,
+            AB154206_1=1999.37
+            <taxa spec='beast.evolution.alignment.TaxonSet'  alignment='@hcv_2011'/>
+        </trait>
     </tree>
 
     <branchRateModel id="branchRates" spec="beast.evolution.branchratemodel.UCRelaxedClockModel" normalize="true">

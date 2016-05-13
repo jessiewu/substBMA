@@ -54,17 +54,17 @@ public class DPTreeLikelihood extends GenericTreeLikelihood implements PluginLis
     protected Alignment alignment;
     protected DPValuable dpVal;
 
-    public void initAndValidate() throws Exception{
+    public void initAndValidate() {
         useThreads = useThreadsInput.get() && (BeastMCMC.m_nThreads > 1);
         useThreadsEvenly = useThreadsEvenlyInput.get() && (BeastMCMC.m_nThreads > 1);
         dpVal = dpValInput.get();
-        if(!(m_pSiteModel.get() instanceof DPSiteModel)){
+        if(!(siteModelInput.get() instanceof DPSiteModel)){
             throw new RuntimeException("DPSiteModel required for site model.");
         }
-        dpSiteModel = (DPSiteModel) m_pSiteModel.get();
+        dpSiteModel = (DPSiteModel) siteModelInput.get();
 
 
-        alignment = m_data.get();
+        alignment = dataInput.get();
         int patternCount = alignment.getPatternCount();
 
 
@@ -93,10 +93,10 @@ public class DPTreeLikelihood extends GenericTreeLikelihood implements PluginLis
             NewWVTreeLikelihood treeLik = new NewWVTreeLikelihood(
                     clusterWeights[i],
                     alignment,
-                    m_tree.get(),
+                    (Tree) treeInput.get(),
                     useAmbiguitiesInput.get(),
                     dpSiteModel.getSiteModel(i),
-                    m_pBranchRateModel.get());
+                    branchRateModelInput.get());
             /*treeLik.initByName(
                     "data", alignment,
                     "tree", treeInput.get(),
@@ -151,7 +151,7 @@ public class DPTreeLikelihood extends GenericTreeLikelihood implements PluginLis
 
 
     @Override
-    public double calculateLogP() throws Exception{
+    public double calculateLogP() {
 
         logP = 0.0;
 
@@ -215,7 +215,7 @@ public class DPTreeLikelihood extends GenericTreeLikelihood implements PluginLis
     }
 
     CountDownLatch m_nCountDown;
-    private double calculateLogPUsingThreads() throws Exception {
+    private double calculateLogPUsingThreads() {
         try {
             //System.out.println("What?");
             int nrOfDirtyDistrs = 0;
@@ -246,16 +246,19 @@ public class DPTreeLikelihood extends GenericTreeLikelihood implements PluginLis
             // refresh thread pool
             BeastMCMC.g_exec = Executors.newFixedThreadPool(BeastMCMC.m_nThreads);
             return calculateLogP();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Interrupted.");
         }
     }
 
 
-    private double calculateLogPUsingThreadsEvenly() throws Exception {
+    private double calculateLogPUsingThreadsEvenly() {
 
         try {
 
             //int nrOfDirtyDistrs = 0;
-            ArrayList<Distribution> tempDists = new ArrayList<Distribution>();
+            ArrayList<Distribution> tempDists = new ArrayList<>();
             for (Distribution dists : treeLiks) {
                 if (dists.isDirtyCalculation()) {
                     tempDists.add(dists);
@@ -306,6 +309,9 @@ public class DPTreeLikelihood extends GenericTreeLikelihood implements PluginLis
             // refresh thread pool
             BeastMCMC.g_exec = Executors.newFixedThreadPool(BeastMCMC.m_nThreads);
             return calculateLogP();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Interrupted.");
         }
     }
 
@@ -426,10 +432,10 @@ public class DPTreeLikelihood extends GenericTreeLikelihood implements PluginLis
         NewWVTreeLikelihood treeLik = new NewWVTreeLikelihood(
                 patternWeights,
                 alignment,
-                m_tree.get(),
+                (Tree) treeInput.get(),
                 useAmbiguitiesInput.get(),
                 siteModel,
-                m_pBranchRateModel.get());
+                branchRateModelInput.get());
         try{
             /*treeLik.initByName(
                     "data", alignment,
@@ -483,10 +489,10 @@ public class DPTreeLikelihood extends GenericTreeLikelihood implements PluginLis
         NewWVTreeLikelihood treeLik = new NewWVTreeLikelihood(
                 patternWeights,
                 alignment,
-                m_tree.get(),
+                (Tree) treeInput.get(),
                 useAmbiguitiesInput.get(),
                 siteModel,
-                m_pBranchRateModel.get());
+                branchRateModelInput.get());
         try{
             /*treeLik.initByName(
                     "data", alignment,
@@ -678,10 +684,10 @@ public class DPTreeLikelihood extends GenericTreeLikelihood implements PluginLis
 
             
             recalculate = true;
-        }else if(m_tree.get().somethingIsDirty()){
+        }else if(treeInput.get().somethingIsDirty()){
             recalculate = true;
 
-        }else if(m_pBranchRateModel.get().isDirtyCalculation()){
+        }else if(branchRateModelInput.get().isDirtyCalculation()){
             recalculate = true;
         }
         if(recalculate){
@@ -722,7 +728,7 @@ public class DPTreeLikelihood extends GenericTreeLikelihood implements PluginLis
     }
 
     public Tree getTree(){
-        return m_tree.get();
+        return (Tree) treeInput.get();
     }
 
     public int[] getClusterWeights(int clusterIndex){

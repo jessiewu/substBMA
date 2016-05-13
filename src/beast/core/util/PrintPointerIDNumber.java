@@ -21,7 +21,7 @@ public class PrintPointerIDNumber extends PrintListIDNumber{
 
     }
     @Override
-	public void init(PrintStream out) throws Exception {
+	public void init(PrintStream out) {
         for(int i = 0; i < pointers.getDimension(); i++){
             out.print(pointers.getID() + ".idNum." + i + "\t");
         }

@@ -102,7 +102,7 @@
 
 
     <input spec="StrictClockModel" id="strict.clock">
-        <input name="clock.rate" value="1.0"/>
+        <clock.rate spec="RealParameter" value="1.0"/>
     </input>
 
     <input spec='DPSepTreeLikelihood' id="treeLikelihood">
@@ -166,7 +166,7 @@
         <input name="plugin" idref="dpNtdSiteModel"/>
     </input-->
 
-    <input spec='beast.evolution.speciation.CalibratedYuleModel' type="all" id="yule">
+    <input spec='beast.evolution.speciation.CalibratedYuleModel' type="full" id="yule">
         <birthRate id="birthRate" spec='parameter.RealParameter' value="2.0"/>
         <tree idref='tree'/>
 

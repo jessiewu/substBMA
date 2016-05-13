@@ -1,4 +1,4 @@
-package test;
+package beast;
 
 import org.apache.commons.math.distribution.Distribution;
 import junit.framework.TestCase;

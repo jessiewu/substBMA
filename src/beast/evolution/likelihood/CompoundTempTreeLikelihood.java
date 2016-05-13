@@ -31,7 +31,7 @@ public class CompoundTempTreeLikelihood extends CompoundDistribution {
     boolean useThreads;
 
     private List<TempTreeLikelihood> tempTreeLiks;
-    public void initAndValidate() throws Exception{
+    public void initAndValidate() {
         tempTreeLiks = tempTreeLiksInput.get();
         useThreads = useThreadsInput.get() && (BeastMCMC.m_nThreads > 1);
 

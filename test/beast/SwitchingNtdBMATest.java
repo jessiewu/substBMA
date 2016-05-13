@@ -1,4 +1,4 @@
-package test;
+package beast;
 
 import beast.core.Description;
 import beast.core.parameter.QuietRealParameter;

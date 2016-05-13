@@ -20,14 +20,14 @@ public class CHWLikelihoodCore4 extends CHWLikelihoodCore{
                                                 double[] fPartials3) {
         int v = 0;
 
-        for (int l = 0; l < m_nMatrices; l++) {
+        for (int l = 0; l < nrOfMatrices; l++) {
 
-            for (int k = 0; k < m_nPatterns; k++) {
+            for (int k = 0; k < nrOfPatterns; k++) {
 
                 int state1 = iStates1[k];
                 int state2 = iStates2[k];
 
-                int w = l * m_nMatrixSize;
+                int w = l * matrixSize;
 
                 if (state1 < 4 && state2 < 4) {
 
@@ -102,12 +102,12 @@ public class CHWLikelihoodCore4 extends CHWLikelihoodCore{
         int u = 0;
         int v = 0;
 
-        for (int l = 0; l < m_nMatrices; l++) {
-            for (int k = 0; k < m_nPatterns; k++) {
+        for (int l = 0; l < nrOfMatrices; l++) {
+            for (int k = 0; k < nrOfPatterns; k++) {
 
                 int state1 = iStates1[k];
 
-                int w = l * m_nMatrixSize;
+                int w = l * matrixSize;
 
                 if (state1 < 4) {
 
@@ -191,11 +191,11 @@ public class CHWLikelihoodCore4 extends CHWLikelihoodCore{
         int u = 0;
         int v = 0;
 
-        for (int l = 0; l < m_nMatrices; l++) {
+        for (int l = 0; l < nrOfMatrices; l++) {
 
-            for (int k = 0; k < m_nPatterns; k++) {
+            for (int k = 0; k < nrOfPatterns; k++) {
 
-                int w = l * m_nMatrixSize;
+                int w = l * matrixSize;
 
                 sum1 = fMatrices1[w] * fPartials1[v];
                 sum2 = fMatrices2[w] * fPartials2[v];

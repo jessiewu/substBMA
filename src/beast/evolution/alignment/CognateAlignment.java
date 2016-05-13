@@ -34,16 +34,16 @@ public class CognateAlignment extends Alignment {
     );
 
     public CognateAlignment(){
-        m_pSequences.setRule(Input.Validate.OPTIONAL);
-        m_sDataType.setRule(Input.Validate.OPTIONAL);
+        sequenceInput.setRule(Input.Validate.OPTIONAL);
+        dataTypeInput.setRule(Input.Validate.OPTIONAL);
     }
 
 
     private List<Cognate> cognates;
     public void initAndValidate(){
         m_dataType = dataTypeInput.get();
-        m_sTaxaNames = taxaInput.get().asStringList();
-        m_nMaxStateCount = m_dataType.getStateCount();
+        taxaNames = taxaInput.get().asStringList();
+        maxStateCount = m_dataType.getStateCount();
         cognates = cognatesInput.get();
 
         int firstWordCount = cognates.get(0).getWordCount();
@@ -92,24 +92,24 @@ public class CognateAlignment extends Alignment {
         }
 
         // reserve memory for patterns
-        m_nWeight = new int[nPatterns];
-        m_nPatterns = new int[nPatterns][nTaxa];
+        patternWeight = new int[nPatterns];
+        sitePatterns = new int[nPatterns][nTaxa];
         for (int i = 0; i < nPatterns; i++) {
-            m_nWeight[i] = weights[i];
-            m_nPatterns[i] = nData[i];
+            patternWeight[i] = weights[i];
+            sitePatterns[i] = nData[i];
         }
 
         // find patterns for the sites
-        m_nPatternIndex = new int[nSites];
+        patternIndex = new int[nSites];
         for (int i = 0; i < nSites; i++) {
         	int [] sites = cognates.get(i).getWords(m_dataType);
-            m_nPatternIndex[i] = Arrays.binarySearch(m_nPatterns, sites, comparator);
+            patternIndex[i] = Arrays.binarySearch(sitePatterns, sites, comparator);
         }
 
         // determine maximum state count
         // Usually, the state count is equal for all sites,
         // though for SnAP analysis, this is typically not the case.
-        m_nMaxStateCount = m_dataType.getStateCount();
+        maxStateCount = m_dataType.getStateCount();
         // report some statistics
 
         System.out.println(getNrTaxa() + " taxa");
@@ -117,11 +117,11 @@ public class CognateAlignment extends Alignment {
         System.out.println(getPatternCount() + " patterns");
 
 
-        if (m_bStripInvariantSites.get()) {
+        if (stripInvariantSitesInput.get()) {
             // don't add patterns that are invariant, e.g. all gaps
         	System.err.print("Stripping invariant sites");
 	        for (int i = 0; i < nPatterns; i++) {
-	        	int [] nPattern = m_nPatterns[i];
+	        	int [] nPattern = sitePatterns[i];
 	        	int iValue = nPattern[0];
 	        	boolean bIsInvariant = true;
 	        	for (int k = 1; k < nPattern.length; k++) {
@@ -131,7 +131,7 @@ public class CognateAlignment extends Alignment {
 	        		}
 	        	}
 	        	if (bIsInvariant) {
-	                m_nWeight[i] = 0;
+	                patternWeight[i] = 0;
 	                System.err.print(" <" + iValue+"> ");
 	        	}
 	        }

@@ -1,14 +1,10 @@
 package beast.math.distributions;
 
+import beast.core.Function;
 import beast.core.Input;
-import beast.core.Valuable;
-import beast.util.Randomizer;
 import org.apache.commons.math.MathException;
-import org.apache.commons.math.distribution.ContinuousDistribution;
 import org.apache.commons.math.distribution.Distribution;
-import org.apache.commons.math.distribution.IntegerDistribution;
 
-import javax.management.RuntimeErrorException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -53,7 +49,7 @@ public class ConditionalParametricDistribution extends ParametricDistribution  {
 
     }
 
-    public double calcLogP(final Valuable x) throws Exception {
+    public double calcLogP(final Function x) {
         throw new RuntimeException("Not applicable.");
     }
 
@@ -64,13 +60,13 @@ public class ConditionalParametricDistribution extends ParametricDistribution  {
      * If x is multidimensional, the components of x are assumed to be independent,
      * so the sum of log probabilities of all elements of x is returned as the prior.
      */
-    public double calcLogP(final Valuable x, int conditionVal) throws Exception {
+    public double calcLogP(final Function x, int conditionVal) throws Exception {
 
         return distr[valueMap.get(conditionVal)].calcLogP(x);
     }
 
 
-    public Double[][] sample(final int size) throws Exception {
+    public Double[][] sample(final int size) {
         throw new RuntimeException("Not applicable.");
 
     }

@@ -25,7 +25,7 @@ public class YuleModelWithScaling extends YuleModel {
 
     protected double calculateTreeLogLikelihood(final Tree tree, final double rho, final double a) {
         final int taxonCount = tree.getLeafNodeCount();
-        final double r = birthDiffRateParameter.get().getValue();
+        final double r = birthDiffRateParameterInput.get().getValue();
 
         double logL = logTreeProbability(taxonCount, r, rho, a);
         double scaleFactor;

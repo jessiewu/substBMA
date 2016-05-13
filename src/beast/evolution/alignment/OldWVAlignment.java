@@ -30,7 +30,7 @@ public class OldWVAlignment extends Alignment{
 
     public OldWVAlignment(Alignment alignment, int[] weights){
         this.alignment = alignment;
-        m_nWeight = weights;
+        patternWeight = weights;
         storedWeight = new int[weights.length];
     }
 
@@ -71,7 +71,7 @@ public class OldWVAlignment extends Alignment{
     }
 
     public int [] getWeights() {
-        return m_nWeight; //TODO TO BE ONVERRIDEN!
+        return patternWeight; //TODO TO BE ONVERRIDEN!
     }
 
     public boolean[] getStateSet(int iState) {
@@ -79,18 +79,18 @@ public class OldWVAlignment extends Alignment{
     }
 
     public void setWeight(int patId, int weight){
-        m_nWeight[patId] = weight;
+        patternWeight[patId] = weight;
         weightsChanged = true;
     }
 
     public void addWeight(int patId, int dweight){
-        m_nWeight[patId] += dweight;
+        patternWeight[patId] += dweight;
         //System.out.println("patId: "+patId+", patternWeights[patId]: "+patternWeights[patId]);
         weightsChanged = true;
     }
 
     public void removeWeight(int patId, int dweight){
-        m_nWeight[patId] -= dweight;
+        patternWeight[patId] -= dweight;
         //System.out.println("patId: "+patId+", patternWeights[patId]: "+patternWeights[patId]);
         weightsChanged = true;
     }
@@ -98,7 +98,7 @@ public class OldWVAlignment extends Alignment{
     @Override
     public void store(){
         weightsChanged = false;
-        System.arraycopy(m_nWeight,0,storedWeight,0,m_nWeight.length);
+        System.arraycopy(patternWeight,0,storedWeight,0,patternWeight.length);
         super.store();
     }
 
@@ -106,8 +106,8 @@ public class OldWVAlignment extends Alignment{
     public void restore(){
         weightsChanged = false;
         
-        int[] temp = m_nWeight;
-        m_nWeight = storedWeight;
+        int[] temp = patternWeight;
+        patternWeight = storedWeight;
         storedWeight = temp;
 
         super.restore();

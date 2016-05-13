@@ -1,4 +1,4 @@
-package test;
+package beast;
 
 import beast.core.MCMCNodeFactory;
 import beast.evolution.alignment.Sequence;

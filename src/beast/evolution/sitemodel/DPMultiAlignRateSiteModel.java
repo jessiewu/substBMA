@@ -64,7 +64,7 @@ public class DPMultiAlignRateSiteModel extends DPMultiAlignSiteModel {
 
 
 
-    public void initAndValidate() throws Exception{
+    public void initAndValidate() {
         super.initAndValidate();
         alignments = alignmentsInput.get();
         substModels = substModelsInput.get();

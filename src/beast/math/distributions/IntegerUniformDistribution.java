@@ -20,7 +20,7 @@ public class IntegerUniformDistribution extends ParametricDistribution{
 	double lower, upper;
 
 	@Override
-	public void initAndValidate() throws Exception {
+	public void initAndValidate() {
 		refresh();
 	}
 

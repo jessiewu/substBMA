@@ -1,4 +1,4 @@
-package test;
+package beast;
 
 import beast.math.distributions.*;
 import beast.core.parameter.*;

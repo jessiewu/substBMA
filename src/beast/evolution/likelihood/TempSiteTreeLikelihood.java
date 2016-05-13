@@ -26,12 +26,12 @@ public class TempSiteTreeLikelihood extends QuietTreeLikelihood{
     
 
     @Override
-    public double calculateLogP() throws Exception{
+    public double calculateLogP() {
 
         //System.out.println("rate ID: "+((SiteModel)m_siteModel).getRateParameter().getIDNumber());
         //System.out.println("model ID: "+((SwitchingNtdBMA)((SiteModel)m_siteModel).getSubstitutionModel()).getIDNumber());
-        m_substitutionModel = m_siteModel.m_pSubstModel.get();
-        m_nHasDirt = Tree.IS_FILTHY;
+        substitutionModel = m_siteModel.substModelInput.get();
+        hasDirt = Tree.IS_FILTHY;
 
 
 
@@ -41,11 +41,11 @@ public class TempSiteTreeLikelihood extends QuietTreeLikelihood{
 
 
         m_nScale++;
-        if (logP > 0 || (m_likelihoodCore.getUseScaling() && m_nScale > X)) {
+        if (logP > 0 || (likelihoodCore.getUseScaling() && m_nScale > X)) {
             //System.err.println("Switch off scaling");
-            m_likelihoodCore.setUseScaling(1.0);
-            m_likelihoodCore.unstore();
-            m_nHasDirt = Tree.IS_FILTHY;
+            likelihoodCore.setUseScaling(1.0);
+            likelihoodCore.unstore();
+            hasDirt = Tree.IS_FILTHY;
             X *= 2;
            	traverse(tree.getRoot());
             calcLogP();
@@ -53,9 +53,9 @@ public class TempSiteTreeLikelihood extends QuietTreeLikelihood{
         	m_nScale = 0;
         	m_fScale *= 1.01;
             //System.err.println("Turning on scaling to prevent numeric instability " + m_fScale);
-            m_likelihoodCore.setUseScaling(m_fScale);
-            m_likelihoodCore.unstore();
-            m_nHasDirt = Tree.IS_FILTHY;
+            likelihoodCore.setUseScaling(m_fScale);
+            likelihoodCore.unstore();
+            hasDirt = Tree.IS_FILTHY;
            	traverse(tree.getRoot());
             calcLogP();
         }

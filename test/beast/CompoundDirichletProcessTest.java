@@ -1,4 +1,4 @@
-package test;
+package beast;
 
 
 import junit.framework.TestCase;

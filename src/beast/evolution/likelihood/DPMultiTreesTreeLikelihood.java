@@ -34,8 +34,8 @@ public class DPMultiTreesTreeLikelihood extends DPTreeLikelihood{
     );
 
     public DPMultiTreesTreeLikelihood(){
-        m_tree.setRule(Input.Validate.OPTIONAL);
-        m_data.setRule(Input.Validate.OPTIONAL);
+        treeInput.setRule(Input.Validate.OPTIONAL);
+        dataInput.setRule(Input.Validate.OPTIONAL);
     }
 
     private HashMap<Integer,NewWVTreeLikelihood>[] treeLikelihoodMap;
@@ -48,10 +48,10 @@ public class DPMultiTreesTreeLikelihood extends DPTreeLikelihood{
     private HashMap<Integer, Integer>[] storedLikelihoodWeight;
     public void initAndValidate(){
         //Get the required DPSiteModel
-        if(!(m_pSiteModel.get() instanceof DPSiteModel)){
+        if(!(siteModelInput.get() instanceof DPSiteModel)){
             throw new RuntimeException("DPSiteModel required for site model.");
         }
-        dpSiteModel = (DPSiteModel) m_pSiteModel.get();
+        dpSiteModel = (DPSiteModel) siteModelInput.get();
 
 
         trees = treesInput.get();
@@ -138,7 +138,7 @@ public class DPMultiTreesTreeLikelihood extends DPTreeLikelihood{
                                 trees.get(i),
                                 useAmbiguitiesInput.get(),
                                 dpSiteModel.getSiteModel(i),
-                                m_pBranchRateModel.get()
+                                branchRateModelInput.get()
                         );
 
                         treeLik.calculateLogP();
@@ -271,7 +271,7 @@ public class DPMultiTreesTreeLikelihood extends DPTreeLikelihood{
                     trees.get(alignmentIndex),
                     useAmbiguitiesInput.get(),
                     siteModel,
-                    m_pBranchRateModel.get());
+                    branchRateModelInput.get());
 
             treeLik.calculateLogP();
             treeLik.store();
@@ -362,11 +362,11 @@ public class DPMultiTreesTreeLikelihood extends DPTreeLikelihood{
             }
             recalculate = true;
 
-        }else if(m_tree.get().somethingIsDirty()){
+        }else if(treeInput.get().somethingIsDirty()){
 
             recalculate = true;
 
-        }else if(m_pBranchRateModel.get().isDirtyCalculation()){
+        }else if(branchRateModelInput.get().isDirtyCalculation()){
 
             recalculate = true;
 

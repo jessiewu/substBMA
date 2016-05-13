@@ -27,7 +27,7 @@ public class IntegerRandomWalkOperator extends Operator {
     double logq;
     double range;
     boolean autoOptimize;
-    public void initAndValidate() throws Exception {
+    public void initAndValidate() {
         autoOptimize = input_autoOptimize.get();
         windowSize = windowSizeInput.get();
         if(intparameterInput.get() != null){

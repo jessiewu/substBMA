@@ -1,4 +1,4 @@
-package test;
+package beast;
 
 import beast.core.parameter.RealParameter;
 import beast.math.distributions.MultivariateNormal;

@@ -25,7 +25,7 @@ public class ScaledTreeHeightLogger extends TreeHeightLogger {
 
 
     public void log (int nSample, PrintStream out){
-        final Tree tree = m_tree.get();
+        final Tree tree = treeInput.get();
 		out.print(tree.getRoot().getHeight()*scaler.getScaleFactor() + "\t");
     }
 

@@ -21,16 +21,16 @@ public class PLScaleOperator2 extends PLScaleOperator{
             final double scale = getScaler();
 
             if (m_bIsTreeScaler) {
-                Tree tree = m_pTree.get(this);
+                Tree tree = treeInput.get(this);
                 // scale the beast.tree
                 final int nInternalNodes = tree.scale(scale);
                 return Math.log(scale) * (nInternalNodes - 2);
             }
 
             // not a tree scaler, so scale a parameter
-            final boolean bScaleAll = m_pScaleAll.get();
-            final int nDegreesOfFreedom = m_pDegreesOfFreedom.get();
-            final boolean bScaleAllIndependently = m_pScaleAllIndependently.get();
+            final boolean bScaleAll = scaleAllInput.get();
+            final int nDegreesOfFreedom = degreesOfFreedomInput.get();
+            final boolean bScaleAllIndependently = scaleAllIndependentlyInput.get();
 
             final ParameterList param = parameterListInput.get(this);
 
@@ -79,7 +79,7 @@ public class PLScaleOperator2 extends PLScaleOperator{
 
                 // which position to scale
                 int index = -1;
-                final BooleanParameter indicators = m_indicator.get();
+                final BooleanParameter indicators = indicatorInput.get();
                 if ( indicators != null ) {
                     final int nDim = indicators.getDimension();
                     Boolean [] indicator = indicators.getValues();

@@ -1,4 +1,4 @@
-package test;
+package beast;
 
 import cern.colt.matrix.DoubleMatrix2D;
 import cern.colt.matrix.linalg.Property;

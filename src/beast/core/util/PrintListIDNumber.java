@@ -22,7 +22,7 @@ public class PrintListIDNumber extends CalculationNode implements Loggable {
 
     }
     @Override
-	public void init(PrintStream out) throws Exception {
+	public void init(PrintStream out) {
         out.print("IDNumber("+paramList.getID() + ")\t");
     }
 
