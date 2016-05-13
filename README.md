@@ -1,8 +1,6 @@
 substBMA
 ========
 
-[![Build Status](https://travis-ci.org/tgvaughan/substBMA.svg?branch=master)](https://travis-ci.org/tgvaughan/substBMA)
-
 This repository houses the source code for substBMA: a BEAST 2 package for
 modelling across-site variation in the nucleotide substitution process.
 
