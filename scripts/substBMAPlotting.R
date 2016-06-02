@@ -23,8 +23,8 @@ loadData <- function(prefix, burninFrac=0.1) {
 
     # Read in data
     modelList <- readAsList(paste(prefix,"_modelList_1.log", sep=""))
-    substListPrint <-  readAsList(paste(prefix,"_subst.list.print_1.log", sep=""))
-    substListPointers <- readTableWithoutFirstColumn(paste(prefix,"_subst.pointers.print_1.log", sep=""), header=T)
+    substListPrint <-  readAsList(paste(prefix,"_subst.list.idNum_1.log", sep=""))
+    substListPointers <- readTableWithoutFirstColumn(paste(prefix,"_subst.pointers.idNum_1.log", sep=""), header=T)
 
     # Remove burnin
     modelList <- modelList[-(1:ceiling(burninFrac*length(modelList)))]
