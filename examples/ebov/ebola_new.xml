@@ -209,30 +209,6 @@
         <input name="alpha" spec="RealParameter" value="0.0895" lower="0.0" upper="Infinity"/>
     </input>
 
-    <input spec="Count" id="model.count">
-        <input name="list" idref="dpNtdBMA"/>
-    </input>
-
-    <input spec="Count" id="rate.count">
-        <input name="list" idref="ratesList"/>
-    </input>
-
-    <input spec="Count" id="siteModel.count">
-        <input name="list" idref="dpNtdRateSiteModel"/>
-    </input>
-
-    <input spec="Count" id="treeLikelihood.count">
-        <input name="list" idref="treeLikelihood"/>
-    </input>
-
-    <input spec="Weights" id="treeLik.weight">
-        <input name="dpTreeLik" idref="treeLikelihood"/>
-    </input>
-
-    <input spec="Indices" id="model.indices">
-        <input name="dpNtdBMA" idref="dpNtdBMA"/>
-    </input>
-
 
     <run spec="MCMC" id="mcmc" chainLength="100000000"> <!--autoOptimize="true"-->
         <state>
@@ -329,6 +305,7 @@
         <operator id='popSizesScaler' spec='ScaleOperator' scaleFactor="0.75" weight="15" parameter="@skyline.popSize"/>
         <operator id='groupSizesDelta' spec='DeltaExchangeOperator' delta="1" weight="6" integer="true"
                   intparameter="@skyline.groupSize"/>
+
         <operator id='root.Scaler' spec='ScaleOperator' rootOnly="true" scaleFactor="0.75" weight="6.0" tree="@tree"/>
         <operator id='tree.Scaler' spec='ScaleOperator' scaleFactor="0.75" weight="6.0" tree="@tree"/>
         <operator spec='SubtreeSlide' weight="5" gaussian="true" size="25.0" tree="@tree"/>
