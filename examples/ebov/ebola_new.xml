@@ -47,8 +47,8 @@
     </input>
 
     <input spec="DPPointer" id="param.pointers">
-        <input name="uniqueParameter" idref="parameter1"/>
-        <input name="initialAssignment" spec="IntegerParameter" value="0" dimension="1389" lower="0"/>
+        <uniqueParameter idref="parameter1"/>
+        <initialAssignment spec="IntegerParameter" value="0" dimension="1389" lower="0"/>
     </input>
 
     <input spec="ParameterList" id="modelList">
@@ -56,8 +56,8 @@
     </input>
 
     <input spec="DPPointer" id="model.pointers">
-        <input name="uniqueParameter" idref="parameter2"/>
-        <input name="initialAssignment" spec="IntegerParameter" value="0" dimension="1389" lower="0"/>
+        <uniqueParameter idref="parameter2"/>
+        <initialAssignment spec="IntegerParameter" value="0" dimension="1389" lower="0"/>
     </input>
 
     <input spec="ParameterList" id="freqsList">
@@ -65,8 +65,8 @@
     </input>
 
     <input spec="DPPointer" id="freq.pointers">
-        <input name="uniqueParameter" idref="parameter3"/>
-        <input name="initialAssignment" spec="IntegerParameter" value="0" dimension="1389" lower="0"/>
+        <uniqueParameter idref="parameter3"/>
+        <initialAssignment spec="IntegerParameter" value="0" dimension="1389" lower="0"/>
     </input>
 
     <input spec="ParameterList" id="ratesList">
@@ -74,23 +74,23 @@
     </input>
 
     <input spec="DPPointer" id="rates.pointers">
-        <input name="uniqueParameter" idref="parameter4"/>
-        <input name="initialAssignment" spec="IntegerParameter" value="0" dimension="1389" lower="0"/>
+        <uniqueParameter idref="parameter4"/>
+        <initialAssignment spec="IntegerParameter" value="0" dimension="1389" lower="0"/>
     </input>
 
 
      <input spec="DPNtdBMA" id="dpNtdBMA">
-         <input name="paramList" spec="ParameterList" idref="parameterList"/>
-         <input name="modelList" spec="ParameterList" idref="modelList"/>
-         <input name="freqsList" spec="ParameterList" idref="freqsList"/>
-         <input name="pointers" spec="DPPointer" idref="freq.pointers"/>
+         <paramList spec="ParameterList" idref="parameterList"/>
+         <modelList spec="ParameterList" idref="modelList"/>
+         <freqsList spec="ParameterList" idref="freqsList"/>
+         <pointers spec="DPPointer" idref="freq.pointers"/>
      </input>
 
 
     <input spec="DPNtdRateSiteModel" id="dpNtdRateSiteModel">
-         <input name="ntdBMAList" idref="dpNtdBMA"/>
-         <input name="ratesList" idref="ratesList"/>
-         <input name="ratesPointers" idref="rates.pointers"/>
+         <ntdBMAList idref="dpNtdBMA"/>
+         <ratesList idref="ratesList"/>
+         <ratesPointers idref="rates.pointers"/>
      </input>
 
 
