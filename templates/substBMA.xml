@@ -163,6 +163,115 @@
                 <dpVal idref="dpValuable.$(n)"/>
             </input>
 
+            <input spec="DPNtdRateSiteModel" id="dpNtdRateSiteModel.s:$(n)">
+                <ntdBMAList idref="dpNtdBMA.s:$(n)"/>
+                <ratesList idref="ratesList.s:$(n)"/>
+                <ratesPointers idref="rates.pointers.s:$(n)"/>
+            </input>
+
+             <input spec="DPNtdBMA" id="dpNtdBMA.s:$(n)">
+                 <paramList spec="ParameterList" idref="parameterList.s:$(n)"/>
+                 <modelList spec="ParameterList" idref="modelList.s:$(n)"/>
+                 <freqsList spec="ParameterList" idref="freqsList.s:$(n)"/>
+                 <pointers spec="DPPointer" idref="freq.pointers.s:$(n)"/>
+             </input>
+
+            <input spec="ParameterList" id="parameterList.s:$(n)">
+                <parameter spec="QuietRealParameter" id="parameter1.s:$(n)" value="0.0 0.0 0.0 0.0 0.0" upper="Infinity" lower="-Infinity"/>
+            </input>
+
+            <input spec="DPPointer" id="param.pointers.s:$(n)">
+                <uniqueParameter idref="parameter1.s:$(n)"/>
+                <initialAssignment spec="IntegerParameter" value="0" dimension="1389" lower="0"/>
+            </input>
+
+            <input spec="ParameterList" id="modelList.s:$(n)">
+                <parameter spec="QuietRealParameter" id="parameter2.s:$(n)" value="3.0" upper="5.0" lower="1.0"/>
+            </input>
+
+            <input spec="DPPointer" id="model.pointers.s:$(n)">
+                <uniqueParameter idref="parameter2.s:$(n)"/>
+                <initialAssignment spec="IntegerParameter" value="0" dimension="1389" lower="0"/>
+            </input>
+
+            <input spec="ParameterList" id="freqsList.s:$(n)">
+                <parameter spec="QuietRealParameter" id="parameter3.s:$(n)" value="0.25 0.25 0.25 0.25" upper="1.0" lower="0.0"/>
+            </input>
+
+            <input spec="DPPointer" id="freq.pointers.s:$(n)">
+                <uniqueParameter idref="parameter3.s:$(n)"/>
+                <initialAssignment spec="IntegerParameter" value="0" dimension="1389" lower="0"/>
+            </input>
+
+            <input spec="ParameterList" id="ratesList.s:$(n)">
+                <parameter spec="QuietRealParameter" id="parameter4.s:$(n)" value="0.001" upper="Infinity" lower="0.0"/>
+            </input>
+
+            <input spec="DPPointer" id="rates.pointers.s:$(n)">
+                <uniqueParameter idref="parameter4.s:$(n)"/>
+                <initialAssignment spec="IntegerParameter" value="0" dimension="1389" lower="0"/>
+            </input>
+
+            <input spec="SwitchingNtdBMA" id="tempNtdBMA.s:$(n)">
+                <logKappa spec="QuietRealParameter" value="0.0"/>
+                <logTN spec="QuietRealParameter" value="0.0"/>
+                <logAC spec="QuietRealParameter" value="0.0"/>
+                <logAT spec="QuietRealParameter" value="0.0"/>
+                <logGC spec="QuietRealParameter" value="0.0"/>
+                <modelChoose spec="QuietRealParameter" value="1.0"/>
+                <frequenciesParameter spec="QuietRealParameter" value="0.25 0.25 0.25 0.25"/>
+            </input>
+
+            <!-- site model                                                              -->
+            <input spec='QuietSiteModel' id="dummySiteModel.s:$(n)">
+                <substModel idref='tempNtdBMA.s:$(n)'/>
+                <mutationRate spec="QuietRealParameter" value="1.0"/>
+            </input>
+
+            <input spec='TempTreeLikelihood' id="tempTreeLikelihood1.s:$(n)">
+                <data idref="data"/>
+                <tree idref="Tree.t:$(n)"/>
+                <siteModel idref="dummySiteModel.s:$(n)"/>
+                <branchRateModel idref="StrictClock.c:$(n)"/>
+            </input>
+            <input spec='TempWVTreeLikelihood' id="tempTreeLikelihood2.s:$(n)">
+                <data idref="data"/>
+                <tree idref="Tree.t:$(n)"/>
+                <siteModel idref="dummySiteModel.s:$(n)"/>
+                <branchRateModel idref="StrictClock.c:$(n)"/>
+            </input>
+            <input spec="DPValuable" id="dpValuable.s:$(n)">
+                <paramList spec="ParameterList" idref="freqsList.s:$(n)"/>
+                <pointers spec="DPPointer" idref="freq.pointers.s:$(n)"/>
+            </input>
+
+            <input spec="CompoundDirichletProcess" id="cpdp.s:$(n)">
+                <dpVal idref="dpValuable.s:$(n)"/>
+                <baseDistr spec="beast.math.distributions.MultivariateNormal">
+                    <mean spec="RealParameter" id="mvn.mean.s:$(n)"  value="2.11 0.548 0.216 0.359 -0.579"/>
+                    <precision id="mvn.precision.s:$(n)" spec="RealParameter" value="
+                        8.16 2.44 -0.060 -3.41 -1.59
+                        2.44 12.2 3.09 -4.70 0.194
+                        -0.060  3.09 6.95 -1.97 -1.38
+                        -3.41 -4.70 -1.97 7.70 -0.563
+                        -1.59 0.194 -1.38 -0.563 3.21"/>
+                </baseDistr>
+                <baseDistr spec="beast.math.distributions.CategoricalDistribution"  offset="1">
+                    <probs spec="RealParameter" id="categorical.prob.s:$(n)" value="0.2 0.2 0.2 0.2 0.2" lower="0.0"/>
+                </baseDistr>
+                <baseDistr spec="beast.math.distributions.DirichletDistribution">
+                    <alpha id="dirichlet.prob.s:$(n)" spec="RealParameter" value="0.25 0.25 0.25 0.25" lower="0" upper="Infinity"/>
+                    <scale id="dirichlet.scale.s:$(n)" spec="RealParameter" value="40.0" lower="0" upper="Infinity"/>
+                </baseDistr>
+                <baseDistr spec="beast.math.distributions.LogNormal" meanInRealSpace="false" sIsPrec="true">
+                    <M spec="RealParameter" id="lnorm.mean.s:$(n)" value="-7.685701" lower="-Infinity" upper="Infinity"/>
+                    <S spec="RealParameter" id="lnorm.prec.s:$(n)" value="1.267327" lower="0.0" upper="Infinity"/>
+                </baseDistr>
+                <alpha spec="RealParameter" value="0.0895" lower="0.0" upper="Infinity"/>
+            </input>
+
+
+
 	        <prior id='ClockPrior.c:$(n)' x='@clockRate.c:$(n)'><distr spec="beast.math.distributions.Uniform" upper='Infinity'/></prior>
 	        <prior id='MutationRatePrior.s:$(n)' x='@mutationRate.s:$(n)'><distr spec="OneOnX"/></prior>
 

@@ -152,19 +152,19 @@
 
 
     <input spec="SwitchingNtdBMA" id="tempNtdBMA">
-        <input name="logKappa" spec="QuietRealParameter" value="0.0"/>
-        <input name="logTN" spec="QuietRealParameter" value="0.0"/>
-        <input name="logAC" spec="QuietRealParameter" value="0.0"/>
-        <input name="logAT" spec="QuietRealParameter" value="0.0"/>
-        <input name="logGC" spec="QuietRealParameter" value="0.0"/>
-        <input name="modelChoose" spec="QuietRealParameter" value="1.0"/>
-        <input name="frequenciesParameter" spec="QuietRealParameter" value="0.25 0.25 0.25 0.25"/>
+        <logKappa spec="QuietRealParameter" value="0.0"/>
+        <logTN spec="QuietRealParameter" value="0.0"/>
+        <logAC spec="QuietRealParameter" value="0.0"/>
+        <logAT spec="QuietRealParameter" value="0.0"/>
+        <logGC spec="QuietRealParameter" value="0.0"/>
+        <modelChoose spec="QuietRealParameter" value="1.0"/>
+        <frequenciesParameter spec="QuietRealParameter" value="0.25 0.25 0.25 0.25"/>
     </input>
 
     <!-- site model                                                              -->
     <input spec='QuietSiteModel' id="dummySiteModel">
         <substModel idref='tempNtdBMA'/>
-        <input name="mutationRate" spec="QuietRealParameter" value="1.0"/>
+        <mutationRate spec="QuietRealParameter" value="1.0"/>
     </input>
 
     <input spec='TempTreeLikelihood' id="tempTreeLikelihood1">
@@ -180,58 +180,58 @@
         <branchRateModel idref="strict.clock"/>
     </input>
     <input spec="DPValuable" id="dpValuable">
-        <input spec="ParameterList" name="paramList" idref="freqsList"/>
-        <input spec="DPPointer" name="pointers" idref="freq.pointers"/>
+        <paramList spec="ParameterList" idref="freqsList"/>
+        <pointers spec="DPPointer" idref="freq.pointers"/>
     </input>
 
     <input spec="CompoundDirichletProcess" id="cpdp">
-        <input name="dpVal" idref="dpValuable"/>
-        <input name="baseDistr" spec="beast.math.distributions.MultivariateNormal">
-            <input name="mean" spec="RealParameter" id="mvn.mean"  value="2.11 0.548 0.216 0.359 -0.579"/>
-            <input name="precision" id="mvn.precision" spec="RealParameter" value="
+        <dpVal idref="dpValuable"/>
+        <baseDistr spec="beast.math.distributions.MultivariateNormal">
+            <mean spec="RealParameter" id="mvn.mean"  value="2.11 0.548 0.216 0.359 -0.579"/>
+            <precision id="mvn.precision" spec="RealParameter" value="
                 8.16 2.44 -0.060 -3.41 -1.59
                 2.44 12.2 3.09 -4.70 0.194
                 -0.060  3.09 6.95 -1.97 -1.38
                 -3.41 -4.70 -1.97 7.70 -0.563
                 -1.59 0.194 -1.38 -0.563 3.21"/>
-        </input>
-        <input name="baseDistr" spec="beast.math.distributions.CategoricalDistribution"  offset="1">
-            <input spec="RealParameter" name="probs" id="categorical.prob" value="0.2 0.2 0.2 0.2 0.2" lower="0.0"/>
-        </input>
-        <input name="baseDistr" spec="beast.math.distributions.DirichletDistribution">
-            <input name="alpha" id="dirichlet.prob" spec="RealParameter" value="0.25 0.25 0.25 0.25" lower="0" upper="Infinity"/>
-            <input name="scale" id="dirichlet.scale" spec="RealParameter" value="40.0" lower="0" upper="Infinity"/>
-        </input>
-        <input name="baseDistr" spec="beast.math.distributions.LogNormal" meanInRealSpace="false" sIsPrec="true">
-            <input name="M" spec="RealParameter" id="lnorm.mean" value="-7.685701" lower="-Infinity" upper="Infinity"/>
-            <input name="S" spec="RealParameter" id="lnorm.prec" value="1.267327" lower="0.0" upper="Infinity"/>
-        </input>
-        <input name="alpha" spec="RealParameter" value="0.0895" lower="0.0" upper="Infinity"/>
+        </baseDistr>
+        <baseDistr spec="beast.math.distributions.CategoricalDistribution"  offset="1">
+            <probs spec="RealParameter" id="categorical.prob" value="0.2 0.2 0.2 0.2 0.2" lower="0.0"/>
+        </baseDistr>
+        <baseDistr spec="beast.math.distributions.DirichletDistribution">
+            <alpha id="dirichlet.prob" spec="RealParameter" value="0.25 0.25 0.25 0.25" lower="0" upper="Infinity"/>
+            <scale id="dirichlet.scale" spec="RealParameter" value="40.0" lower="0" upper="Infinity"/>
+        </baseDistr>
+        <baseDistr spec="beast.math.distributions.LogNormal" meanInRealSpace="false" sIsPrec="true">
+            <M spec="RealParameter" id="lnorm.mean" value="-7.685701" lower="-Infinity" upper="Infinity"/>
+            <S spec="RealParameter" id="lnorm.prec" value="1.267327" lower="0.0" upper="Infinity"/>
+        </baseDistr>
+        <alpha spec="RealParameter" value="0.0895" lower="0.0" upper="Infinity"/>
     </input>
 
 
     <run spec="MCMC" id="mcmc" chainLength="100000000"> <!--autoOptimize="true"-->
         <state>
-            <input name='stateNode' idref='parameterList'/>
-            <input name='stateNode' idref='modelList'/>
-            <input name='stateNode' idref='freqsList'/>
-            <input name='stateNode' idref='ratesList'/>
-            <input name='stateNode' idref='param.pointers'/>
-            <input name='stateNode' idref='model.pointers'/>
-            <input name='stateNode' idref='freq.pointers'/>
-            <input name='stateNode' idref='rates.pointers'/>
-            <input name="stateNode" idref="tree"/>
-            <input name='stateNode' idref="lnorm.mean"/>
-            <input name='stateNode' idref="lnorm.prec"/>
-            <input name="stateNode" idref="dirichlet.scale"/>
-            <input name="stateNode" idref="dirichlet.prob"/>
-            <input name="stateNode" idref="categorical.prob"/>
-            <input name="stateNode" idref="dirichletPriorOncategorialProbs"/>
-            <input name='stateNode' idref="mvn.mean"/>
-            <input name='stateNode' idref="mvn.precision"/>
-            <input name="stateNode" idref="mvnPriorMean"/>
-            <input name="stateNode" idref="mvnPriorPrecision"/>
-            <input name="stateNode" idref="wishartPriorScale"/>
+            <stateNode idref='parameterList'/>
+            <stateNode idref='modelList'/>
+            <stateNode idref='freqsList'/>
+            <stateNode idref='ratesList'/>
+            <stateNode idref='param.pointers'/>
+            <stateNode idref='model.pointers'/>
+            <stateNode idref='freq.pointers'/>
+            <stateNode idref='rates.pointers'/>
+            <stateNode idref="tree"/>
+            <stateNode idref="lnorm.mean"/>
+            <stateNode idref="lnorm.prec"/>
+            <stateNode idref="dirichlet.scale"/>
+            <stateNode idref="dirichlet.prob"/>
+            <stateNode idref="categorical.prob"/>
+            <stateNode idref="dirichletPriorOncategorialProbs"/>
+            <stateNode idref="mvn.mean"/>
+            <stateNode idref="mvn.precision"/>
+            <stateNode idref="mvnPriorMean"/>
+            <stateNode idref="mvnPriorPrecision"/>
+            <stateNode idref="wishartPriorScale"/>
 	        <parameter name='stateNode' id="skyline.popSize" dimension="5" value="50.0" lower="0.0" upper="Infinity"/>
             <stateNode spec='parameter.IntegerParameter' id='skyline.groupSize' value="11 7 8 1 4" lower="0"/>
         </state>
@@ -248,19 +248,19 @@
 				jeffreys="true"
 				parameter="@skyline.popSize"/>
             <distribution id="hMean.prior" spec="beast.math.distributions.Prior">
-                 <input name="distr" spec="beast.math.distributions.Normal" mean="-7.685701" sigma="1.267327"/>
+                 <distr spec="beast.math.distributions.Normal" mean="-7.685701" sigma="1.267327"/>
                  <x idref="lnorm.mean"/>
              </distribution>
             <distribution id="hCV.prior" spec="beast.math.distributions.Prior">
-                 <input name="distr" spec="beast.math.distributions.Gamma" alpha="1.0" beta="10"/>
+                 <distr spec="beast.math.distributions.Gamma" alpha="1.0" beta="10"/>
                  <x idref="lnorm.prec"/>
              </distribution>
             <distribution id="dScale.prior" spec="beast.math.distributions.Prior">
-                <input name="distr" spec="beast.math.distributions.Gamma" alpha="0.001" beta="1000"/>
+                <distr spec="beast.math.distributions.Gamma" alpha="0.001" beta="1000"/>
                 <x idref="dirichlet.scale"/>
             </distribution>
              <distribution id="mvnmean.prior" spec="beast.math.distributions.Prior">
-                 <input name="distr" spec="beast.math.distributions.MultivariateNormal">
+                 <distr spec="beast.math.distributions.MultivariateNormal">
                      <input name="mean" spec="RealParameter" id="mvnPriorMean"  value="2.11 0.548 0.216 0.359 -0.579"/>
                      <parameter name="precision" id="mvnPriorPrecision" value="
                         8.16 2.44 -0.060 -3.41 -1.59
@@ -268,11 +268,11 @@
                         -0.060  3.09 6.95 -1.97 -1.38
                         -3.41 -4.70 -1.97 7.70 -0.563
                         -1.59 0.194 -1.38 -0.563 3.21"/>
-                 </input>
+                 </distr>
                  <x idref="mvn.mean"/>
              </distribution>
             <distribution id="mvnprecision.prior" spec="beast.math.distributions.Prior">
-                 <input name="distr" spec="beast.math.distributions.Wishart" df="7">
+                 <distr spec="beast.math.distributions.Wishart" df="7">
                      <parameter name="scaleMatrix" id="wishartPriorScale" value="
                         8.16 0 0 0 0
                         0 12.2 0 0 0
@@ -280,11 +280,11 @@
                         0 0 0 7.70 0
                         0 0 0 0 3.21
                         "/>
-                 </input>
+                 </distr>
                  <x idref="mvn.precision"/>
              </distribution>
             <distribution id="prior" spec="beast.math.distributions.ParameterListsPrior" applyToList="true">
-                <input name="distr" idref="cpdp"/>
+                <distr idref="cpdp"/>
                 <xList idref="parameterList"/>
                 <xList idref="modelList"/>
                 <xList idref="freqsList"/>
@@ -296,10 +296,10 @@
 
 
          <operator id="upDOwnOp" spec="UpDownOperator" scaleFactor="0.75" weight="6">
-            <input name="up" idref="ratesList"/>
-            <input name="up" idref="lnorm.mean"/>
-            <input name="down" idref="tree"/>
-            <input name="down" idref="skyline.popSize"/>
+            <up idref="ratesList"/>
+            <up idref="lnorm.mean"/>
+            <down idref="tree"/>
+            <down idref="skyline.popSize"/>
         </operator>
 
         <operator id='popSizesScaler' spec='ScaleOperator' scaleFactor="0.75" weight="15" parameter="@skyline.popSize"/>
@@ -315,53 +315,53 @@
         <operator spec='WilsonBalding' weight="1" tree="@tree"/>
 
         <operator id="dpps1" spec="NtdBMARateDPPGibbsSampler" weight="10" sampleSize="5">
-            <input name="tempLikelihood" idref="tempTreeLikelihood1"/>
-            <input name="parameterList" idref="parameterList"/>
-            <input name="parameterPointers" idref="param.pointers"/>
-            <input name="modelList" idref="modelList"/>
-            <input name="modelPointers" idref="model.pointers"/>
-            <input name="freqsList" idref="freqsList"/>
-            <input name="freqPointers" idref="freq.pointers"/>
-            <input name="ratesList" idref="ratesList"/>
-            <input name="ratesPointers" idref="rates.pointers"/>
-            <input name="dirichletProcess" idref="cpdp"/>
-            <input name="dpTreeLik" idref="treeLikelihood"/>
-            <input name="dpVal" idref="dpValuable"/>
+            <tempLikelihood idref="tempTreeLikelihood1"/>
+            <parameterList idref="parameterList"/>
+            <parameterPointers idref="param.pointers"/>
+            <modelList idref="modelList"/>
+            <modelPointers idref="model.pointers"/>
+            <freqsList idref="freqsList"/>
+            <freqPointers idref="freq.pointers"/>
+            <ratesList idref="ratesList"/>
+            <ratesPointers idref="rates.pointers"/>
+            <dirichletProcess idref="cpdp"/>
+            <dpTreeLik idref="treeLikelihood"/>
+            <dpVal idref="dpValuable"/>
         </operator>
 
         <operator id="dpps2" spec="NtdBMARateSAMSPriorOperator" weight="3">
-            <input name="tempLikelihood" idref="tempTreeLikelihood2"/>
-            <input name="parameterList" idref="parameterList"/>
-            <input name="parameterPointers" idref="param.pointers"/>
-            <input name="modelList" idref="modelList"/>
-            <input name="modelPointers" idref="model.pointers"/>
-            <input name="freqsList" idref="freqsList"/>
-            <input name="freqPointers" idref="freq.pointers"/>
-            <input name="ratesList" idref="ratesList"/>
-            <input name="ratesPointers" idref="rates.pointers"/>
-            <input name="dirichletProcess" idref="cpdp"/>
-            <input name="dpTreeLik" idref="treeLikelihood"/>
-            <input name="dpVal" idref="dpValuable"/>
+            <tempLikelihood idref="tempTreeLikelihood2"/>
+            <parameterList idref="parameterList"/>
+            <parameterPointers idref="param.pointers"/>
+            <modelList idref="modelList"/>
+            <modelPointers idref="model.pointers"/>
+            <freqsList idref="freqsList"/>
+            <freqPointers idref="freq.pointers"/>
+            <ratesList idref="ratesList"/>
+            <ratesPointers idref="rates.pointers"/>
+            <dirichletProcess idref="cpdp"/>
+            <dpTreeLik idref="treeLikelihood"/>
+            <dpVal idref="dpValuable"/>
         </operator>
 
         <operator id="plerrwo" spec="PLExtendedRealRandomWalkOperator" windowSizes="0.5 0.1 0.1 0.1 0.1" weight="4">
-            <input name="parameters" idref="parameterList"/>
+            <parameters idref="parameterList"/>
         </operator>
         <operator id="PLNetworkIntRandomWalk" spec="PLNetworkIntRandomWalkOperator" weight="2" offset="1">
-            <input id="k80" spec='Vertex' name="vertex" idNum="0" neighbours="2"/>
-            <input id="f81" spec='Vertex' name="vertex" idNum="1" neighbours="2"/>
-            <input id="hky85" spec='Vertex' name="vertex" idNum="2" neighbours="0 1 3"/>
-            <input id="tn93" spec='Vertex' name="vertex" idNum="3" neighbours="2 4"/>
-            <input id="gtr" spec='Vertex' name="vertex" idNum="4" neighbours="3"/>
-            <input name="parameters" idref="modelList"/>
+            <vertex id="k80" spec='Vertex' idNum="0" neighbours="2"/>
+            <vertex id="f81" spec='Vertex' idNum="1" neighbours="2"/>
+            <vertex id="hky85" spec='Vertex' idNum="2" neighbours="0 1 3"/>
+            <vertex id="tn93" spec='Vertex' idNum="3" neighbours="2 4"/>
+            <vertex id="gtr" spec='Vertex' idNum="4" neighbours="3"/>
+            <parameters idref="modelList"/>
         </operator>
 
         <operator id="pldeo" spec="PLDeltaExchangeOperator" delta="0.05" weight="4">
-            <input name="parameterList" idref="freqsList"/>
+            <parameterList idref="freqsList"/>
         </operator>
 
         <operator id="plso" spec="PLScaleOperator" scaleFactor="0.75" weight="4">
-            <input name="parameters" idref="ratesList"/>
+            <parameters idref="ratesList"/>
         </operator>
 
         <operator spec='ScaleOperator' scaleFactor="0.75" weight="0.2" parameter="@dirichlet.scale"/>
@@ -370,27 +370,27 @@
         <operator id='hCVScaler' spec='ScaleOperator' scaleFactor="0.75" weight="0.5" parameter="@lnorm.prec"/>
 
         <operator spec="beast.evolution.operators.CategoricalPDirichletPriorSampler" weight="0.5" offset="1">
-            <input name="categorialProbs" idref="categorical.prob"/>
-            <input name="x" idref="modelList"/>
-            <input name="dirichletPriorCounts" id="dirichletPriorOncategorialProbs" spec="RealParameter" value="1.0 1.0 1.0 1.0 1.0"/>
+            <categorialProbs idref="categorical.prob"/>
+            <x idref="modelList"/>
+            <dirichletPriorCounts id="dirichletPriorOncategorialProbs" spec="RealParameter" value="1.0 1.0 1.0 1.0 1.0"/>
         </operator>
 
         <operator spec='DeltaExchangeOperator' delta="0.1" weight="0.2" parameter="@categorical.prob"/>
 
         <operator id='hMVNMeanRandomWalk' spec='ExtendedRealRandomWalkOperator' windowSizes="1 0.25 0.1 0.1 0.1" weight="0.3" useGaussian="true" parameter="@mvn.mean"/>
         <operator spec="MeanMVNSampler" weight="1">
-            <input name="priorMean" idref="mvnPriorMean"/>
-            <input name="priorPrecision" idref="mvnPriorPrecision"/>
-            <input name="x" idref="parameterList"/>
-            <input name="mean" idref="mvn.mean"/>
-            <input name="precision" idref="mvn.precision"/>
+            <priorMean idref="mvnPriorMean"/>
+            <priorPrecision idref="mvnPriorPrecision"/>
+            <x idref="parameterList"/>
+            <mean idref="mvn.mean"/>
+            <precision idref="mvn.precision"/>
         </operator>
 
         <operator spec="PrecisionWishartSampler" weight="0.5" df="7">
-            <input name="scaleMatrix" idref="wishartPriorScale"/>
-            <input name="mean" idref="mvn.mean"/>
-            <input name="precision" idref="mvn.precision"/>
-            <input name="x" idref="parameterList"/>
+            <scaleMatrix idref="wishartPriorScale"/>
+            <mean idref="mvn.mean"/>
+            <precision idref="mvn.precision"/>
+            <x idref="parameterList"/>
         </operator>
 
 
