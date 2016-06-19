@@ -482,73 +482,73 @@
             <!--connect method="substBMA.beauti.CMConnector.customConnector"/-->
 
             <!-- substBMA-specific state -->
-            <connect srcID="parameterList.s:$(n)" targetID="state" inputName="stateNode"/>
-            <connect srcID="modelList.s:$(n)" targetID="state" inputName="stateNode"/>
-            <connect srcID="freqsList.s:$(n)" targetID="state" inputName="stateNode"/>
-            <connect srcID="ratesList.s:$(n)" targetID="state" inputName="stateNode"/>
-            <connect srcID="param.pointers.s:$(n)" targetID="state" inputName="stateNode"/>
-            <connect srcID="model.pointers.s:$(n)" targetID="state" inputName="stateNode"/>
-            <connect srcID="freq.pointers.s:$(n)" targetID="state" inputName="stateNode"/>
-            <connect srcID="rates.pointers.s:$(n)" targetID="state" inputName="stateNode"/>
-            <connect srcID="lnorm.mean.s:$(n)" targetID="state" inputName="stateNode"/>
-            <connect srcID="lnorm.prec.s:$(n)" targetID="state" inputName="stateNode"/>
-            <connect srcID="dirichlet.scale.s:$(n)" targetID="state" inputName="stateNode"/>
-            <connect srcID="dirichlet.prob.s:$(n)" targetID="state" inputName="stateNode"/>
-            <connect srcID="categorical.prob.s:$(n)" targetID="state" inputName="stateNode"/>
-            <connect srcID="dirichletPriorOnCategoricalProbs.s:$(n)" targetID="state" inputName="stateNode"/>
-            <connect srcID="mvn.mean.s:$(n)" targetID="state" inputName="stateNode"/>
-            <connect srcID="mvn.precision.s:$(n)" targetID="state" inputName="stateNode"/>
-            <connect srcID="mvnPriorMean.s:$(n)" targetID="state" inputName="stateNode"/>
-            <connect srcID="mvnPriorPrecision.s:$(n)" targetID="state" inputName="stateNode"/>
-            <connect srcID="wishartPriorScale.s:$(n)" targetID="state" inputName="stateNode"/>
+            <connect srcID="parameterList.s:$(n)" targetID="state" inputName="stateNode" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="modelList.s:$(n)" targetID="state" inputName="stateNode" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="freqsList.s:$(n)" targetID="state" inputName="stateNode" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="ratesList.s:$(n)" targetID="state" inputName="stateNode" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="param.pointers.s:$(n)" targetID="state" inputName="stateNode" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="model.pointers.s:$(n)" targetID="state" inputName="stateNode" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="freq.pointers.s:$(n)" targetID="state" inputName="stateNode" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="rates.pointers.s:$(n)" targetID="state" inputName="stateNode" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="lnorm.mean.s:$(n)" targetID="state" inputName="stateNode" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="lnorm.prec.s:$(n)" targetID="state" inputName="stateNode" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="dirichlet.scale.s:$(n)" targetID="state" inputName="stateNode" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="dirichlet.prob.s:$(n)" targetID="state" inputName="stateNode" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="categorical.prob.s:$(n)" targetID="state" inputName="stateNode" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="dirichletPriorOnCategoricalProbs.s:$(n)" targetID="state" inputName="stateNode" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="mvn.mean.s:$(n)" targetID="state" inputName="stateNode" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="mvn.precision.s:$(n)" targetID="state" inputName="stateNode" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="mvnPriorMean.s:$(n)" targetID="state" inputName="stateNode" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="mvnPriorPrecision.s:$(n)" targetID="state" inputName="stateNode" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="wishartPriorScale.s:$(n)" targetID="state" inputName="stateNode" if="inlikelihood(treeLikelihood.$(n))"/>
 
             <!-- substBMA-specific priors -->
-            <connect srcID="hMean.prior.s:$(n)" targetID="prior" inputName="distribution"/>
-            <connect srcID="hCV.prior.s:$(n)" targetID="prior" inputName="distribution"/>
-            <connect srcID="dScale.prior.s:$(n)" targetID="prior" inputName="distribution"/>
-            <connect srcID="mvnmean.prior.s:$(n)" targetID="prior" inputName="distribution"/>
-            <connect srcID="mvnprecision.prior.s:$(n)" targetID="prior" inputName="distribution"/>
-            <connect srcID="paramListPrior.s:$(n)" targetID="prior" inputName="distribution"/>
+            <connect srcID="hMean.prior.s:$(n)" targetID="prior" inputName="distribution" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="hCV.prior.s:$(n)" targetID="prior" inputName="distribution" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="dScale.prior.s:$(n)" targetID="prior" inputName="distribution" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="mvnmean.prior.s:$(n)" targetID="prior" inputName="distribution" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="mvnprecision.prior.s:$(n)" targetID="prior" inputName="distribution" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="paramListPrior.s:$(n)" targetID="prior" inputName="distribution" if="inlikelihood(treeLikelihood.$(n))"/>
 
             <!-- substBMA-specific operators -->
-            <connect srcID="upDownOp.s:$(n)" targetID="mcmc" inputName="operator"/>
-            <connect srcID="dpps1.s:$(n)" targetID="mcmc" inputName="operator"/>
-            <connect srcID="dpps2.s:$(n)" targetID="mcmc" inputName="operator"/>
-            <connect srcID="plerrwo.s:$(n)" targetID="mcmc" inputName="operator"/>
-            <connect srcID="PLNetworkIntRandomWalk.s:$(n)" targetID="mcmc" inputName="operator"/>
-            <connect srcID="pldeo.s:$(n)" targetID="mcmc" inputName="operator"/>
-            <connect srcID="plso.s:$(n)" targetID="mcmc" inputName="operator"/>
-            <connect srcID="DPScaleScaler.s:$(n)" targetID="mcmc" inputName="operator"/>
-            <connect srcID="DPProbExchange.s:$(n)" targetID="mcmc" inputName="operator"/>
-            <connect srcID="hMeanRandomWalk.s:$(n)" targetID="mcmc" inputName="operator"/>
-            <connect srcID="hCVScaler.s:$(n)" targetID="mcmc" inputName="operator"/>
-            <connect srcID="CPDPSampler.s:$(n)" targetID="mcmc" inputName="operator"/>
-            <connect srcID="CPExchange.s:$(n)" targetID="mcmc" inputName="operator"/>
-            <connect srcID="hMVNMeanRandomWalk.s:$(n)" targetID="mcmc" inputName="operator"/>
-            <connect srcID="meanMVNSampler.s:$(n)" targetID="mcmc" inputName="operator"/>
-            <connect srcID="precisionWishartSampler.s:$(n)" targetID="mcmc" inputName="operator"/>
+            <connect srcID="upDownOp.s:$(n)" targetID="mcmc" inputName="operator" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="dpps1.s:$(n)" targetID="mcmc" inputName="operator" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="dpps2.s:$(n)" targetID="mcmc" inputName="operator" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="plerrwo.s:$(n)" targetID="mcmc" inputName="operator" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="PLNetworkIntRandomWalk.s:$(n)" targetID="mcmc" inputName="operator" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="pldeo.s:$(n)" targetID="mcmc" inputName="operator" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="plso.s:$(n)" targetID="mcmc" inputName="operator" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="DPScaleScaler.s:$(n)" targetID="mcmc" inputName="operator" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="DPProbExchange.s:$(n)" targetID="mcmc" inputName="operator" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="hMeanRandomWalk.s:$(n)" targetID="mcmc" inputName="operator" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="hCVScaler.s:$(n)" targetID="mcmc" inputName="operator" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="CPDPSampler.s:$(n)" targetID="mcmc" inputName="operator" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="CPExchange.s:$(n)" targetID="mcmc" inputName="operator" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="hMVNMeanRandomWalk.s:$(n)" targetID="mcmc" inputName="operator" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="meanMVNSampler.s:$(n)" targetID="mcmc" inputName="operator" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="precisionWishartSampler.s:$(n)" targetID="mcmc" inputName="operator" if="inlikelihood(treeLikelihood.$(n))"/>
 
             <!-- substBMA-specific logs -->
-            <connect srcID="dpValuable.s:$(n)" targetID="screenlog" inputName="log"/>
-            <connect srcID="dpValuable.s:$(n)" targetID="tracelog" inputName="log"/>
-            <connect srcID="mvnmean.prior.s:$(n)" targetID="tracelog" inputName="log"/>
-            <connect srcID="mvnprecision.prior.s:$(n)" targetID="tracelog" inputName="log"/>
-            <connect srcID="lnorm.mean.s:$(n)" targetID="tracelog" inputName="log"/>
-            <connect srcID="lnorm.prec.s:$(n)" targetID="tracelog" inputName="log"/>
-            <connect srcID="dirichlet.scale.s:$(n)" targetID="tracelog" inputName="log"/>
-            <connect srcID="dirichlet.prob.s:$(n)" targetID="tracelog" inputName="log"/>
-            <connect srcID="categorical.prob.s:$(n)" targetID="tracelog" inputName="log"/>
-            <connect srcID="mvn.mean.s:$(n)" targetID="tracelog" inputName="log"/>
-            <connect srcID="mvn.precision.s:$(n)" targetID="tracelog" inputName="log"/>
+            <connect srcID="dpValuable.s:$(n)" targetID="screenlog" inputName="log" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="dpValuable.s:$(n)" targetID="tracelog" inputName="log" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="mvnmean.prior.s:$(n)" targetID="tracelog" inputName="log" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="mvnprecision.prior.s:$(n)" targetID="tracelog" inputName="log" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="lnorm.mean.s:$(n)" targetID="tracelog" inputName="log" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="lnorm.prec.s:$(n)" targetID="tracelog" inputName="log" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="dirichlet.scale.s:$(n)" targetID="tracelog" inputName="log" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="dirichlet.prob.s:$(n)" targetID="tracelog" inputName="log" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="categorical.prob.s:$(n)" targetID="tracelog" inputName="log" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="mvn.mean.s:$(n)" targetID="tracelog" inputName="log" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="mvn.precision.s:$(n)" targetID="tracelog" inputName="log" if="inlikelihood(treeLikelihood.$(n))"/>
 
-            <connect srcID="paramListLog.s:$(n)" targetID="mcmc" inputName="logger"/>
-            <connect srcID="modelListLog.s:$(n)" targetID="mcmc" inputName="logger"/>
-            <connect srcID="freqsListLog.s:$(n)" targetID="mcmc" inputName="logger"/>
-            <connect srcID="ratesListLog.s:$(n)" targetID="mcmc" inputName="logger"/>
-            <connect srcID="substListIdLog.s:$(n)" targetID="mcmc" inputName="logger"/>
-            <connect srcID="ratesListIdLog.s:$(n)" targetID="mcmc" inputName="logger"/>
-            <connect srcID="substPointersIdLog.s:$(n)" targetID="mcmc" inputName="logger"/>
-            <connect srcID="ratesPointersIdLog.s:$(n)" targetID="mcmc" inputName="logger"/>
+            <connect srcID="paramListLog.s:$(n)" targetID="mcmc" inputName="logger" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="modelListLog.s:$(n)" targetID="mcmc" inputName="logger" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="freqsListLog.s:$(n)" targetID="mcmc" inputName="logger" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="ratesListLog.s:$(n)" targetID="mcmc" inputName="logger" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="substListIdLog.s:$(n)" targetID="mcmc" inputName="logger" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="ratesListIdLog.s:$(n)" targetID="mcmc" inputName="logger" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="substPointersIdLog.s:$(n)" targetID="mcmc" inputName="logger" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="ratesPointersIdLog.s:$(n)" targetID="mcmc" inputName="logger" if="inlikelihood(treeLikelihood.$(n))"/>
 
             <connect srcID='treeLikelihood.$(n)'            targetID='likelihood' inputName='distribution' if="isInitializing"/>
             <connect srcID='YuleModel.t:$(n)'               targetID='prior' inputName='distribution' if="isInitializing"/>
