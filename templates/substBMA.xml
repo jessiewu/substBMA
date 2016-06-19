@@ -116,11 +116,14 @@
 		<mergepoint id='aux-sitemodel-panels'/>
         -->
 
+        <!--
 		<panel spec='BeautiPanelConfig' panelname="Clock Model" tiptext="Clock model"
             path='branchRateModel'
             hasPartitions="ClockModel" icon='4.png.x' forceExpansion='TRUE'
         />
 		<mergepoint id='aux-clockmodel-panels'/>
+		-->
+
 		<panel spec='BeautiPanelConfig' panelname="Initialization" tiptext="Initial state"
             path='state/stateNode'
             hasPartitions="none" icon='6.png.x' forceExpansion='TRUE_START_COLLAPSED'
@@ -316,8 +319,6 @@
               </distribution>
 
 
-	        <prior id='ClockPrior.c:$(n)' x='@clockRate.c:$(n)'><distr spec="beast.math.distributions.Uniform" upper='Infinity'/></prior>
-
             <!-- tree and its properties -->
             <taxonset id='TaxonSet.$(n)' spec='beast.evolution.alignment.TaxonSet' alignment='@$(n)' />
             <plugin spec='beast.evolution.tree.Tree' id='Tree.t:$(n)' taxonset='@TaxonSet.$(n)'/>
@@ -354,12 +355,13 @@
 
             <prior id='YuleBirthRatePrior.t:$(n)' x='@birthRate.t:$(n)'><distr spec="beast.math.distributions.Uniform" lower='0' upper='Infinity'/></prior>
   		    <operator id='YuleBirthRateScaler.t:$(n)' spec='ScaleOperator' scaleFactor="0.75" weight="3" parameter="@birthRate.t:$(n)"/>
-			<operator id='StrictClockRateScaler.c:$(n)' spec='ScaleOperator' scaleFactor="0.75" weight="3" parameter='@clockRate.c:$(n)'/>
-			<!-- need updown operator for clockRate?!? Also in SubstModel.xml -->
-			<upDownOperator id='strictClockUpDownOperator.c:$(n)' spec='UpDownOperator' scaleFactor="0.75" weight="3">
-				<up idref="clockRate.c:$(n)"/>
-				<down idref="Tree.t:$(n)"/>
-			</upDownOperator>
+
+
+             <operator id="upDownOp.s:$(n)" spec="UpDownOperator" scaleFactor="0.75" weight="6">
+                <up idref="ratesList.s:$(n)"/>
+                <up idref="lnorm.mean.s:$(n)"/>
+                <down idref="Tree.t:$(n)"/>
+            </operator>
 
             <operator id="dpps1.s:$(n)" spec="NtdBMARateDPPGibbsSampler" weight="10" sampleSize="5">
               <tempLikelihood idref="tempTreeLikelihood1.s:$(n)"/>
@@ -412,22 +414,22 @@
               <parameters idref="ratesList.s:$(n)"/>
           </operator>
 
-          <operator spec='ScaleOperator' scaleFactor="0.75" weight="0.2" parameter="@dirichlet.scale.s:$(n)"/>
-          <operator spec='DeltaExchangeOperator' delta="0.05" weight="0.6" parameter="@dirichlet.prob.s:$(n)"/>
+          <operator id="DPScaleScaler.s:$(n)" spec='ScaleOperator' scaleFactor="0.75" weight="0.2" parameter="@dirichlet.scale.s:$(n)"/>
+          <operator id="DPProbExchange.s:$(n)" spec='DeltaExchangeOperator' delta="0.05" weight="0.6" parameter="@dirichlet.prob.s:$(n)"/>
           <operator id='hMeanRandomWalk.s:$(n)' spec='RealRandomWalkOperator' windowSize="0.5" weight="0.5" parameter="@lnorm.mean.s:$(n)"/>
           <operator id='hCVScaler.s:$(n)' spec='ScaleOperator' scaleFactor="0.75" weight="0.5" parameter="@lnorm.prec.s:$(n)"/>
 
-          <operator spec="beast.evolution.operators.CategoricalPDirichletPriorSampler" weight="0.5" offset="1">
+          <operator id="CPDPSampler.s:$(n)" spec="beast.evolution.operators.CategoricalPDirichletPriorSampler" weight="0.5" offset="1">
               <categorialProbs idref="categorical.prob.s:$(n)"/>
               <x idref="modelList.s:$(n)"/>
-              <dirichletPriorCounts id="dirichletPriorOncategorialProbs.s:$(n)" spec="beast.core.parameter.RealParameter" value="1.0 1.0 1.0 1.0 1.0"/>
+              <dirichletPriorCounts id="dirichletPriorOnCategoricalProbs.s:$(n)" spec="beast.core.parameter.RealParameter" value="1.0 1.0 1.0 1.0 1.0"/>
           </operator>
 
-          <operator spec='DeltaExchangeOperator' delta="0.1" weight="0.2" parameter="@categorical.prob.s:$(n)"/>
+          <operator id="CPExchange.s:$(n)" spec='DeltaExchangeOperator' delta="0.1" weight="0.2" parameter="@categorical.prob.s:$(n)"/>
 
           <operator id='hMVNMeanRandomWalk.s:$(n)' spec='ExtendedRealRandomWalkOperator' windowSizes="1 0.25 0.1 0.1 0.1"
                 weight="0.3" useGaussian="true" parameter="@mvn.mean.s:$(n)"/>
-          <operator spec="MeanMVNSampler" weight="1">
+          <operator id="meanMVNSampler.s:$(n)" spec="MeanMVNSampler" weight="1">
               <priorMean idref="mvnPriorMean.s:$(n)"/>
               <priorPrecision idref="mvnPriorPrecision.s:$(n)"/>
               <x idref="parameterList.s:$(n)"/>
@@ -435,7 +437,7 @@
               <precision idref="mvn.precision.s:$(n)"/>
           </operator>
 
-          <operator spec="PrecisionWishartSampler" weight="0.5" df="7">
+          <operator id="precisionWishartSampler.s:$(n)" spec="PrecisionWishartSampler" weight="0.5" df="7">
               <scaleMatrix idref="wishartPriorScale.s:$(n)"/>
               <mean idref="mvn.mean.s:$(n)"/>
               <precision idref="mvn.precision.s:$(n)"/>
@@ -444,9 +446,11 @@
 
 ]]>
 
+            <!-- substBMA-specific state -->
             <connect srcID="parameterList.s:$(n)" targetID="state" inputName="stateNode"/>
             <connect srcID="modelList.s:$(n)" targetID="state" inputName="stateNode"/>
             <connect srcID="freqsList.s:$(n)" targetID="state" inputName="stateNode"/>
+            <connect srcID="ratesList.s:$(n)" targetID="state" inputName="stateNode"/>
             <connect srcID="param.pointers.s:$(n)" targetID="state" inputName="stateNode"/>
             <connect srcID="model.pointers.s:$(n)" targetID="state" inputName="stateNode"/>
             <connect srcID="freq.pointers.s:$(n)" targetID="state" inputName="stateNode"/>
@@ -456,13 +460,14 @@
             <connect srcID="dirichlet.scale.s:$(n)" targetID="state" inputName="stateNode"/>
             <connect srcID="dirichlet.prob.s:$(n)" targetID="state" inputName="stateNode"/>
             <connect srcID="categorical.prob.s:$(n)" targetID="state" inputName="stateNode"/>
-            <connect srcID="dirichletPriorOncategoricalProbs.s:$(n)" targetID="state" inputName="stateNode"/>
+            <connect srcID="dirichletPriorOnCategoricalProbs.s:$(n)" targetID="state" inputName="stateNode"/>
             <connect srcID="mvn.mean.s:$(n)" targetID="state" inputName="stateNode"/>
             <connect srcID="mvn.precision.s:$(n)" targetID="state" inputName="stateNode"/>
             <connect srcID="mvnPriorMean.s:$(n)" targetID="state" inputName="stateNode"/>
             <connect srcID="mvnPriorPrecision.s:$(n)" targetID="state" inputName="stateNode"/>
             <connect srcID="wishartPriorScale.s:$(n)" targetID="state" inputName="stateNode"/>
 
+            <!-- substBMA-specific priors -->
             <connect srcID="hMean.prior.s:$(n)" targetID="prior" inputName="distribution"/>
             <connect srcID="hCV.prior.s:$(n)" targetID="prior" inputName="distribution"/>
             <connect srcID="dScale.prior.s:$(n)" targetID="prior" inputName="distribution"/>
@@ -470,26 +475,38 @@
             <connect srcID="mvnprecision.prior.s:$(n)" targetID="prior" inputName="distribution"/>
             <connect srcID="paramListPrior.s:$(n)" targetID="prior" inputName="distribution"/>
 
+            <!-- substBMA-specific operators -->
+            <connect srcID="upDownOp.s:$(n)" targetID="mcmc" inputName="operator"/>
+            <connect srcID="dpps1.s:$(n)" targetID="mcmc" inputName="operator"/>
+            <connect srcID="dpps2.s:$(n)" targetID="mcmc" inputName="operator"/>
+            <connect srcID="plerrwo.s:$(n)" targetID="mcmc" inputName="operator"/>
+            <connect srcID="PLNetworkIntRandomWalk.s:$(n)" targetID="mcmc" inputName="operator"/>
+            <connect srcID="pldeo.s:$(n)" targetID="mcmc" inputName="operator"/>
+            <connect srcID="plso.s:$(n)" targetID="mcmc" inputName="operator"/>
+            <connect srcID="DPScaleScaler.s:$(n)" targetID="mcmc" inputName="operator"/>
+            <connect srcID="DPProbExchange.s:$(n)" targetID="mcmc" inputName="operator"/>
+            <connect srcID="hMeanRandomWalk.s:$(n)" targetID="mcmc" inputName="operator"/>
+            <connect srcID="hCVScaler.s:$(n)" targetID="mcmc" inputName="operator"/>
+            <connect srcID="CPDPSampler.s:$(n)" targetID="mcmc" inputName="operator"/>
+            <connect srcID="CPExchange.s:$(n)" targetID="mcmc" inputName="operator"/>
+            <connect srcID="hMVNMeanRandomWalk.s:$(n)" targetID="mcmc" inputName="operator"/>
+            <connect srcID="meanMVNSampler.s:$(n)" targetID="mcmc" inputName="operator"/>
+            <connect srcID="precisionWishartSampler.s:$(n)" targetID="mcmc" inputName="operator"/>
+
+
             <connect srcID='treeLikelihood.$(n)'            targetID='likelihood' inputName='distribution' if="isInitializing"/>
             <connect srcID='YuleModel.t:$(n)'               targetID='prior' inputName='distribution' if="isInitializing"/>
 
             <connect srcID='treelog.t:$(n)'                 targetID='mcmc' inputName='logger' if='inposterior(Tree.t:$(n)) and Tree.t:$(n)/estimate=true'/>
             <connect srcID='RandomTree.t:$(n)'                targetID='mcmc' inputName='init'   if='inposterior(Tree.t:$(n))'/>
 
-            <connect srcID='ClockPrior.c:$(n)'                targetID='prior' inputName='distribution' if='inlikelihood(clockRate.c:$(n)) and clockRate.c:$(n)/estimate=true'/>
 <!-- when FixMeanMutationRatesOperator, the prior is uniform due to the operator -->
 
             <connect srcID='Tree.t:$(n)'                      targetID='state' inputName='stateNode' if='inposterior(Tree.t:$(n)) and Tree.t:$(n)/estimate=true'/>
-            <connect srcID='clockRate.c:$(n)'                 targetID='state' inputName='stateNode' if='inlikelihood(clockRate.c:$(n)) and clockRate.c:$(n)/estimate=true'/>
             <connect srcID='birthRate.t:$(n)'                 targetID='state' inputName='stateNode' if='inposterior(YuleModel.t:$(n)) and inposterior(Tree.t:$(n)) and birthRate.t:$(n)/estimate=true'/>
 
 
-            <connect srcID='StrictClockRateScaler.c:$(n)'     targetID='mcmc' inputName='operator' if='inlikelihood(clockRate.c:$(n)) and clockRate.c:$(n)/estimate=true'>Scale clock rate of partition c:$(n)</connect>
             <connect srcID='YuleBirthRateScaler.t:$(n)'       targetID='mcmc' inputName='operator' if='inposterior(birthRate.t:$(n)) and birthRate.t:$(n)/estimate=true'>Scales birth rate of Yule prior for partition t:$(n)</connect>
-            <connect srcID='strictClockUpDownOperator.c:$(n)' targetID='mcmc' inputName='operator'
-                     if='nooperator(FixMeanRatesOperator) and inlikelihood(clockRate.c:$(n)) and inlikelihood(Tree.t:$(n)) and Tree.t:$(n)/estimate=true and clockRate.c:$(n)/estimate=true'>
-                Scale up substitution rate c:$(n) and scale down tree t:($n)
-            </connect>
 
             <connect srcID='allTipDatesRandomWalker.t:$(n)'   targetID='mcmc' inputName='operator' if='inposterior(Tree.t:$(n)) and Tree.t:$(n)/estimate=true and allTipDatesRandomWalker.t:$(n)/weight!=0.0'>Estimates tip dates for tree t:$(n)</connect>
 
@@ -503,7 +520,6 @@
 
             <connect srcID='treeLikelihood.$(n)'              targetID='tracelog' inputName='log' if='inlikelihood(treeLikelihood.$(n))'/>
             <connect srcID='TreeHeight.t:$(n)'                targetID='tracelog' inputName='log' if='inposterior(Tree.t:$(n))  and Tree.t:$(n)/estimate=true'/>
-            <connect srcID='clockRate.c:$(n)'                 targetID='tracelog' inputName='log' if='inlikelihood(clockRate.c:$(n)) and clockRate.c:$(n)/estimate=true'/>
             <connect srcID='YuleModel.t:$(n)'                 targetID='tracelog' inputName='log' if='inposterior(YuleModel.t:$(n)) and inposterior(Tree.t:$(n)) and Tree.t:$(n)/estimate=true'/>
             <connect srcID='birthRate.t:$(n)'                 targetID='tracelog' inputName='log' if='inposterior(YuleModel.t:$(n)) and birthRate.t:$(n)/estimate=true'/>
 
