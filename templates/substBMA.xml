@@ -18,7 +18,8 @@
     <beauticonfig spec='BeautiConfig'
         inputLabelMap='beast.core.MCMC.operator=Operators,
 	        beast.core.MCMC.logger=Loggers,
-			beast.evolution.sitemodel.SiteModel.mutationRate =Substitution Rate'
+			beast.evolution.sitemodel.SiteModel.mutationRate=Substitution Rate,
+			beast.math.distributions.Wishart.df=Degrees of freedom'
         inlinePlugins ='beast.core.MCMC.distribution,
             beast.evolution.sitemodel.SiteModel.substModel,
             beast.evolution.tree.coalescent.ExponentialGrowth,
@@ -116,13 +117,11 @@
 		<mergepoint id='aux-sitemodel-panels'/>
         -->
 
-        <!--
 		<panel spec='BeautiPanelConfig' panelname="Clock Model" tiptext="Clock model"
             path='branchRateModel'
             hasPartitions="ClockModel" icon='4.png.x' forceExpansion='TRUE'
         />
 		<mergepoint id='aux-clockmodel-panels'/>
-		-->
 
 		<panel spec='BeautiPanelConfig' panelname="Initialization" tiptext="Initial state"
             path='state/stateNode'
@@ -235,13 +234,15 @@
                 <data idref="data"/>
                 <tree idref="Tree.t:$(n)"/>
                 <siteModel idref="dummySiteModel.s:$(n)"/>
-                <branchRateModel idref="StrictClock.c:$(n)"/>
+                <!-- <branchRateModel idref="StrictClock.c:$(n)"/> -->
+                <trueLikelihood idref="treeLikelihood.$(n)"/>
             </input>
             <input spec='TempWVTreeLikelihood' id="tempTreeLikelihood2.s:$(n)">
                 <data idref="data"/>
                 <tree idref="Tree.t:$(n)"/>
                 <siteModel idref="dummySiteModel.s:$(n)"/>
-                <branchRateModel idref="StrictClock.c:$(n)"/>
+                <!-- <branchRateModel idref="StrictClock.c:$(n)"/> -->
+                <trueLikelihood idref="treeLikelihood.$(n)"/>
             </input>
             <input spec="beast.core.parameter.DPValuable" id="dpValuable.s:$(n)">
                 <paramList spec="beast.core.parameter.ParameterList" idref="freqsList.s:$(n)"/>
@@ -477,6 +478,9 @@
         </logger>
 
 ]]>
+            <!-- substBMA-specific custom connectors -->
+            <!--connect method="substBMA.beauti.CMConnector.customConnector"/-->
+
             <!-- substBMA-specific state -->
             <connect srcID="parameterList.s:$(n)" targetID="state" inputName="stateNode"/>
             <connect srcID="modelList.s:$(n)" targetID="state" inputName="stateNode"/>
