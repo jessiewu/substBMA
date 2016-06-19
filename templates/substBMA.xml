@@ -463,6 +463,13 @@
             <connect srcID="mvnPriorPrecision.s:$(n)" targetID="state" inputName="stateNode"/>
             <connect srcID="wishartPriorScale.s:$(n)" targetID="state" inputName="stateNode"/>
 
+            <connect srcID="hMean.prior.s:$(n)" targetID="prior" inputName="distribution"/>
+            <connect srcID="hCV.prior.s:$(n)" targetID="prior" inputName="distribution"/>
+            <connect srcID="dScale.prior.s:$(n)" targetID="prior" inputName="distribution"/>
+            <connect srcID="mvnmean.prior.s:$(n)" targetID="prior" inputName="distribution"/>
+            <connect srcID="mvnprecision.prior.s:$(n)" targetID="prior" inputName="distribution"/>
+            <connect srcID="paramListPrior.s:$(n)" targetID="prior" inputName="distribution"/>
+
             <connect srcID='treeLikelihood.$(n)'            targetID='likelihood' inputName='distribution' if="isInitializing"/>
             <connect srcID='YuleModel.t:$(n)'               targetID='prior' inputName='distribution' if="isInitializing"/>
 
