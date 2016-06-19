@@ -444,6 +444,38 @@
               <x idref="parameterList.s:$(n)"/>
           </operator>
 
+         <logger id="paramListLog.s:$(n)" logEvery="10000" fileName="$(filebase)_paramList.log">
+             <log idref="parameterList.s:$(n)"/>
+         </logger>
+
+         <logger id="modelListLog.s:$(n)" logEvery="10000" fileName="$(filebase)_modelList.log">
+             <log idref="modelList.s:$(n)"/>
+         </logger>
+
+         <logger id="freqsListLog.s:$(n)" logEvery="10000" fileName="$(filebase)_freqsList.log">
+             <log idref="freqsList.s:$(n)"/>
+         </logger>
+
+         <logger id="ratesListLog.s:$(n)" logEvery="10000" fileName="$(filebase)_ratesList.log">
+             <log idref="ratesList.s:$(n)"/>
+         </logger>
+
+        <logger id="substListIdLog.s:$(n)" logEvery="10000" fileName="$(filebase)_subst.list.idNum.log">
+            <log spec="PrintListIDNumber" id="subst.list.print.s:$(n)" paramList="@freqsList.s:$(n)"/>
+        </logger>
+
+        <logger id="ratesListIdLog.s:$(n)" logEvery="10000" fileName="$(filebase)_rates.list.idNum.log">
+            <log spec="PrintListIDNumber" id="rates.list.print.s:$(n)" paramList="@freqsList.s:$(n)"/>
+        </logger>
+
+        <logger id="substPointersIdLog.s:$(n)" logEvery="10000" fileName="$(filebase)_subst.pointers.idNum.log">
+            <log spec="PrintPointerIDNumber" id="subst.pointers.print.s:$(n)" pointers="@freq.pointers.s:$(n)"/>
+        </logger>
+
+        <logger id="ratesPointersIdLog.s:$(n)" logEvery="10000" fileName="$(filebase)_rates.pointers.idNum.log">
+            <log spec="PrintPointerIDNumber" id="rates.pointers.print.s:$(n)" pointers="@rates.pointers.s:$(n)"/>
+        </logger>
+
 ]]>
 
             <!-- substBMA-specific state -->
@@ -493,6 +525,27 @@
             <connect srcID="meanMVNSampler.s:$(n)" targetID="mcmc" inputName="operator"/>
             <connect srcID="precisionWishartSampler.s:$(n)" targetID="mcmc" inputName="operator"/>
 
+            <!-- substBMA-specific logs -->
+            <connect srcID="dpValuable.s:$(n)" targetID="screenlog" inputName="log"/>
+            <connect srcID="dpValuable.s:$(n)" targetID="tracelog" inputName="log"/>
+            <connect srcID="mvnmean.prior.s:$(n)" targetID="tracelog" inputName="log"/>
+            <connect srcID="mvnprecision.prior.s:$(n)" targetID="tracelog" inputName="log"/>
+            <connect srcID="lnorm.mean.s:$(n)" targetID="tracelog" inputName="log"/>
+            <connect srcID="lnorm.prec.s:$(n)" targetID="tracelog" inputName="log"/>
+            <connect srcID="dirichlet.scale.s:$(n)" targetID="tracelog" inputName="log"/>
+            <connect srcID="dirichlet.prob.s:$(n)" targetID="tracelog" inputName="log"/>
+            <connect srcID="categorical.prob.s:$(n)" targetID="tracelog" inputName="log"/>
+            <connect srcID="mvn.mean.s:$(n)" targetID="tracelog" inputName="log"/>
+            <connect srcID="mvn.precision.s:$(n)" targetID="tracelog" inputName="log"/>
+
+            <connect srcID="paramListLog.s:$(n)" targetID="mcmc" inputName="logger"/>
+            <connect srcID="modelListLog.s:$(n)" targetID="mcmc" inputName="logger"/>
+            <connect srcID="freqsListLog.s:$(n)" targetID="mcmc" inputName="logger"/>
+            <connect srcID="ratesListLog.s:$(n)" targetID="mcmc" inputName="logger"/>
+            <connect srcID="substListIdLog.s:$(n)" targetID="mcmc" inputName="logger"/>
+            <connect srcID="ratesListIdLog.s:$(n)" targetID="mcmc" inputName="logger"/>
+            <connect srcID="substPointersIdLog.s:$(n)" targetID="mcmc" inputName="logger"/>
+            <connect srcID="ratesPointersIdLog.s:$(n)" targetID="mcmc" inputName="logger"/>
 
             <connect srcID='treeLikelihood.$(n)'            targetID='likelihood' inputName='distribution' if="isInitializing"/>
             <connect srcID='YuleModel.t:$(n)'               targetID='prior' inputName='distribution' if="isInitializing"/>
