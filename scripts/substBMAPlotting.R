@@ -22,9 +22,9 @@ readTableWithoutFirstColumn <- function(filename, ...) {
 loadData <- function(prefix, burninFrac=0.1) {
 
     # Read in data
-    modelList <- readAsList(paste(prefix,"_modelList_1.log", sep=""))
-    substListPrint <-  readAsList(paste(prefix,"_subst.list.idNum_1.log", sep=""))
-    substListPointers <- readTableWithoutFirstColumn(paste(prefix,"_subst.pointers.idNum_1.log", sep=""), header=T)
+    modelList <- readAsList(paste(prefix,"_modelList.log", sep=""))
+    substListPrint <-  readAsList(paste(prefix,"_subst.list.idNum.log", sep=""))
+    substListPointers <- readTableWithoutFirstColumn(paste(prefix,"_subst.pointers.idNum.log", sep=""), header=T)
 
     # Remove burnin
     modelList <- modelList[-(1:ceiling(burninFrac*length(modelList)))]
