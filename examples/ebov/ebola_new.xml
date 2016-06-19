@@ -406,7 +406,7 @@
         </logger>
 
 
-        <logger logEvery="10000" fileName="$(filebase)_1.log">
+        <logger logEvery="10000" fileName="$(filebase).log">
             <log idref="posterior"/>
             <log idref="prior"/>
             <log idref="skyline"/>
@@ -426,39 +426,39 @@
             <log idref="mvn.precision"/>
         </logger>
 
-        <logger logEvery="10000" fileName="$(filebase)_1.trees">
+        <logger logEvery="10000" fileName="$(filebase).trees">
              <log idref="tree"/>
          </logger>
 
-         <logger logEvery="10000" fileName="$(filebase)_paramList_1.log">
+         <logger logEvery="10000" fileName="$(filebase)_paramList.log">
              <log idref="parameterList"/>
          </logger>
 
-         <logger logEvery="10000" fileName="$(filebase)_modelList_1.log">
+         <logger logEvery="10000" fileName="$(filebase)_modelList.log">
              <log idref="modelList"/>
          </logger>
 
-         <logger logEvery="10000" fileName="$(filebase)_freqsList_1.log">
+         <logger logEvery="10000" fileName="$(filebase)_freqsList.log">
              <log idref="freqsList"/>
          </logger>
 
-         <logger logEvery="10000" fileName="$(filebase)_ratesList_1.log">
+         <logger logEvery="10000" fileName="$(filebase)_ratesList.log">
              <log idref="ratesList"/>
          </logger>
 
-        <logger logEvery="10000" fileName="$(filebase)_subst.list.idNum_1.log">
+        <logger logEvery="10000" fileName="$(filebase)_subst.list.idNum.log">
             <log spec="PrintListIDNumber" id="subst.list.print" paramList="@freqsList"/>
         </logger>
 
-        <logger logEvery="10000" fileName="$(filebase)_rates.list.idNum_1.log">
+        <logger logEvery="10000" fileName="$(filebase)_rates.list.idNum.log">
             <log spec="PrintListIDNumber" id="rates.list.print" paramList="@freqsList"/>
         </logger>
 
-        <logger logEvery="10000" fileName="$(filebase)_subst.pointers.idNum_1.log">
+        <logger logEvery="10000" fileName="$(filebase)_subst.pointers.idNum.log">
             <log spec="PrintPointerIDNumber" id="subst.pointers.print" pointers="@freq.pointers"/>
         </logger>
 
-        <logger logEvery="10000" fileName="$(filebase)_rates.pointers.idNum_1.log">
+        <logger logEvery="10000" fileName="$(filebase)_rates.pointers.idNum.log">
             <log spec="PrintPointerIDNumber" id="rates.pointers.print" pointers="@rates.pointers"/>
         </logger>
 
