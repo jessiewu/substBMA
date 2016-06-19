@@ -443,6 +443,26 @@
           </operator>
 
 ]]>
+
+            <connect srcID="parameterList.s:$(n)" targetID="state" inputName="stateNode"/>
+            <connect srcID="modelList.s:$(n)" targetID="state" inputName="stateNode"/>
+            <connect srcID="freqsList.s:$(n)" targetID="state" inputName="stateNode"/>
+            <connect srcID="param.pointers.s:$(n)" targetID="state" inputName="stateNode"/>
+            <connect srcID="model.pointers.s:$(n)" targetID="state" inputName="stateNode"/>
+            <connect srcID="freq.pointers.s:$(n)" targetID="state" inputName="stateNode"/>
+            <connect srcID="rates.pointers.s:$(n)" targetID="state" inputName="stateNode"/>
+            <connect srcID="lnorm.mean.s:$(n)" targetID="state" inputName="stateNode"/>
+            <connect srcID="lnorm.prec.s:$(n)" targetID="state" inputName="stateNode"/>
+            <connect srcID="dirichlet.scale.s:$(n)" targetID="state" inputName="stateNode"/>
+            <connect srcID="dirichlet.prob.s:$(n)" targetID="state" inputName="stateNode"/>
+            <connect srcID="categorical.prob.s:$(n)" targetID="state" inputName="stateNode"/>
+            <connect srcID="dirichletPriorOncategoricalProbs.s:$(n)" targetID="state" inputName="stateNode"/>
+            <connect srcID="mvn.mean.s:$(n)" targetID="state" inputName="stateNode"/>
+            <connect srcID="mvn.precision.s:$(n)" targetID="state" inputName="stateNode"/>
+            <connect srcID="mvnPriorMean.s:$(n)" targetID="state" inputName="stateNode"/>
+            <connect srcID="mvnPriorPrecision.s:$(n)" targetID="state" inputName="stateNode"/>
+            <connect srcID="wishartPriorScale.s:$(n)" targetID="state" inputName="stateNode"/>
+
             <connect srcID='treeLikelihood.$(n)'            targetID='likelihood' inputName='distribution' if="isInitializing"/>
             <connect srcID='YuleModel.t:$(n)'               targetID='prior' inputName='distribution' if="isInitializing"/>
 
