@@ -247,6 +247,7 @@
             <distribution id='eml1' spec="beast.math.distributions.MarkovChainDistribution"
 				jeffreys="true"
 				parameter="@skyline.popSize"/>
+
             <distribution id="hMean.prior" spec="beast.math.distributions.Prior">
                  <distr spec="beast.math.distributions.Normal" mean="-7.685701" sigma="1.267327"/>
                  <x idref="lnorm.mean"/>
@@ -259,10 +260,11 @@
                 <distr spec="beast.math.distributions.Gamma" alpha="0.001" beta="1000"/>
                 <x idref="dirichlet.scale"/>
             </distribution>
+
              <distribution id="mvnmean.prior" spec="beast.math.distributions.Prior">
                  <distr spec="beast.math.distributions.MultivariateNormal">
-                     <input name="mean" spec="RealParameter" id="mvnPriorMean"  value="2.11 0.548 0.216 0.359 -0.579"/>
-                     <parameter name="precision" id="mvnPriorPrecision" value="
+                     <mean spec="RealParameter" id="mvnPriorMean"  value="2.11 0.548 0.216 0.359 -0.579"/>
+                     <precision spec="RealParameter" id="mvnPriorPrecision" value="
                         8.16 2.44 -0.060 -3.41 -1.59
                         2.44 12.2 3.09 -4.70 0.194
                         -0.060  3.09 6.95 -1.97 -1.38
@@ -273,7 +275,7 @@
              </distribution>
             <distribution id="mvnprecision.prior" spec="beast.math.distributions.Prior">
                  <distr spec="beast.math.distributions.Wishart" df="7">
-                     <parameter name="scaleMatrix" id="wishartPriorScale" value="
+                     <scaleMatrix spec="RealParameter" id="wishartPriorScale" value="
                         8.16 0 0 0 0
                         0 12.2 0 0 0
                         0  0 6.95 0 0
