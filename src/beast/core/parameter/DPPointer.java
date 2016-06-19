@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.io.PrintStream;
 
+import beast.evolution.alignment.Alignment;
 import org.w3c.dom.Node;
 
 /**
@@ -25,12 +26,13 @@ public class DPPointer extends StateNode {
 
     public Input<IntegerParameter> assignmentInput = new Input<IntegerParameter>(
             "initialAssignment",
-            "a parameter which specifies the assignment of elements to clusters",
-            Input.Validate.REQUIRED
+            "a parameter which specifies the assignment of elements to clusters"
     );
 
-
-
+    public Input<Alignment> alignmentInput = new Input<>(
+            "alignment",
+            "Use this alignment (if given) to set the size of the IntegerParamter.",
+            Input.Validate.XOR, assignmentInput);
 
 
     protected QuietRealParameter[] parameters;
@@ -51,14 +53,27 @@ public class DPPointer extends StateNode {
 
     }
 
+    @Override
     public void initAndValidate(){
-        IntegerParameter initialAssignment = assignmentInput.get();
+
         List<QuietRealParameter> uniqueParameters = uniqueParametersInput.get();
-        parameters = new QuietRealParameter[initialAssignment.getDimension()];
-        storedParameters = new QuietRealParameter[initialAssignment.getDimension()];
-        for(int i = 0; i < parameters.length;i++){
-            parameters[i] = uniqueParameters.get(initialAssignment.getValue(i));
+        IntegerParameter initialAssignment = assignmentInput.get();
+
+        int nSites = initialAssignment != null
+                ? initialAssignment.getDimension()
+                : alignmentInput.get().getSiteCount();
+
+        parameters = new QuietRealParameter[nSites];
+        storedParameters = new QuietRealParameter[nSites];
+
+        if (assignmentInput.get() != null) {
+            for (int i = 0; i < parameters.length; i++)
+                parameters[i] = uniqueParameters.get(initialAssignment.getValue(i));
+        } else {
+            for (int i = 0; i< parameters.length; i++)
+                parameters[i] = uniqueParameters.get(0);
         }
+
         System.arraycopy(parameters,0,storedParameters,0,parameters.length);
         lastSwappedSites = new int[2];
     }

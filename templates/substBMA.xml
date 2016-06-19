@@ -185,7 +185,7 @@
 
             <input spec="beast.core.parameter.DPPointer" id="param.pointers.s:$(n)">
                 <uniqueParameter idref="parameter1.s:$(n)"/>
-                <initialAssignment spec="beast.core.parameter.IntegerParameter" value="0" dimension="1389" lower="0"/>
+                <alignment idref="data"/>
             </input>
 
             <input spec="beast.core.parameter.ParameterList" id="modelList.s:$(n)">
@@ -194,7 +194,7 @@
 
             <input spec="beast.core.parameter.DPPointer" id="model.pointers.s:$(n)">
                 <uniqueParameter idref="parameter2.s:$(n)"/>
-                <initialAssignment spec="beast.core.parameter.IntegerParameter" value="0" dimension="1389" lower="0"/>
+                <alignment idref="data"/>
             </input>
 
             <input spec="beast.core.parameter.ParameterList" id="freqsList.s:$(n)">
@@ -203,7 +203,7 @@
 
             <input spec="beast.core.parameter.DPPointer" id="freq.pointers.s:$(n)">
                 <uniqueParameter idref="parameter3.s:$(n)"/>
-                <initialAssignment spec="beast.core.parameter.IntegerParameter" value="0" dimension="1389" lower="0"/>
+                <alignment idref="data"/>
             </input>
 
             <input spec="beast.core.parameter.ParameterList" id="ratesList.s:$(n)">
@@ -212,7 +212,7 @@
 
             <input spec="beast.core.parameter.DPPointer" id="rates.pointers.s:$(n)">
                 <uniqueParameter idref="parameter4.s:$(n)"/>
-                <initialAssignment spec="beast.core.parameter.IntegerParameter" value="0" dimension="1389" lower="0"/>
+                <alignment idref="data"/>
             </input>
 
             <input spec="SwitchingNtdBMA" id="tempNtdBMA.s:$(n)">
@@ -477,7 +477,6 @@
         </logger>
 
 ]]>
-
             <!-- substBMA-specific state -->
             <connect srcID="parameterList.s:$(n)" targetID="state" inputName="stateNode"/>
             <connect srcID="modelList.s:$(n)" targetID="state" inputName="stateNode"/>
