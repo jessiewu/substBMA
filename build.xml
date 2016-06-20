@@ -176,6 +176,7 @@
 
         <mkdir dir="${pack}"/>
         <mkdir dir="${pack}/examples"/>
+        <mkdir dir="${pack}/scripts"/>
         <mkdir dir="${pack}/templates"/>
         <mkdir dir="${pack}/lib"/>
         <mkdir dir="${pack}/doc"/>
@@ -200,6 +201,11 @@
             <fileset dir="${examples}" includes="**/*.fasta" />
             <fileset dir="${examples}" includes="**/*.fna" />
         </copy>
+
+        <copy todir="${pack}/scripts">
+            <fileset dir="scripts" includes="**/*" />
+        </copy>
+
 
         <mkdir dir="${templates}" />
         <copy todir="${pack}/templates">
