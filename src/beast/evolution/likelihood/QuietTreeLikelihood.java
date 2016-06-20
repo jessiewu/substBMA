@@ -1,6 +1,7 @@
 package beast.evolution.likelihood;
 
 import beast.core.Description;
+import beast.core.Input;
 import beast.evolution.alignment.Alignment;
 import beast.evolution.alignment.AscertainedAlignment;
 import beast.evolution.branchratemodel.BranchRateModel;
@@ -25,6 +26,8 @@ public class QuietTreeLikelihood extends TreeLikelihood{
     protected boolean useAmbiguities;
     private Scaling scale;
 
+    public Input<GenericTreeLikelihood> trueLikelihoodInput = new Input<>("trueLikelihood",
+            "If present, use this as source of branch rate model.");
 
 
     public QuietTreeLikelihood(){}
@@ -56,7 +59,11 @@ public class QuietTreeLikelihood extends TreeLikelihood{
         if (branchRateModelInput.get() != null) {
             branchRateModel = branchRateModelInput.get();
         } else {
-            branchRateModel = new StrictClockModel();
+            if (trueLikelihoodInput.get() != null) {
+                branchRateModel = trueLikelihoodInput.get().branchRateModelInput.get();
+            } else {
+                branchRateModel = new StrictClockModel();
+            }
         }
         useAmbiguities = m_useAmbiguities.get();
         scale = scaling.get();

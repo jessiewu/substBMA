@@ -5,6 +5,7 @@ import beast.core.Input;
 import beast.core.parameter.RealParameter;
 import beast.evolution.alignment.Alignment;
 import beast.evolution.alignment.AlignmentSubset;
+import beast.evolution.branchratemodel.BranchRateModel;
 import beast.evolution.sitemodel.DPMultiAlignSiteModel;
 import beast.evolution.sitemodel.DummySiteModel;
 import beast.evolution.sitemodel.QuietSiteModel;
@@ -95,6 +96,11 @@ public class MultiAlignmentTempTreeLikelihood extends TempTreeLikelihood {
 
         //for(int iAlign = 0; iAlign < alignments.size(); iAlign++){
             //System.out.println(iAlign+" patternCount: "+alignments.get(iAlign).getPatternCount());
+
+            BranchRateModel.Base brModel = branchRateModelInput.get() != null
+                ? branchRateModelInput.get()
+                : trueLikelihoodInput.get().branchRateModelInput.get();
+
             for(int i = 0; i < firstPatternOccur.length; i++){
                 //System.out.println("i: "+i+" "+firstPatternOccur[i]);
                 AlignmentSubset sitePattern = new AlignmentSubset(alignments.get(patternAlignmentMap[i]),firstPatternOccur[i]);
@@ -103,7 +109,7 @@ public class MultiAlignmentTempTreeLikelihood extends TempTreeLikelihood {
                         treeInput.get(),
                         useAmbiguitiesInput.get(),
                         siteModels.get(patternAlignmentMap[i]),
-                        branchRateModelInput.get()
+                        brModel
                 );
                 treeLiks[i] = treeLik;
             }

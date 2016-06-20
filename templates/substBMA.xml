@@ -1,0 +1,663 @@
+<beast version='2.0'
+       namespace='beast.app.beauti:beast.core:beast.evolution.branchratemodel:beast.evolution.speciation:beast.evolution.tree.coalescent:beast.core.util:beast.evolution.nuc:beast.evolution.operators:beast.evolution.sitemodel:beast.evolution.substitutionmodel:beast.evolution.likelihood:beast.evolution:beast.math.distributions'
+	templateinfo='Template for substBMA'>
+
+<map name='connect' reserved='true'>beast.app.beauti.BeautiConnector</map>
+<map name='subtemplate' reserved='true'>beast.app.beauti.BeautiSubTemplate</map>
+<map name='Uniform'>beast.math.distributions.Uniform</map>
+<map name='Normal'>beast.math.distributions.Normal</map>
+<map name='OneOnX'>beast.math.distributions.OneOnX</map>
+<map name='LogNormal'>beast.math.distributions.LogNormalDistributionModel</map>
+<map name='Exponential'>beast.math.distributions.Exponential</map>
+<map name='Gamma'>beast.math.distributions.Gamma</map>
+<map name='Beta'>beast.math.distributions.Beta</map>
+<map name='LaplaceDistribution'>beast.math.distributions.LaplaceDistribution</map>
+<map name='InverseGamma'>beast.math.distributions.InverseGamma</map>
+<map name='prior'>beast.math.distributions.Prior</map>
+
+    <beauticonfig spec='BeautiConfig'
+        inputLabelMap='beast.core.MCMC.operator=Operators,
+	        beast.core.MCMC.logger=Loggers,
+			beast.evolution.sitemodel.SiteModel.mutationRate=Substitution Rate,
+			beast.math.distributions.Wishart.df=Degrees of freedom'
+        inlinePlugins ='beast.core.MCMC.distribution,
+            beast.evolution.sitemodel.SiteModel.substModel,
+            beast.evolution.tree.coalescent.ExponentialGrowth,
+            beast.evolution.tree.coalescent.ConstantPopulation,
+            beast.evolution.tree.coalescent.Coalescent,
+            beast.core.State.stateNode'
+        collapsedPlugins ='beast.core.MCMC.logger'
+        suppressPlugins = 'beast.core.MCMC.operator,
+    		beast.core.MCMC.operatorschedule,
+	        beast.evolution.tree.coalescent.Coalescent.treeIntervals,
+	        beast.evolution.tree.coalescent.Coalescent.tree,
+	        beast.core.MCMC.state,
+	        beast.core.MCMC.distribution,
+	        beast.core.MCMC.init,
+	        beast.evolution.speciation.BirthDeathGernhard08Model.treeIntervals,
+	        beast.evolution.speciation.BirthDeathGernhard08Model.tree,
+	        beast.evolution.speciation.BirthDeathGernhard08Model.sampleProbability,
+			beast.evolution.speciation.YuleModel.treeIntervals,
+			beast.evolution.speciation.YuleModel.useTipDates,
+			beast.evolution.speciation.YuleModel.tree,
+	        beast.evolution.tree.Tree,
+	        beast.evolution.tree.Tree.trait,
+	        beast.evolution.tree.Tree.taxa,
+	        beast.evolution.tree.Tree.taxonset,
+	        beast.evolution.tree.RandomTree.trait,
+	        beast.evolution.tree.RandomTree.initial,
+	        beast.evolution.tree.RandomTree.taxa,
+	        beast.evolution.tree.RandomTree.taxonset,
+	        beast.evolution.tree.RandomTree.estimate,
+	        beast.util.TreeParser.initial,
+	        beast.util.TreeParser.taxa,
+	        beast.util.TreeParser.taxonset,
+	        beast.util.TreeParser.trait,
+	        beast.util.TreeParser.estimate,
+	        beast.util.ClusterTree.initial,
+	        beast.util.ClusterTree.taxa,
+	        beast.util.ClusterTree.taxonset,
+	        beast.util.ClusterTree.trait,
+	        beast.util.ClusterTree.estimate,
+	        beast.evolution.substitutionmodel.WAG.rates,
+	        beast.evolution.substitutionmodel.WAG.frequencies,
+	        beast.evolution.substitutionmodel.JTT.rates,
+	        beast.evolution.substitutionmodel.JTT.frequencies,
+	        beast.evolution.substitutionmodel.Blosum62.rates,
+	        beast.evolution.substitutionmodel.Blosum62.frequencies,
+	        beast.evolution.substitutionmodel.Dayhoff.rates,
+	        beast.evolution.substitutionmodel.Dayhoff.frequencies,
+	        beast.evolution.substitutionmodel.CPREV.rates,
+	        beast.evolution.substitutionmodel.CPREV.frequencies,
+	        beast.evolution.substitutionmodel.MTREV.rates,
+	        beast.evolution.substitutionmodel.MTREV.frequencies,
+	        beast.evolution.substitutionmodel.GTR.rates,
+	        beast.evolution.substitutionmodel.JukesCantor.frequencies,
+            beast.math.distributions.Prior.x,
+            beast.math.distributions.MRCAPrior.tree,
+            beast.math.distributions.MRCAPrior.monophyletic,
+            beast.math.distributions.MRCAPrior.taxonset,
+            beast.evolution.branchratemodel.UCRelaxedClockModel.tree,
+            beast.evolution.branchratemodel.UCRelaxedClockModel.rateCategories,
+			beast.evolution.branchratemodel.UCRelaxedClockModel.distr,
+            beast.evolution.branchratemodel.RandomLocalClockModel.tree,
+            beast.evolution.branchratemodel.RandomLocalClockModel.meanRate,
+            beast.evolution.branchratemodel.RandomLocalClockModel.indicators,
+            beast.evolution.operators.ScaleOperator.indicator,
+	        beast.core.Operator.weight,
+            beast.core.Logger.model,
+            beast.evolution.tree.coalescent.BayesianSkyline.treeIntervals,
+            beast.evolution.tree.coalescent.BayesianSkyline.groupSizes,
+            beast.evolution.tree.coalescent.BayesianSkyline.popSizes,
+            beast.evolution.speciation.YuleModel.originHeight
+            '
+        buttonLabelMap='beast.app.beauti.BeautiInitDlg.&gt;&gt; details=Edit parameters'
+    >
+        <!--disableMenus='Mode'-->
+
+        <panel spec='BeautiPanelConfig' panelname="Partitions" tiptext="Data Partitions"
+            path='distribution/distribution[id="likelihood"]/distribution/data'
+            hasPartitions="none" icon='2220.png.x' forceExpansion='FALSE'
+            type='beast.evolution.alignment.Alignment'
+        />
+		<mergepoint id='aux-partitions-panels'/>
+
+		<panel spec='BeautiPanelConfig' panelname="Tip Dates" tiptext="Allows to specify data that a taxon was sampled"
+            path='tree'
+            hasPartitions="Tree" icon='2.png.x' forceExpansion='TRUE'
+            isVisible='true'
+        />
+		<mergepoint id='aux-tipdates-panels'/>
+
+        <!--
+		<panel spec='BeautiPanelConfig' panelname="Site Model" tiptext="Site model and substitution model specifications"
+            path='siteModel'
+            hasPartitions="SiteModel" icon='3.png.x' forceExpansion='TRUE'
+        />
+		<mergepoint id='aux-sitemodel-panels'/>
+        -->
+
+		<panel spec='BeautiPanelConfig' panelname="Clock Model" tiptext="Clock model"
+            path='branchRateModel'
+            hasPartitions="ClockModel" icon='4.png.x' forceExpansion='TRUE'
+        />
+		<mergepoint id='aux-clockmodel-panels'/>
+
+		<panel spec='BeautiPanelConfig' panelname="Initialization" tiptext="Initial state"
+            path='state/stateNode'
+            hasPartitions="none" icon='6.png.x' forceExpansion='TRUE_START_COLLAPSED'
+            isVisible='false'
+        />
+		<mergepoint id='aux-initilisation-panels'/>
+
+		<panel spec='BeautiPanelConfig' panelname="Priors" tiptext="Other priors"
+            path='distribution/distribution[id="prior"]/distribution'
+            hasPartitions="none" icon='7.png.x' forceExpansion='TRUE_START_COLLAPSED'
+            type='beast.core.Distribution'
+        />
+		<mergepoint id='aux-priors-panels'/>
+
+		<panel spec='BeautiPanelConfig' panelname="Operators" tiptext="MCMC Operator details"
+            path='operator'
+            hasPartitions="none" icon='8.png.x' forceExpansion='TRUE_START_COLLAPSED'
+            isVisible='false' buttonStatus='ADD_ONLY'
+        />
+		<mergepoint id='aux-operators-panels'/>
+
+		<panel spec='BeautiPanelConfig' panelname="MCMC" tiptext="MCMC parameters"
+            path=''
+            hasPartitions="none" icon='9.png.x' forceExpansion='TRUE'
+        />
+		<mergepoint id='aux-panels'/>
+
+		<alignmentProvider id="Import Alignment" spec='BeautiAlignmentProvider' template='@StandardPartitionTemplate'/>
+
+
+        <partitiontemplate id='StandardPartitionTemplate' spec='BeautiSubTemplate' class='beast.evolution.likelihood.DPTreeLikelihood' mainid='mcmc'>
+<![CDATA[
+            <input spec='DPTreeLikelihood' id="treeLikelihood.$(n)">
+                <data idref="data"/>
+                <tree idref="Tree.t:$(n)"/>
+                <siteModel idref="dpNtdRateSiteModel.s:$(n)"/>
+                <branchRateModel spec='StrictClockModel' id='StrictClock.c:$(n)'>
+                    <clock.rate id='clockRate.c:$(n)' spec='parameter.RealParameter' value='1.0' estimate='true'/>
+                </branchRateModel>
+                <dpVal idref="dpValuable.s:$(n)"/>
+            </input>
+
+            <input spec="DPNtdRateSiteModel" id="dpNtdRateSiteModel.s:$(n)">
+                <ntdBMAList idref="dpNtdBMA.s:$(n)"/>
+                <ratesList idref="ratesList.s:$(n)"/>
+                <ratesPointers idref="rates.pointers.s:$(n)"/>
+            </input>
+
+             <input spec="DPNtdBMA" id="dpNtdBMA.s:$(n)">
+                 <paramList spec="beast.core.parameter.ParameterList" idref="parameterList.s:$(n)"/>
+                 <modelList spec="beast.core.parameter.ParameterList" idref="modelList.s:$(n)"/>
+                 <freqsList spec="beast.core.parameter.ParameterList" idref="freqsList.s:$(n)"/>
+                 <pointers spec="beast.core.parameter.DPPointer" idref="freq.pointers.s:$(n)"/>
+             </input>
+
+            <input spec="beast.core.parameter.ParameterList" id="parameterList.s:$(n)">
+                <parameter spec="beast.core.parameter.QuietRealParameter" id="parameter1.s:$(n)" value="0.0 0.0 0.0 0.0 0.0" upper="Infinity" lower="-Infinity"/>
+            </input>
+
+            <input spec="beast.core.parameter.DPPointer" id="param.pointers.s:$(n)">
+                <uniqueParameter idref="parameter1.s:$(n)"/>
+                <alignment idref="data"/>
+            </input>
+
+            <input spec="beast.core.parameter.ParameterList" id="modelList.s:$(n)">
+                <parameter spec="beast.core.parameter.QuietRealParameter" id="parameter2.s:$(n)" value="3.0" upper="5.0" lower="1.0"/>
+            </input>
+
+            <input spec="beast.core.parameter.DPPointer" id="model.pointers.s:$(n)">
+                <uniqueParameter idref="parameter2.s:$(n)"/>
+                <alignment idref="data"/>
+            </input>
+
+            <input spec="beast.core.parameter.ParameterList" id="freqsList.s:$(n)">
+                <parameter spec="beast.core.parameter.QuietRealParameter" id="parameter3.s:$(n)" value="0.25 0.25 0.25 0.25" upper="1.0" lower="0.0"/>
+            </input>
+
+            <input spec="beast.core.parameter.DPPointer" id="freq.pointers.s:$(n)">
+                <uniqueParameter idref="parameter3.s:$(n)"/>
+                <alignment idref="data"/>
+            </input>
+
+            <input spec="beast.core.parameter.ParameterList" id="ratesList.s:$(n)">
+                <parameter spec="beast.core.parameter.QuietRealParameter" id="parameter4.s:$(n)" value="0.001" upper="Infinity" lower="0.0"/>
+            </input>
+
+            <input spec="beast.core.parameter.DPPointer" id="rates.pointers.s:$(n)">
+                <uniqueParameter idref="parameter4.s:$(n)"/>
+                <alignment idref="data"/>
+            </input>
+
+            <input spec="SwitchingNtdBMA" id="tempNtdBMA.s:$(n)">
+                <logKappa spec="beast.core.parameter.QuietRealParameter" value="0.0"/>
+                <logTN spec="beast.core.parameter.QuietRealParameter" value="0.0"/>
+                <logAC spec="beast.core.parameter.QuietRealParameter" value="0.0"/>
+                <logAT spec="beast.core.parameter.QuietRealParameter" value="0.0"/>
+                <logGC spec="beast.core.parameter.QuietRealParameter" value="0.0"/>
+                <modelChoose spec="beast.core.parameter.QuietRealParameter" value="1.0"/>
+                <frequenciesParameter spec="beast.core.parameter.QuietRealParameter" value="0.25 0.25 0.25 0.25"/>
+            </input>
+
+            <!-- site model                                                              -->
+            <input spec='QuietSiteModel' id="dummySiteModel.s:$(n)">
+                <substModel idref='tempNtdBMA.s:$(n)'/>
+                <mutationRate spec="beast.core.parameter.QuietRealParameter" value="1.0"/>
+            </input>
+
+            <input spec='TempTreeLikelihood' id="tempTreeLikelihood1.s:$(n)">
+                <data idref="data"/>
+                <tree idref="Tree.t:$(n)"/>
+                <siteModel idref="dummySiteModel.s:$(n)"/>
+                <!-- <branchRateModel idref="StrictClock.c:$(n)"/> -->
+                <trueLikelihood idref="treeLikelihood.$(n)"/>
+            </input>
+            <input spec='TempWVTreeLikelihood' id="tempTreeLikelihood2.s:$(n)">
+                <data idref="data"/>
+                <tree idref="Tree.t:$(n)"/>
+                <siteModel idref="dummySiteModel.s:$(n)"/>
+                <!-- <branchRateModel idref="StrictClock.c:$(n)"/> -->
+                <trueLikelihood idref="treeLikelihood.$(n)"/>
+            </input>
+            <input spec="beast.core.parameter.DPValuable" id="dpValuable.s:$(n)">
+                <paramList spec="beast.core.parameter.ParameterList" idref="freqsList.s:$(n)"/>
+                <pointers spec="beast.core.parameter.DPPointer" idref="freq.pointers.s:$(n)"/>
+            </input>
+
+            <input spec="CompoundDirichletProcess" id="cpdp.s:$(n)">
+                <dpVal idref="dpValuable.s:$(n)"/>
+                <baseDistr spec="beast.math.distributions.MultivariateNormal">
+                    <mean spec="beast.core.parameter.RealParameter" id="mvn.mean.s:$(n)"  value="2.11 0.548 0.216 0.359 -0.579"/>
+                    <precision id="mvn.precision.s:$(n)" spec="beast.core.parameter.RealParameter" value="
+                        8.16 2.44 -0.060 -3.41 -1.59
+                        2.44 12.2 3.09 -4.70 0.194
+                        -0.060  3.09 6.95 -1.97 -1.38
+                        -3.41 -4.70 -1.97 7.70 -0.563
+                        -1.59 0.194 -1.38 -0.563 3.21"/>
+                </baseDistr>
+                <baseDistr spec="beast.math.distributions.CategoricalDistribution"  offset="1">
+                    <probs spec="beast.core.parameter.RealParameter" id="categorical.prob.s:$(n)" value="0.2 0.2 0.2 0.2 0.2" lower="0.0"/>
+                </baseDistr>
+                <baseDistr spec="beast.math.distributions.DirichletDistribution">
+                    <alpha id="dirichlet.prob.s:$(n)" spec="beast.core.parameter.RealParameter" value="0.25 0.25 0.25 0.25" lower="0" upper="Infinity"/>
+                    <scale id="dirichlet.scale.s:$(n)" spec="beast.core.parameter.RealParameter" value="40.0" lower="0" upper="Infinity"/>
+                </baseDistr>
+                <baseDistr spec="beast.math.distributions.LogNormal" meanInRealSpace="false" sIsPrec="true">
+                    <M spec="beast.core.parameter.RealParameter" id="lnorm.mean.s:$(n)" value="-7.685701" lower="-Infinity" upper="Infinity"/>
+                    <S spec="beast.core.parameter.RealParameter" id="lnorm.prec.s:$(n)" value="1.267327" lower="0.0" upper="Infinity"/>
+                </baseDistr>
+                <alpha spec="beast.core.parameter.RealParameter" value="0.0895" lower="0.0" upper="Infinity"/>
+            </input>
+
+            <distribution id="hMean.prior.s:$(n)" spec="beast.math.distributions.Prior">
+                   <distr spec="beast.math.distributions.Normal" mean="-7.685701" sigma="1.267327"/>
+                   <x idref="lnorm.mean.s:$(n)"/>
+               </distribution>
+              <distribution id="hCV.prior.s:$(n)" spec="beast.math.distributions.Prior">
+                   <distr spec="beast.math.distributions.Gamma" alpha="1.0" beta="10"/>
+                   <x idref="lnorm.prec.s:$(n)"/>
+               </distribution>
+              <distribution id="dScale.prior.s:$(n)" spec="beast.math.distributions.Prior">
+                  <distr spec="beast.math.distributions.Gamma" alpha="0.001" beta="1000"/>
+                  <x idref="dirichlet.scale.s:$(n)"/>
+              </distribution>
+
+               <distribution id="mvnmean.prior.s:$(n)" spec="beast.math.distributions.Prior">
+                   <distr spec="beast.math.distributions.MultivariateNormal">
+                       <input name="mean" spec="beast.core.parameter.RealParameter" id="mvnPriorMean.s:$(n)"  value="2.11 0.548 0.216 0.359 -0.579  "/>
+                       <parameter name="precision" id="mvnPriorPrecision.s:$(n)" value="
+                          8.16 2.44 -0.060 -3.41 -1.59
+                          2.44 12.2 3.09 -4.70 0.194
+                          -0.060  3.09 6.95 -1.97 -1.38
+                          -3.41 -4.70 -1.97 7.70 -0.563
+                          -1.59 0.194 -1.38 -0.563 3.21"/>
+                   </distr>
+                   <x idref="mvn.mean.s:$(n)"/>
+               </distribution>
+              <distribution id="mvnprecision.prior.s:$(n)" spec="beast.math.distributions.Prior">
+                   <distr spec="beast.math.distributions.Wishart" df="7">
+                       <parameter name="scaleMatrix" id="wishartPriorScale.s:$(n)" value="
+                          8.16 0 0 0 0
+                          0 12.2 0 0 0
+                          0  0 6.95 0 0
+                          0 0 0 7.70 0
+                          0 0 0 0 3.21
+                          "/>
+                   </distr>
+                   <x idref="mvn.precision.s:$(n)"/>
+              </distribution>
+              <distribution id="paramListPrior.s:$(n)" spec="beast.math.distributions.ParameterListsPrior" applyToList="true">
+                  <distr idref="cpdp.s:$(n)"/>
+                  <xList idref="parameterList.s:$(n)"/>
+                  <xList idref="modelList.s:$(n)"/>
+                  <xList idref="freqsList.s:$(n)"/>
+                  <xList idref="ratesList.s:$(n)"/>
+              </distribution>
+
+
+            <!-- tree and its properties -->
+            <taxonset id='TaxonSet.$(n)' spec='beast.evolution.alignment.TaxonSet' alignment='@$(n)' />
+            <plugin spec='beast.evolution.tree.Tree' id='Tree.t:$(n)' taxonset='@TaxonSet.$(n)'/>
+
+            <plugin spec='beast.evolution.tree.RandomTree' id='RandomTree.t:$(n)' estimate='false' initial='@Tree.t:$(n)'>
+                <taxa spec='Alignment' idref='data'/>
+                <populationModel id='ConstantPopulation0.t:$(n)' spec='ConstantPopulation'>
+            		<popSize id='randomPopSize.t:$(n)' spec='parameter.RealParameter' value='1'/>
+	            </populationModel>
+            </plugin>
+
+            <!-- default tree prior -->
+            <plugin spec='YuleModel' id="YuleModel.t:$(n)" tree='@Tree.t:$(n)'>
+                <parameter name='birthDiffRate' id="birthRate.t:$(n)" value='1.0' estimate='true'/>
+            </plugin>
+
+            <plugin id='TreeHeight.t:$(n)' spec='beast.evolution.tree.TreeHeightLogger' tree='@Tree.t:$(n)'/>
+
+            <logger id='treelog.t:$(n)' spec='beast.core.Logger' logEvery="1000" fileName="$(tree).trees" mode='tree'>
+	            <log id='TreeWithMetaDataLogger.t:$(n)' spec='beast.evolution.tree.TreeWithMetaDataLogger' tree='@Tree.t:$(n)'>
+	            </log>
+            </logger>
+
+            <operator id='allTipDatesRandomWalker.t:$(n)' spec='TipDatesRandomWalker' windowSize="1" weight="0" tree="@Tree.t:$(n)"/>
+
+            <operator id='YuleModelTreeScaler.t:$(n)' spec='ScaleOperator' scaleFactor="0.5" weight="3" tree="@Tree.t:$(n)"/>
+            <operator id='YuleModelTreeRootScaler.t:$(n)' spec='ScaleOperator' scaleFactor="0.5" weight="3" tree="@Tree.t:$(n)" rootOnly='true'/>
+            <operator id='YuleModelUniformOperator.t:$(n)' spec='Uniform' weight="30" tree="@Tree.t:$(n)"/>
+            <operator id='YuleModelSubtreeSlide.t:$(n)' spec='SubtreeSlide' weight="15" gaussian="true" size="1.0" tree="@Tree.t:$(n)"/>
+            <operator id='YuleModelNarrow.t:$(n)' spec='Exchange' isNarrow='true' weight="15" tree="@Tree.t:$(n)"/>
+            <operator id='YuleModelWide.t:$(n)' spec='Exchange' isNarrow='false' weight="3" tree="@Tree.t:$(n)"/>
+            <operator id='YuleModelWilsonBalding.t:$(n)' spec='WilsonBalding' weight="3" tree="@Tree.t:$(n)"/>
+
+
+            <prior id='YuleBirthRatePrior.t:$(n)' x='@birthRate.t:$(n)'><distr spec="beast.math.distributions.Uniform" lower='0' upper='Infinity'/></prior>
+  		    <operator id='YuleBirthRateScaler.t:$(n)' spec='ScaleOperator' scaleFactor="0.75" weight="3" parameter="@birthRate.t:$(n)"/>
+
+
+             <operator id="upDownOp.s:$(n)" spec="UpDownOperator" scaleFactor="0.75" weight="6">
+                <up idref="ratesList.s:$(n)"/>
+                <up idref="lnorm.mean.s:$(n)"/>
+                <down idref="Tree.t:$(n)"/>
+            </operator>
+
+            <operator id="dpps1.s:$(n)" spec="NtdBMARateDPPGibbsSampler" weight="10" sampleSize="5">
+              <tempLikelihood idref="tempTreeLikelihood1.s:$(n)"/>
+              <parameterList idref="parameterList.s:$(n)"/>
+              <parameterPointers idref="param.pointers.s:$(n)"/>
+              <modelList idref="modelList.s:$(n)"/>
+              <modelPointers idref="model.pointers.s:$(n)"/>
+              <freqsList idref="freqsList.s:$(n)"/>
+              <freqPointers idref="freq.pointers.s:$(n)"/>
+              <ratesList idref="ratesList.s:$(n)"/>
+              <ratesPointers idref="rates.pointers.s:$(n)"/>
+              <dirichletProcess idref="cpdp.s:$(n)"/>
+              <dpTreeLik idref="treeLikelihood.$(n)"/>
+              <dpVal idref="dpValuable.s:$(n)"/>
+          </operator>
+
+          <operator id="dpps2.s:$(n)" spec="NtdBMARateSAMSPriorOperator" weight="3">
+              <tempLikelihood idref="tempTreeLikelihood2.s:$(n)"/>
+              <parameterList idref="parameterList.s:$(n)"/>
+              <parameterPointers idref="param.pointers.s:$(n)"/>
+              <modelList idref="modelList.s:$(n)"/>
+              <modelPointers idref="model.pointers.s:$(n)"/>
+              <freqsList idref="freqsList.s:$(n)"/>
+              <freqPointers idref="freq.pointers.s:$(n)"/>
+              <ratesList idref="ratesList.s:$(n)"/>
+              <ratesPointers idref="rates.pointers.s:$(n)"/>
+              <dirichletProcess idref="cpdp.s:$(n)"/>
+              <dpTreeLik idref="treeLikelihood.$(n)"/>
+              <dpVal idref="dpValuable.s:$(n)"/>
+          </operator>
+
+
+          <operator id="plerrwo.s:$(n)" spec="PLExtendedRealRandomWalkOperator" windowSizes="0.5 0.1 0.1 0.1 0.1" weight="4">
+              <parameters idref="parameterList.s:$(n)"/>
+          </operator>
+          <operator id="PLNetworkIntRandomWalk.s:$(n)" spec="PLNetworkIntRandomWalkOperator" weight="2" offset="1">
+              <vertex id="k80.s:$(n)" spec='beast.evolution.operators.util.Vertex' idNum="0" neighbours="2"/>
+              <vertex id="f81.s:$(n)" spec='beast.evolution.operators.util.Vertex' idNum="1" neighbours="2"/>
+              <vertex id="hky85.s:$(n)" spec='beast.evolution.operators.util.Vertex' idNum="2" neighbours="0 1 3"/>
+              <vertex id="tn93.s:$(n)" spec='beast.evolution.operators.util.Vertex' idNum="3" neighbours="2 4"/>
+              <vertex id="gtr.s:$(n)" spec='beast.evolution.operators.util.Vertex' idNum="4" neighbours="3"/>
+              <parameters idref="modelList.s:$(n)"/>
+          </operator>
+
+          <operator id="pldeo.s:$(n)" spec="PLDeltaExchangeOperator" delta="0.05" weight="4">
+              <parameterList idref="freqsList.s:$(n)"/>
+          </operator>
+
+          <operator id="plso.s:$(n)" spec="PLScaleOperator" scaleFactor="0.75" weight="4">
+              <parameters idref="ratesList.s:$(n)"/>
+          </operator>
+
+          <operator id="DPScaleScaler.s:$(n)" spec='ScaleOperator' scaleFactor="0.75" weight="0.2" parameter="@dirichlet.scale.s:$(n)"/>
+          <operator id="DPProbExchange.s:$(n)" spec='DeltaExchangeOperator' delta="0.05" weight="0.6" parameter="@dirichlet.prob.s:$(n)"/>
+          <operator id='hMeanRandomWalk.s:$(n)' spec='RealRandomWalkOperator' windowSize="0.5" weight="0.5" parameter="@lnorm.mean.s:$(n)"/>
+          <operator id='hCVScaler.s:$(n)' spec='ScaleOperator' scaleFactor="0.75" weight="0.5" parameter="@lnorm.prec.s:$(n)"/>
+
+          <operator id="CPDPSampler.s:$(n)" spec="beast.evolution.operators.CategoricalPDirichletPriorSampler" weight="0.5" offset="1">
+              <categorialProbs idref="categorical.prob.s:$(n)"/>
+              <x idref="modelList.s:$(n)"/>
+              <dirichletPriorCounts id="dirichletPriorOnCategoricalProbs.s:$(n)" spec="beast.core.parameter.RealParameter" value="1.0 1.0 1.0 1.0 1.0"/>
+          </operator>
+
+          <operator id="CPExchange.s:$(n)" spec='DeltaExchangeOperator' delta="0.1" weight="0.2" parameter="@categorical.prob.s:$(n)"/>
+
+          <operator id='hMVNMeanRandomWalk.s:$(n)' spec='ExtendedRealRandomWalkOperator' windowSizes="1 0.25 0.1 0.1 0.1"
+                weight="0.3" useGaussian="true" parameter="@mvn.mean.s:$(n)"/>
+          <operator id="meanMVNSampler.s:$(n)" spec="MeanMVNSampler" weight="1">
+              <priorMean idref="mvnPriorMean.s:$(n)"/>
+              <priorPrecision idref="mvnPriorPrecision.s:$(n)"/>
+              <x idref="parameterList.s:$(n)"/>
+              <mean idref="mvn.mean.s:$(n)"/>
+              <precision idref="mvn.precision.s:$(n)"/>
+          </operator>
+
+          <operator id="precisionWishartSampler.s:$(n)" spec="PrecisionWishartSampler" weight="0.5" df="7">
+              <scaleMatrix idref="wishartPriorScale.s:$(n)"/>
+              <mean idref="mvn.mean.s:$(n)"/>
+              <precision idref="mvn.precision.s:$(n)"/>
+              <x idref="parameterList.s:$(n)"/>
+          </operator>
+
+         <logger id="paramListLog.s:$(n)" logEvery="10000" fileName="$(filebase)_paramList.log">
+             <log idref="parameterList.s:$(n)"/>
+         </logger>
+
+         <logger id="modelListLog.s:$(n)" logEvery="10000" fileName="$(filebase)_modelList.log">
+             <log idref="modelList.s:$(n)"/>
+         </logger>
+
+         <logger id="freqsListLog.s:$(n)" logEvery="10000" fileName="$(filebase)_freqsList.log">
+             <log idref="freqsList.s:$(n)"/>
+         </logger>
+
+         <logger id="ratesListLog.s:$(n)" logEvery="10000" fileName="$(filebase)_ratesList.log">
+             <log idref="ratesList.s:$(n)"/>
+         </logger>
+
+        <logger id="substListIdLog.s:$(n)" logEvery="10000" fileName="$(filebase)_subst.list.idNum.log">
+            <log spec="PrintListIDNumber" id="subst.list.print.s:$(n)" paramList="@freqsList.s:$(n)"/>
+        </logger>
+
+        <logger id="ratesListIdLog.s:$(n)" logEvery="10000" fileName="$(filebase)_rates.list.idNum.log">
+            <log spec="PrintListIDNumber" id="rates.list.print.s:$(n)" paramList="@freqsList.s:$(n)"/>
+        </logger>
+
+        <logger id="substPointersIdLog.s:$(n)" logEvery="10000" fileName="$(filebase)_subst.pointers.idNum.log">
+            <log spec="PrintPointerIDNumber" id="subst.pointers.print.s:$(n)" pointers="@freq.pointers.s:$(n)"/>
+        </logger>
+
+        <logger id="ratesPointersIdLog.s:$(n)" logEvery="10000" fileName="$(filebase)_rates.pointers.idNum.log">
+            <log spec="PrintPointerIDNumber" id="rates.pointers.print.s:$(n)" pointers="@rates.pointers.s:$(n)"/>
+        </logger>
+
+]]>
+            <!-- substBMA-specific custom connectors -->
+            <!--connect method="substBMA.beauti.CMConnector.customConnector"/-->
+
+            <!-- substBMA-specific state -->
+            <connect srcID="parameterList.s:$(n)" targetID="state" inputName="stateNode" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="modelList.s:$(n)" targetID="state" inputName="stateNode" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="freqsList.s:$(n)" targetID="state" inputName="stateNode" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="ratesList.s:$(n)" targetID="state" inputName="stateNode" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="param.pointers.s:$(n)" targetID="state" inputName="stateNode" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="model.pointers.s:$(n)" targetID="state" inputName="stateNode" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="freq.pointers.s:$(n)" targetID="state" inputName="stateNode" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="rates.pointers.s:$(n)" targetID="state" inputName="stateNode" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="lnorm.mean.s:$(n)" targetID="state" inputName="stateNode" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="lnorm.prec.s:$(n)" targetID="state" inputName="stateNode" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="dirichlet.scale.s:$(n)" targetID="state" inputName="stateNode" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="dirichlet.prob.s:$(n)" targetID="state" inputName="stateNode" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="categorical.prob.s:$(n)" targetID="state" inputName="stateNode" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="dirichletPriorOnCategoricalProbs.s:$(n)" targetID="state" inputName="stateNode" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="mvn.mean.s:$(n)" targetID="state" inputName="stateNode" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="mvn.precision.s:$(n)" targetID="state" inputName="stateNode" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="mvnPriorMean.s:$(n)" targetID="state" inputName="stateNode" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="mvnPriorPrecision.s:$(n)" targetID="state" inputName="stateNode" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="wishartPriorScale.s:$(n)" targetID="state" inputName="stateNode" if="inlikelihood(treeLikelihood.$(n))"/>
+
+            <!-- substBMA-specific priors -->
+            <connect srcID="hMean.prior.s:$(n)" targetID="prior" inputName="distribution" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="hCV.prior.s:$(n)" targetID="prior" inputName="distribution" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="dScale.prior.s:$(n)" targetID="prior" inputName="distribution" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="mvnmean.prior.s:$(n)" targetID="prior" inputName="distribution" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="mvnprecision.prior.s:$(n)" targetID="prior" inputName="distribution" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="paramListPrior.s:$(n)" targetID="prior" inputName="distribution" if="inlikelihood(treeLikelihood.$(n))"/>
+
+            <!-- substBMA-specific operators -->
+            <connect srcID="upDownOp.s:$(n)" targetID="mcmc" inputName="operator" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="dpps1.s:$(n)" targetID="mcmc" inputName="operator" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="dpps2.s:$(n)" targetID="mcmc" inputName="operator" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="plerrwo.s:$(n)" targetID="mcmc" inputName="operator" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="PLNetworkIntRandomWalk.s:$(n)" targetID="mcmc" inputName="operator" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="pldeo.s:$(n)" targetID="mcmc" inputName="operator" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="plso.s:$(n)" targetID="mcmc" inputName="operator" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="DPScaleScaler.s:$(n)" targetID="mcmc" inputName="operator" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="DPProbExchange.s:$(n)" targetID="mcmc" inputName="operator" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="hMeanRandomWalk.s:$(n)" targetID="mcmc" inputName="operator" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="hCVScaler.s:$(n)" targetID="mcmc" inputName="operator" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="CPDPSampler.s:$(n)" targetID="mcmc" inputName="operator" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="CPExchange.s:$(n)" targetID="mcmc" inputName="operator" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="hMVNMeanRandomWalk.s:$(n)" targetID="mcmc" inputName="operator" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="meanMVNSampler.s:$(n)" targetID="mcmc" inputName="operator" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="precisionWishartSampler.s:$(n)" targetID="mcmc" inputName="operator" if="inlikelihood(treeLikelihood.$(n))"/>
+
+            <!-- substBMA-specific logs -->
+            <connect srcID="dpValuable.s:$(n)" targetID="screenlog" inputName="log" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="dpValuable.s:$(n)" targetID="tracelog" inputName="log" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="mvnmean.prior.s:$(n)" targetID="tracelog" inputName="log" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="mvnprecision.prior.s:$(n)" targetID="tracelog" inputName="log" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="lnorm.mean.s:$(n)" targetID="tracelog" inputName="log" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="lnorm.prec.s:$(n)" targetID="tracelog" inputName="log" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="dirichlet.scale.s:$(n)" targetID="tracelog" inputName="log" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="dirichlet.prob.s:$(n)" targetID="tracelog" inputName="log" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="categorical.prob.s:$(n)" targetID="tracelog" inputName="log" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="mvn.mean.s:$(n)" targetID="tracelog" inputName="log" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="mvn.precision.s:$(n)" targetID="tracelog" inputName="log" if="inlikelihood(treeLikelihood.$(n))"/>
+
+            <connect srcID="paramListLog.s:$(n)" targetID="mcmc" inputName="logger" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="modelListLog.s:$(n)" targetID="mcmc" inputName="logger" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="freqsListLog.s:$(n)" targetID="mcmc" inputName="logger" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="ratesListLog.s:$(n)" targetID="mcmc" inputName="logger" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="substListIdLog.s:$(n)" targetID="mcmc" inputName="logger" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="ratesListIdLog.s:$(n)" targetID="mcmc" inputName="logger" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="substPointersIdLog.s:$(n)" targetID="mcmc" inputName="logger" if="inlikelihood(treeLikelihood.$(n))"/>
+            <connect srcID="ratesPointersIdLog.s:$(n)" targetID="mcmc" inputName="logger" if="inlikelihood(treeLikelihood.$(n))"/>
+
+            <connect srcID='treeLikelihood.$(n)'            targetID='likelihood' inputName='distribution' if="isInitializing"/>
+            <connect srcID='YuleModel.t:$(n)'               targetID='prior' inputName='distribution' if="isInitializing"/>
+
+            <connect srcID='treelog.t:$(n)'                 targetID='mcmc' inputName='logger' if='inposterior(Tree.t:$(n)) and Tree.t:$(n)/estimate=true'/>
+            <connect srcID='RandomTree.t:$(n)'                targetID='mcmc' inputName='init'   if='inposterior(Tree.t:$(n))'/>
+
+<!-- when FixMeanMutationRatesOperator, the prior is uniform due to the operator -->
+
+            <connect srcID='Tree.t:$(n)'                      targetID='state' inputName='stateNode' if='inposterior(Tree.t:$(n)) and Tree.t:$(n)/estimate=true'/>
+            <connect srcID='birthRate.t:$(n)'                 targetID='state' inputName='stateNode' if='inposterior(YuleModel.t:$(n)) and inposterior(Tree.t:$(n)) and birthRate.t:$(n)/estimate=true'/>
+
+
+            <connect srcID='YuleBirthRateScaler.t:$(n)'       targetID='mcmc' inputName='operator' if='inposterior(birthRate.t:$(n)) and birthRate.t:$(n)/estimate=true'>Scales birth rate of Yule prior for partition t:$(n)</connect>
+
+            <connect srcID='allTipDatesRandomWalker.t:$(n)'   targetID='mcmc' inputName='operator' if='inposterior(Tree.t:$(n)) and Tree.t:$(n)/estimate=true and allTipDatesRandomWalker.t:$(n)/weight!=0.0'>Estimates tip dates for tree t:$(n)</connect>
+
+            <connect if="inposterior(YuleModel.t:$(n)) and Tree.t:$(n)/estimate=true" inputName="operator" srcID="YuleModelTreeScaler.t:$(n)" targetID="mcmc">Scales all internal nodes for tree t:$(n)</connect>
+            <connect if="inposterior(YuleModel.t:$(n)) and Tree.t:$(n)/estimate=true" inputName="operator" srcID="YuleModelTreeRootScaler.t:$(n)" targetID="mcmc">Scales root node for tree t:$(n)</connect>
+            <connect if="inposterior(YuleModel.t:$(n)) and Tree.t:$(n)/estimate=true" inputName="operator" srcID="YuleModelUniformOperator.t:$(n)" targetID="mcmc">Draws new internal node heights uniformally for tree t:$(n)</connect>
+            <connect if="inposterior(YuleModel.t:$(n)) and Tree.t:$(n)/estimate=true" inputName="operator" srcID="YuleModelSubtreeSlide.t:$(n)" targetID="mcmc">Performs subtree slide rearrangement of tree t:$(n)</connect>
+            <connect if="inposterior(YuleModel.t:$(n)) and Tree.t:$(n)/estimate=true" inputName="operator" srcID="YuleModelNarrow.t:$(n)" targetID="mcmc">Narrow exchange performs local rearrangement of tree t:$(n)</connect>
+            <connect if="inposterior(YuleModel.t:$(n)) and Tree.t:$(n)/estimate=true" inputName="operator" srcID="YuleModelWide.t:$(n)" targetID="mcmc">Wide exchange performs global rearrangement of tree t:$(n)</connect>
+            <connect if="inposterior(YuleModel.t:$(n)) and Tree.t:$(n)/estimate=true" inputName="operator" srcID="YuleModelWilsonBalding.t:$(n)" targetID="mcmc">Performs Wilson-Balding global rearrangement of tree t:$(n)</connect>
+
+            <connect srcID='treeLikelihood.$(n)'              targetID='tracelog' inputName='log' if='inlikelihood(treeLikelihood.$(n))'/>
+            <connect srcID='TreeHeight.t:$(n)'                targetID='tracelog' inputName='log' if='inposterior(Tree.t:$(n))  and Tree.t:$(n)/estimate=true'/>
+            <connect srcID='YuleModel.t:$(n)'                 targetID='tracelog' inputName='log' if='inposterior(YuleModel.t:$(n)) and inposterior(Tree.t:$(n)) and Tree.t:$(n)/estimate=true'/>
+            <connect srcID='birthRate.t:$(n)'                 targetID='tracelog' inputName='log' if='inposterior(YuleModel.t:$(n)) and birthRate.t:$(n)/estimate=true'/>
+
+            <connect srcID='YuleBirthRatePrior.t:$(n)'        targetID='prior' inputName='distribution' if='inposterior(YuleModel.t:$(n)) and inposterior(Tree.t:$(n)) and birthRate.t:$(n)/estimate=true'>Prior on Yule birth rate for partition s:$(n)</connect>
+
+			<mergepoint id='aux-partitiontemplate'/>
+        </partitiontemplate>
+
+		<mergepoint id='clockModelTemplates'/>
+		<mergepoint id='treePriorTemplates'/>
+        <mergepoint id='parametricDistributions'/>
+
+<!-- Tree initialisation -->
+<!-- Random tree -->
+
+        <subtemplate id='RandomTree' class='beast.evolution.tree.RandomTree' mainid='RandomTree.t:$(n)'>
+<![CDATA[
+            <tree spec='beast.evolution.tree.RandomTree' id='RandomTree.t:$(n)' estimate='false' trait='@datetrait.$(n)'>
+                <taxa spec='Alignment' idref='data'/>
+                <populationModel id='ConstantPopulation0.t:$(n)' spec='ConstantPopulation'>
+            		<popSize id='randomPopSize.t:$(n)' spec='parameter.RealParameter' value='1'/>
+	            </populationModel>
+            </tree>
+]]>
+        </subtemplate>
+
+<!-- Cluster tree (for UPGMA) -->
+
+        <subtemplate id='UPGMATree' class='beast.util.ClusterTree' mainid='UPGMATree.t:$(n)'>
+<![CDATA[
+        <tree spec='beast.util.ClusterTree' id='UPGMATree.t:$(n)' clusterType='upgma' estimate='false'  trait='@datetrait.$(n)' taxa='@$(n)'/>
+]]>
+        </subtemplate>
+
+<!-- Newick tree -->
+        <subtemplate id='NewickTree' class='beast.util.ClusterTree' mainid='NewickTree.t:$(n)'>
+<![CDATA[
+        <tree spec='beast.util.TreeParser' id='NewickTree.t:$(n)' estimate='false'  trait='@datetrait.$(n)'  taxa='@$(n)' newick=""/>
+]]>
+        </subtemplate>
+
+    </beauticonfig>
+
+
+	<mergepoint id='misc'/>
+
+    
+<!--
+<operator spec='DeltaExchangeOperator' id='FixMeanRatesOperator' weight='2' delta='0.75'/>
+-->
+
+<!-- framework for main model -->
+
+    <run spec="MCMC" id="mcmc" chainLength="10000000">
+
+        <state storeEvery='5000' id='state'>
+        </state>
+
+        <distribution spec="CompoundDistribution" id="posterior">
+            <distribution spec="CompoundDistribution" id="prior">
+				<mergepoint id='aux-priors'/>
+            </distribution>
+            <distribution spec="CompoundDistribution" id="likelihood" useThreads="true">
+				<mergepoint id='aux-likelihoods'/>
+            </distribution>
+        </distribution>
+
+        <logger id='tracelog' logEvery="1000" fileName="beast.log" sort="smart" sanitiseHeaders='true'>
+	        <model idref='posterior'/>
+            <log idref="posterior"/>
+            <log idref="likelihood"/>
+            <log idref="prior"/>
+        </logger>
+
+        <logger id='screenlog' logEvery="1000">
+	        <!--model idref='posterior'/-->
+            <log idref="posterior"/>
+      	    <ESS spec='ESS' name='log' arg="@posterior"/>
+            <log idref="likelihood"/>
+            <log idref="prior"/>
+        </logger>
+    </run>
+
+</beast>
+

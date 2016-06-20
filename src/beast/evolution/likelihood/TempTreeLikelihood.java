@@ -22,30 +22,35 @@ import java.util.Random;
  */
 @Description("Used to compute the tree likelihood for operators that samples the partitioning space. Used when there is only one partitioning.")
 public class TempTreeLikelihood extends Distribution {
-    public Input<Alignment> dataInput = new Input<Alignment>(
+    public Input<Alignment> dataInput = new Input<>(
             "data",
             "sequence data for the beast.tree",
             Input.Validate.REQUIRED
     );
 
-    public Input<QuietSiteModel> siteModelInput = new Input<QuietSiteModel>(
+    public Input<QuietSiteModel> siteModelInput = new Input<>(
             "siteModel",
             "Models the evolution of a site in an alignment",
             Input.Validate.REQUIRED
     );
 
-    public Input<Tree> treeInput = new Input<Tree>(
+    public Input<Tree> treeInput = new Input<>(
             "tree",
             "phylogenetic beast.tree with sequence data in the leafs",
             Input.Validate.REQUIRED
     );
 
-    public Input<BranchRateModel.Base> branchRateModelInput = new Input<BranchRateModel.Base>(
+    public Input<BranchRateModel.Base> branchRateModelInput = new Input<>(
             "branchRateModel",
             "A model describing the rates on the branches of the beast.tree."
     );
 
-    public Input<Boolean> useAmbiguitiesInput = new Input<Boolean>(
+    public Input<GenericTreeLikelihood> trueLikelihoodInput = new Input<>(
+            "trueLikelihood",
+            "If present, use this as source of branch rate model."
+    );
+
+    public Input<Boolean> useAmbiguitiesInput = new Input<>(
             "useAmbiguities",
             "flag to indicate leafs that sites containing ambigue states should be handled instead of ignored (the default)",
             false
@@ -119,13 +124,16 @@ public class TempTreeLikelihood extends Distribution {
 
         for(int i = 0; i < firstPatternOccur.length; i++){
             AlignmentSubset sitePattern = new AlignmentSubset(alignment,firstPatternOccur[i]);
+            BranchRateModel.Base brModel = branchRateModelInput.get() != null
+                    ? branchRateModelInput.get()
+                    : trueLikelihoodInput.get().branchRateModelInput.get();
+
             TempSiteTreeLikelihood treeLik = new TempSiteTreeLikelihood(
                     sitePattern,
                     treeInput.get(),
                     useAmbiguitiesInput.get(),
                     siteModelInput.get(),
-                    branchRateModelInput.get()
-
+                    brModel
             );
 
             treeLiks[i] = treeLik;
