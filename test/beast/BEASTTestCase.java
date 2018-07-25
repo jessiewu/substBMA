@@ -6,10 +6,12 @@ import beast.evolution.alignment.Sequence;
 import beast.evolution.tree.Tree;
 import beast.util.TreeParser;
 import junit.framework.TestCase;
+import org.junit.Ignore;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Ignore
 public class BEASTTestCase extends TestCase {
     public static final double PRECISION = 1e-6;
 
