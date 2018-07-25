@@ -1,17 +1,14 @@
 package beast.evolution.operators;
 
 import beast.core.Description;
-import beast.core.Operator;
-import beast.core.Loggable;
 import beast.core.Input;
+import beast.core.Loggable;
+import beast.core.Operator;
 import beast.core.parameter.*;
-import beast.evolution.likelihood.DPSepTreeLikelihood;
-import beast.evolution.sitemodel.DPNtdRateSepSiteModel;
-import beast.math.distributions.NtdDP;
-import beast.math.distributions.ParametricDistribution;
-import beast.math.distributions.CompoundDirichletProcess;
-import beast.evolution.likelihood.TempTreeLikelihood;
 import beast.evolution.likelihood.DPTreeLikelihood;
+import beast.evolution.likelihood.TempTreeLikelihood;
+import beast.math.distributions.CompoundDirichletProcess;
+import beast.math.distributions.ParametricDistribution;
 import beast.util.Randomizer;
 
 import java.io.PrintStream;
@@ -197,10 +194,18 @@ public class NtdBMARateDPPGibbsSampler  extends Operator implements Loggable {
         try{
 
             //Generate a sample of proposals
-            QuietRealParameter[] paramPreProposals = getSamples(paramBaseDistr,currParamVal);
-            QuietRealParameter[] modelPreProposals = getSamples(modelBaseDistr,currModelVal);
-            QuietRealParameter[] freqsPreProposals = getSamples(freqsBaseDistr,currFreqsVal);
-            QuietRealParameter[] ratesPreProposals = getSamples(ratesBaseDistr,currRatesVal);
+//            QuietRealParameter[] paramPreProposals = getSamples(paramBaseDistr,currParamVal);
+//            QuietRealParameter[] modelPreProposals = getSamples(modelBaseDistr,currModelVal);
+//            QuietRealParameter[] freqsPreProposals = getSamples(freqsBaseDistr,currFreqsVal);
+//            QuietRealParameter[] ratesPreProposals = getSamples(ratesBaseDistr,currRatesVal);
+            QuietRealParameter[] paramPreProposals = QuietRealParameter.getSamples(paramBaseDistr,
+                    sampleSize, currParamVal.getUpper(), currParamVal.getLower());
+            QuietRealParameter[] modelPreProposals = QuietRealParameter.getSamples(modelBaseDistr,
+                    sampleSize, currModelVal.getUpper(), currModelVal.getLower());
+            QuietRealParameter[] freqsPreProposals = QuietRealParameter.getSamples(freqsBaseDistr,
+                    sampleSize, currFreqsVal.getUpper(), currFreqsVal.getLower());
+            QuietRealParameter[] ratesPreProposals = QuietRealParameter.getSamples(ratesBaseDistr,
+                    sampleSize, currRatesVal.getUpper(), currRatesVal.getLower());
 
             //System.err.println("zero count: "+zeroCount);
             //If the a singleton has been picked
@@ -480,16 +485,16 @@ public class NtdBMARateDPPGibbsSampler  extends Operator implements Loggable {
         return siteLogLik;
     }
 
-    public QuietRealParameter[] getSamples(ParametricDistribution distr, RealParameter example) throws Exception{
-        QuietRealParameter[] samples = new QuietRealParameter[sampleSize];
-        Double[][] sampleVals = distr.sample(sampleSize);
-        for(int i = 0; i < samples.length;i++){
-            samples[i] = new QuietRealParameter(sampleVals[i]);
-            samples[i].setUpper(example.getUpper());
-            samples[i].setLower(example.getLower());
-        }
-        return samples;
-    }
+//    public QuietRealParameter[] getSamples(ParametricDistribution distr, RealParameter example) throws Exception{
+//        QuietRealParameter[] samples = new QuietRealParameter[sampleSize];
+//        Double[][] sampleVals = distr.sample(sampleSize);
+//        for(int i = 0; i < samples.length;i++){
+//            samples[i] = new QuietRealParameter(sampleVals[i]);
+//            samples[i].setUpper(example.getUpper());
+//            samples[i].setLower(example.getLower());
+//        }
+//        return samples;
+//    }
 
     @Override
 	public void init(PrintStream out) {

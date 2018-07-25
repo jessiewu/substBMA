@@ -3,15 +3,18 @@ package beast.evolution.operators;
 import beast.core.Description;
 import beast.core.Input;
 import beast.core.Operator;
-import beast.core.parameter.*;
-import beast.evolution.likelihood.*;
+import beast.core.parameter.DPPointer;
+import beast.core.parameter.DPValuable;
+import beast.core.parameter.ParameterList;
+import beast.core.parameter.QuietRealParameter;
+import beast.evolution.likelihood.DPSepTreeLikelihood;
+import beast.evolution.likelihood.DPTreeLikelihood;
+import beast.evolution.likelihood.SlowDPSepTreeLikelihood;
+import beast.evolution.likelihood.TempWVTreeLikelihood;
 import beast.evolution.sitemodel.DPNtdRateSepSiteModel;
 import beast.math.distributions.CompoundDirichletProcess;
-import beast.math.distributions.DirichletDistribution;
 import beast.math.distributions.ParametricDistribution;
 import beast.util.Randomizer;
-import org.apache.commons.math.distribution.NormalDistribution;
-import org.apache.commons.math.distribution.NormalDistributionImpl;
 
 import java.util.HashMap;
 import java.util.List;
@@ -185,29 +188,28 @@ public class NtdBMASAMSPriorOperator extends Operator {
         return logq;
     }
 
-    public QuietRealParameter getSample(ParametricDistribution distr, double upper, double lower) throws Exception{
-
-        Double[][] sampleVals = distr.sample(1);
-
-        QuietRealParameter sampleParameter = new QuietRealParameter(sampleVals[0]);
-        sampleParameter.setUpper(upper);
-        sampleParameter.setLower(lower);
-
-        return sampleParameter;
-    }
+//    public QuietRealParameter getSample(ParametricDistribution distr, double upper, double lower) throws Exception{
+//
+//        Double[][] sampleVals = distr.sample(1);
+//
+//        QuietRealParameter sampleParameter = new QuietRealParameter(sampleVals[0]);
+//        sampleParameter.setUpper(upper);
+//        sampleParameter.setLower(lower);
+//
+//        return sampleParameter;
+//    }
 
     public double split(int index1, int index2, int clusterIndex, int[] initClusterSites){
         try{
             double logqSplit = 0.0;
 
-
-
             //Create a parameter by sampling from the prior
-            QuietRealParameter newParam = getSample(paramBaseDistr, paramList.getUpper(), paramList.getLower());
-            QuietRealParameter newModel = getSample(modelBaseDistr, modelList.getUpper(), modelList.getLower());
-            QuietRealParameter newFreqs = getSample(freqsBaseDistr, freqsList.getUpper(), freqsList.getLower());
-
-
+            QuietRealParameter newParam = QuietRealParameter.getSample(paramBaseDistr,
+                    paramList.getUpper(), paramList.getLower());
+            QuietRealParameter newModel = QuietRealParameter.getSample(modelBaseDistr,
+                    modelList.getUpper(), modelList.getLower());
+            QuietRealParameter newFreqs = QuietRealParameter.getSample(freqsBaseDistr,
+                    freqsList.getUpper(), freqsList.getLower());
 
             //Perform a split
             //paramList.splitParameter(clusterIndex,newParam);

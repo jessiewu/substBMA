@@ -126,6 +126,7 @@ public class RateSAMSPriorOperator extends Operator {
 
             //Create a parameter by sampling from the prior
             //Double[][] sampleVal = baseDistr.sample(1,rateList.getParameter(clusterIndex).getUpper(),rateList.getParameter(clusterIndex).getLower());
+            // keep the original code, and not use sampler in QuietRealParameter#getSample
             Double[][] sampleVal = baseDistr.sample(1);
 
             QuietRealParameter newParam = new QuietRealParameter(sampleVal[0]);

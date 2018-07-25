@@ -8,6 +8,7 @@ import beast.core.parameter.*;
 import beast.math.distributions.DirichletProcess;
 import beast.math.distributions.ParametricDistribution;
 import beast.util.Randomizer;
+import org.apache.commons.math.MathException;
 
 
 /**
@@ -215,12 +216,15 @@ public class DirichletProcessPriorGibbsSampler extends Operator {
         return Double.POSITIVE_INFINITY;
     }
 
-    public QuietRealParameter[] sampleFromBaseDistribution(ParameterList paramList) throws Exception{
-        QuietRealParameter[] preliminaryProposals = getSamples(baseDistr);
-        for(RealParameter parameter: preliminaryProposals){
-            parameter.setUpper(paramList.getUpper());
-            parameter.setLower(paramList.getLower());
-        }
+    public QuietRealParameter[] sampleFromBaseDistribution(ParameterList paramList) throws MathException {
+//        QuietRealParameter[] preliminaryProposals = getSamples(baseDistr);
+//        for(RealParameter parameter: preliminaryProposals){
+//            parameter.setUpper(paramList.getUpper());
+//            parameter.setLower(paramList.getLower());
+//        }
+        QuietRealParameter[] preliminaryProposals = QuietRealParameter.getSamples(baseDistr,
+                sampleSize, paramList.getUpper(), paramList.getLower());
+
         /*RealParameter[] preliminaryProposals = new RealParameter[sampleSize];
 
         for(int i = 0; i < sampleSize; i++){
@@ -248,13 +252,13 @@ public class DirichletProcessPriorGibbsSampler extends Operator {
 
     }
 
-    public QuietRealParameter[] getSamples(ParametricDistribution distr) throws Exception{
-        QuietRealParameter[] samples = new QuietRealParameter[sampleSize];
-        Double[][] sampleVals = distr.sample(sampleSize);
-        for(int i = 0; i < samples.length;i++){
-            samples[i] = new QuietRealParameter(sampleVals[i]);
-        }
-        return samples;
-    }
+//    public QuietRealParameter[] getSamples(ParametricDistribution distr) throws Exception{
+//        QuietRealParameter[] samples = new QuietRealParameter[sampleSize];
+//        Double[][] sampleVals = distr.sample(sampleSize);
+//        for(int i = 0; i < samples.length;i++){
+//            samples[i] = new QuietRealParameter(sampleVals[i]);
+//        }
+//        return samples;
+//    }
 
 }

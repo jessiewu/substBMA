@@ -1,10 +1,13 @@
 package beast.math.distributions;
 
-import beast.core.Input;
 import beast.core.Description;
+import beast.core.Input;
 import beast.core.parameter.RealParameter;
-import org.apache.commons.math.distribution.*;
+import beast.core.util.Log;
 import org.apache.commons.math.MathException;
+import org.apache.commons.math.distribution.AbstractIntegerDistribution;
+import org.apache.commons.math.distribution.Distribution;
+import org.apache.commons.math.distribution.IntegerDistribution;
 
 /**
  * @author Chieh-Hsi Wu
@@ -51,7 +54,10 @@ public class CategoricalDistribution extends ParametricDistribution {
 
 		@Override
         public double probability(int x){
-            return probs[x];
+            if (x >= probs.length || x < 0)
+                Log.err("Index x = " + x + " is out of bounds [" +
+                        0 + ", " + (probs.length-1) + "] in CategoricalDistribution !");
+            return probs[x];// offset handled in ParametricDistribution.logDensity(x, offset)
         }
 		public double cumulativeProbability(int x) throws MathException {
             double cumProb = 0.0;

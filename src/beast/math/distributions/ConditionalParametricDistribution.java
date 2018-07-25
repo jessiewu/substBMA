@@ -76,7 +76,7 @@ public class ConditionalParametricDistribution extends ParametricDistribution  {
      * Must be overwritten for multivariate ones.
      */
     public Double[][] sample(final int size, int conditionVal) throws Exception {
-
+        // this method is not used, TODO offset handling?
         return distr[valueMap.get(conditionVal)].sample(size);
 
     }

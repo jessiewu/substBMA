@@ -188,32 +188,30 @@ public class NtdBMARateSAMSPriorOperator extends Operator {
         return logq;
     }
 
-    public QuietRealParameter getSample(ParametricDistribution distr, double upper, double lower) throws Exception{
-
-        Double[][] sampleVals = distr.sample(1);
-
-        QuietRealParameter sampleParameter = new QuietRealParameter(sampleVals[0]);
-        sampleParameter.setUpper(upper);
-        sampleParameter.setLower(lower);
-
-        return sampleParameter;
-    }
+//    public QuietRealParameter getSample(ParametricDistribution distr, double upper, double lower) throws Exception{
+//
+//        Double[][] sampleVals = distr.sample(1);
+//
+//        QuietRealParameter sampleParameter = new QuietRealParameter(sampleVals[0]);
+//        sampleParameter.setUpper(upper);
+//        sampleParameter.setLower(lower);
+//
+//        return sampleParameter;
+//    }
 
     public double split(int index1, int index2, int clusterIndex, int[] initClusterSites){
         try{
             double logqSplit = 0.0;
 
-
-
             //Create a parameter by sampling from the prior
-            QuietRealParameter newParam = getSample(paramBaseDistr, paramList.getUpper(), paramList.getLower());
-            QuietRealParameter newModel = getSample(modelBaseDistr, modelList.getUpper(), modelList.getLower());
-            QuietRealParameter newFreqs = getSample(freqsBaseDistr, freqsList.getUpper(), freqsList.getLower());
-            QuietRealParameter newRates = getSample(ratesBaseDistr, ratesList.getUpper(), ratesList.getLower());
-
-
-
-
+            QuietRealParameter newParam = QuietRealParameter.getSample(paramBaseDistr,
+                    paramList.getUpper(), paramList.getLower());
+            QuietRealParameter newModel = QuietRealParameter.getSample(modelBaseDistr,
+                    modelList.getUpper(), modelList.getLower());
+            QuietRealParameter newFreqs = QuietRealParameter.getSample(freqsBaseDistr,
+                    freqsList.getUpper(), freqsList.getLower());
+            QuietRealParameter newRates = QuietRealParameter.getSample(ratesBaseDistr,
+                    ratesList.getUpper(), ratesList.getLower());
 
             //Remove the index 1 and index 2 from the cluster
             int[] clusterSites = new int[initClusterSites.length -2];

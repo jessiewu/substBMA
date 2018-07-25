@@ -180,16 +180,16 @@ public class NtdBMASAMSTempOperator extends Operator {
         return logq;
     }
 
-    public QuietRealParameter getSample(ParametricDistribution distr, double upper, double lower) throws Exception{
-
-        Double[][] sampleVals = distr.sample(1);
-
-        QuietRealParameter sampleParameter = new QuietRealParameter(sampleVals[0]);
-        sampleParameter.setUpper(upper);
-        sampleParameter.setLower(lower);
-
-        return sampleParameter;
-    }
+//    public QuietRealParameter getSample(ParametricDistribution distr, double upper, double lower) throws Exception{
+//
+//        Double[][] sampleVals = distr.sample(1);
+//
+//        QuietRealParameter sampleParameter = new QuietRealParameter(sampleVals[0]);
+//        sampleParameter.setUpper(upper);
+//        sampleParameter.setLower(lower);
+//
+//        return sampleParameter;
+//    }
 
     public double split(int index1, int index2, int clusterIndex, int[] initClusterSites){
         try{
@@ -198,10 +198,13 @@ public class NtdBMASAMSTempOperator extends Operator {
 
 
             //Create a parameter by sampling from the prior
-            QuietRealParameter newParam = getSample(paramBaseDistr, paramList.getUpper(), paramList.getLower());
+            QuietRealParameter newParam = QuietRealParameter.getSample(paramBaseDistr,
+                    paramList.getUpper(), paramList.getLower());
             //QuietRealParameter newModel = getSample(modelBaseDistr, modelList.getUpper(), modelList.getLower());
+            //TODO why no upper lower here?
             QuietRealParameter newModel = new QuietRealParameter(modelList.getParameter(clusterIndex).getValue());
-            QuietRealParameter newFreqs = getSample(freqsBaseDistr, freqsList.getUpper(), freqsList.getLower());
+            QuietRealParameter newFreqs = QuietRealParameter.getSample(freqsBaseDistr,
+                    freqsList.getUpper(), freqsList.getLower());
 
             //System.out.println(newModel.getValue());
             /*if((double)newModel.getValue() != (double)modelList.getParameter(clusterIndex).getValue()){

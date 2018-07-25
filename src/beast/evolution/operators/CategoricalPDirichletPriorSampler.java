@@ -57,6 +57,7 @@ public class CategoricalPDirichletPriorSampler extends Operator {
         }
         try{
             DirichletDistribution dirichlet = new DirichletDistribution(newCounts);
+            // offset has been handled above, so not use sampler in QuietRealParameter#getSample
             Double[][] draw = dirichlet.sample(1);
             RealParameter probs = categoricalProbsInput.get(this);
             for(int i = 0 ; i < draw[0].length; i++){

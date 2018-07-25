@@ -2,7 +2,6 @@ package beast.evolution.operators;
 
 import beast.core.Description;
 import beast.core.Input;
-import beast.core.Loggable;
 import beast.core.Operator;
 import beast.core.parameter.*;
 import beast.evolution.likelihood.*;
@@ -135,7 +134,9 @@ public class FasterRateDPPGibbsSampler  extends Operator {
         try{
 
             //Generate a sample of proposals
-            QuietRealParameter[] ratePreProposals = getSamples(rateBaseDistr,currRateVal);
+//            QuietRealParameter[] ratePreProposals = getSamples(rateBaseDistr,currRateVal); // line 325
+            QuietRealParameter[] ratePreProposals = QuietRealParameter.getSamples(rateBaseDistr,
+                    sampleSize, currRateVal.getUpper(), currRateVal.getLower());
 
             //System.err.println("zero count: "+zeroCount);
             //If the a singleton has been picked
@@ -321,16 +322,16 @@ public class FasterRateDPPGibbsSampler  extends Operator {
     }
 
 
-    public QuietRealParameter[] getSamples(ParametricDistribution distr, RealParameter example) throws Exception{
-        QuietRealParameter[] samples = new QuietRealParameter[sampleSize];
-        Double[][] sampleVals = distr.sample(sampleSize);
-        for(int i = 0; i < samples.length;i++){
-            samples[i] = new QuietRealParameter(sampleVals[i]);
-            samples[i].setUpper(example.getUpper());
-            samples[i].setLower(example.getLower());
-        }
-        return samples;
-    }
+//    public QuietRealParameter[] getSamples(ParametricDistribution distr, RealParameter example) throws Exception{
+//        QuietRealParameter[] samples = new QuietRealParameter[sampleSize];
+//        Double[][] sampleVals = distr.sample(sampleSize);
+//        for(int i = 0; i < samples.length;i++){
+//            samples[i] = new QuietRealParameter(sampleVals[i]);
+//            samples[i].setUpper(example.getUpper());
+//            samples[i].setLower(example.getLower());
+//        }
+//        return samples;
+//    }
 
         public double getSiteLogLikelihood(
                 QuietRealParameter parameter,
